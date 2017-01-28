@@ -1,0 +1,29 @@
+{
+  "name": "Pixijs_template",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {},
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pixi.js": "^4.3.4"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-cli": "*",
+    "flow-bin": "*",
+    "typescript": "^2.0.3",
+    "webpack": "*",
+    "webpack-dev-server": "*",
+    "babel-core": "*",
+    "babel-loader": "*",
+    "babel-plugin-syntax-flow": "*",
+    "babel-plugin-transform-class-properties": "^6.11.5",
+    "babel-plugin-transform-flow-strip-types": "*",
+    "babel-plugin-transform-runtime": "^6.15.0",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-es2016": "^6.11.3",
+    "babel-preset-es2017": "*",
+    "webpack": "*"
+  }
+}
