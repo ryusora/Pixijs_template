@@ -44,10 +44,10 @@ module.exports =
 
 if (enviroment == '_development')
 {
-   console.log('[Development Plugins]', 'HotModuleReplacementPlugin', 'NoErrorsPlugin');
+   console.log('[Development Plugins]', 'HotModuleReplacementPlugin', 'NoEmitOnErrorsPlugin');
    module.exports.plugins.push(
       new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin()
+      new webpack.NoEmitOnErrorsPlugin()
    )
 }
 // else
