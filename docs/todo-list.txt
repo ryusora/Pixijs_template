@@ -1,6 +1,6 @@
 - Add Loader
-	+ TextureManager to contain all of the images used in game
-	+ AudioManager to contain all of the audio used in game
+	+ TextureManager to contain all of the images used in game (Done)
+	+ AudioManager to contain all of the audio used in game 
 - Add simple Gameplay
 	+ Add Chickens to drop eggs
 	+ Add controlable Bag to catch the falling egg

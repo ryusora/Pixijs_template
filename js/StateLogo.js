@@ -27,7 +27,7 @@ StateLogo.prototype.Init = function(){
 
 StateLogo.prototype.IsLoadDone = function()
 {
-	return isLoadingDone
+	return this.isLoadingDone
 }
 
 StateLogo.prototype.Destroy = function(){
@@ -48,7 +48,7 @@ StateLogo.prototype.Update = function(dt)
 		}
 		else if(this.ticker < 0)
 		{
-			StatesManager.ChangeState(GameStates.stateMainMenu)
+			StatesManager.ChangeState(GameStates.stateLoading)
 		}
 	}
 }

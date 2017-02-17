@@ -1,5 +1,7 @@
 require('pixi.js')
+require('firebase')
 const Application 		= require('./Application.js')
+const FireBaseMgr 		= require('./FireBaseMgr.js')
 window.StatesManager 	= require('./StatesManager.js')
 window.GameStates		= require('./GameStates.js')
 
@@ -12,6 +14,7 @@ function run(){
 var main = function(){
 	StatesManager.ChangeState(GameStates.stateLogo)
 	Application.initialize(run)
+	FireBaseMgr.initialize()
 }
 
 main()

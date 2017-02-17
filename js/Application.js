@@ -1,5 +1,3 @@
-
-
 var Application = function(){
 	this.instance = new PIXI.Application()
 	this.instance.renderer.backgroundColor = 0xffffff
