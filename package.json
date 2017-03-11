@@ -10,7 +10,13 @@
   "license": "ISC",
   "dependencies": {
     "firebase": "^3.6.9",
-    "pixi.js": "^4.3.4"
+    "bit-twiddle": "^1.0.2",
+    "earcut": "^2.0.7",
+    "eventemitter3": "^2.0.0",
+    "ismobilejs": "^0.4.0",
+    "object-assign": "^4.0.1",
+    "pixi-gl-core": "^1.0.3",
+    "resource-loader": "^2.0.6"
   },
   "devDependencies": {
     "babel": "^6.5.2",
@@ -31,6 +37,7 @@
     "html-webpack-plugin": "^2.28.0",
     "typescript": "^2.0.3",
     "webpack": "*",
-    "webpack-dev-server": "*"
+    "webpack-dev-server": "*",
+    "webpack-glsl-loader": "^1.0.1"
   }
 }

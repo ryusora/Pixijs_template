@@ -1,4 +1,3 @@
-require('pixi.js')
 const Application 	= require('./Application.js')
 window.Defines 		= require('./Defines.js')
 window.GameStates	= require('./GameStates.js')
