@@ -1,4 +1,4 @@
-require('pixi.js')
+
 
 function TextureManager()
 {
