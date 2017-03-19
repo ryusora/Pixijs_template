@@ -1,6 +1,6 @@
-- Add Loader
-	+ TextureManager to contain all of the images used in game (Done)
-	+ AudioManager to contain all of the audio used in game 
+- Control animation in Pixijs
+	+ Check sprite animation
+	+ Check which tool should be use for animation
 - Add simple Gameplay
 	+ Add Chickens to drop eggs
 	+ Add controlable Bag to catch the falling egg
