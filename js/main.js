@@ -1,13 +1,12 @@
 require('pixi.js')
-const Application 		= require('./Application.js')
-window.StatesManager 	= require('./StatesManager.js')
-window.GameStates		= require('./GameStates.js')
+window.Application 		= require('./Application.js')
+window.StatesManager 	= require('./States/StatesManager.js')
+window.GameStates		= require('./States/GameStates.js')
 
 function run(){
 	var deltaTime = Application.getDeltaTime()
 	StatesManager.Update(deltaTime)
 }
-
 
 var main = function(){
 	StatesManager.ChangeState(GameStates.stateLogo)

@@ -1,8 +1,4 @@
 require('pixi.js')
-const Application 	= require('./Application.js')
-window.Defines 		= require('./Defines.js')
-window.GameStates	= require('./GameStates.js')
-window.StatesManager	= require('./StatesManager.js')
 
 var StateLogo = function(){
 	this.logoSprite = null
@@ -23,6 +19,8 @@ StateLogo.prototype.Init = function(){
 			Application.addChild(this.logoSprite)
 			this.isLoadingDone = true
 		})
+
+	// Init 
 }
 
 StateLogo.prototype.IsLoadDone = function()
