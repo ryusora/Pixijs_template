@@ -1,6 +1,6 @@
 var Application = function(){
 	this.instance = new PIXI.Application()
-	this.instance.renderer.backgroundColor = 0xffffff
+	this.instance.renderer.backgroundColor = 0x000000
 	document.body.appendChild(this.instance.view)
 }
 

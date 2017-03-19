@@ -8,18 +8,18 @@ var StateLogo = function(){
 }
 
 StateLogo.prototype.Init = function(){
-	PIXI.loader
-		.add('LOGO', 'Assets/logo.png')
-		.load((loader, resource)=>{
-			this.logoSprite = new PIXI.Sprite(resource.LOGO.texture)
-			this.logoSprite.anchor.set(0.5)
-			this.logoSprite.x = Application.getScreenWidth() / 2
-			this.logoSprite.y = Application.getScreenHeight() / 2
-			this.logoSprite.alpha = 0
-			Application.addChild(this.logoSprite)
-			this.isLoadingDone = true
-		})
-
+	TextureManager.load({
+		'LOGO'		:'Assets/logo.png',
+		'LOADING'	:'Assets/loading-icon.png'
+	}, ()=>{
+		this.logoSprite = new PIXI.Sprite(TextureManager.get('LOGO'))
+		this.logoSprite.anchor.set(0.5)
+		this.logoSprite.x = (Application.getScreenWidth()/2)
+		this.logoSprite.y = (Application.getScreenHeight()/2)
+		this.logoSprite.alpha = 0
+		Application.addChild(this.logoSprite)
+		this.isLoadingDone = true
+	})
 	// Init 
 }
 

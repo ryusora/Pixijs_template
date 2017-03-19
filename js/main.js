@@ -1,9 +1,11 @@
 require('pixi.js')
 require('firebase')
-const Application 		= require('./Application.js')
-const FireBaseMgr 		= require('./FireBaseMgr.js')
-window.StatesManager 	= require('./States/StatesManager.js')
-window.GameStates		= require('./States/GameStates.js')
+window.Defines				= require('./Defines.js');
+window.Application 			= require('./Application.js')
+window.StatesManager 		= require('./States/StatesManager.js')
+window.GameStates			= require('./States/GameStates.js')
+window.ParalaxBackgrounds 	= require('./Games/ParalaxBackgrounds.js')
+window.TextureManager 		= require('./TextureManager.js')
 
 function run(){
 	var deltaTime = Application.getDeltaTime()
@@ -14,7 +16,6 @@ function run(){
 var main = function(){
 	StatesManager.ChangeState(GameStates.stateLogo)
 	Application.initialize(run)
-	FireBaseMgr.initialize()
 }
 
 main()
