@@ -3,7 +3,7 @@ require('pixi.js')
 function TextureManager()
 {
 	this.loader = PIXI.loader
-	this.resource = this.loader.resources
+	this.resources = this.loader.resources
 }
 
 TextureManager.prototype.load = function(listTextures, callback)
@@ -12,7 +12,7 @@ TextureManager.prototype.load = function(listTextures, callback)
 	{
 		this.loader.add(i, listTextures[i])
 	}
-	this.loader.load( (loader, resource) => {
+	this.loader.load( (loader, resources) => {
 		if(callback)
 			callback()
 	})
@@ -20,7 +20,7 @@ TextureManager.prototype.load = function(listTextures, callback)
 
 TextureManager.prototype.get = function(textureName)
 {
-	return this.resource[textureName].texture
+	return this.resources[textureName].texture
 }
 
 module.exports = new TextureManager()

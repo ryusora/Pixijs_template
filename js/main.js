@@ -1,11 +1,11 @@
 require('pixi.js')
 require('firebase')
+window.Application 			= require('./Core/Application.js')
+window.InputManager			= require('./Core/InputManager.js')
+window.TextureManager 		= require('./Core/TextureManager.js')
 window.Defines				= require('./Defines.js');
-window.Application 			= require('./Application.js')
 window.StatesManager 		= require('./States/StatesManager.js')
 window.GameStates			= require('./States/GameStates.js')
-window.ParalaxBackgrounds 	= require('./Games/ParalaxBackgrounds.js')
-window.TextureManager 		= require('./TextureManager.js')
 
 function run(){
 	var deltaTime = Application.getDeltaTime()

@@ -15,7 +15,7 @@ StateLoading.prototype.Init = function(){
 	Application.addChild(this.loadingIcon)
 	// loading texture
 	var textureList = {
-		'MainCharacter'	:'Assets/characters/mainCharacter.png',
+		'mainCharacter'	:'Assets/characters/mainCharacter.json',
 		'egg'			:'Assets/characters/egg.png',
 		'chicken'		:'Assets/characters/chicken.png',
 		'bg_1'			:'Assets/backgrounds/1_bg.png',

@@ -6,10 +6,10 @@ var StateInGame = function(){
 }
 
 StateInGame.prototype.Init = function(){
-	ParalaxBackgrounds.Init()
-	ParalaxBackgrounds.Display()
+	//ParalaxBackgrounds.Init()
+	//ParalaxBackgrounds.Display()
 	this.player = new Character()
-	this.player.InitSprite(TextureManager.get('MainCharacter'))
+	this.player.InitSprite()
 	this.player.SetPos(Application.getScreenWidth()/2, Application.getScreenHeight()/2)
 }
 
@@ -24,7 +24,7 @@ StateInGame.prototype.Destroy = function(){
 
 StateInGame.prototype.Update = function(dt)
 {
-
+	this.player.Update(dt)
 }
 
 module.exports = StateInGame
