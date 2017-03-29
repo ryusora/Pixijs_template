@@ -1,22 +1,24 @@
 const Vector2 = require('./Vector2.js')
 
 var Character = function(){
-	this.anim = null
+	this.armatureDisplay = null
 	this.velocity = new Vector2()
 	this.accelerator = new Vector2()
 	this.position = new Vector2()
 }
 
+Character.prototype.SetupDragonBones = function()
+{
+	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('mainChar_ske'));
+	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('mainChar_tex_data'), TextureManager.getTexture('mainChar_tex'));
+
+	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay("mainCharacter");
+	this.armatureDisplay.animation.play("run");
+}
+
 Character.prototype.InitSprite = function()
 {
-	var frames = []
-	frames.push(PIXI.Texture.fromFrame('front_1'))
-
-	this.anim = new PIXI.extras.AnimatedSprite(frames)
-	this.anim.anchor.set(0.5)
-	this.anim.animationSpeed = 0.5
-	this.anim.scale.set(2)
-	Application.addChild(this.anim)
+	this.SetupDragonBones()
 }
 
 Character.prototype.SetPos = function(x, y)
@@ -27,10 +29,10 @@ Character.prototype.SetPos = function(x, y)
 
 Character.prototype.UpdatePosition = function()
 {
-	if(this.anim)
+	if(this.armatureDisplay)
 	{
-		this.anim.x = this.position.x
-		this.anim.y = this.position.y
+		this.armatureDisplay.x = this.position.x
+		this.armatureDisplay.y = this.position.y
 	}
 }
 

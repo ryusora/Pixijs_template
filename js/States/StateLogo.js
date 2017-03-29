@@ -12,7 +12,7 @@ StateLogo.prototype.Init = function(){
 		'LOGO'		:'Assets/logo.png',
 		'LOADING'	:'Assets/loading-icon.png'
 	}, ()=>{
-		this.logoSprite = new PIXI.Sprite(TextureManager.get('LOGO'))
+		this.logoSprite = new PIXI.Sprite(TextureManager.getTexture('LOGO'))
 		this.logoSprite.anchor.set(0.5)
 		this.logoSprite.x = (Application.getScreenWidth()/2)
 		this.logoSprite.y = (Application.getScreenHeight()/2)

@@ -6,7 +6,7 @@ var StateLoading = function(){
 
 StateLoading.prototype.Init = function(){
 	// init loading icon
-	this.loadingIcon = new PIXI.Sprite(TextureManager.get('LOADING'))
+	this.loadingIcon = new PIXI.Sprite(TextureManager.getTexture('LOADING'))
 	this.loadingIcon.width = 100
 	this.loadingIcon.height = 100
 	this.loadingIcon.anchor.set(0.5)
@@ -15,20 +15,9 @@ StateLoading.prototype.Init = function(){
 	Application.addChild(this.loadingIcon)
 	// loading texture
 	var textureList = {
-		'mainCharacter'	:'Assets/characters/mainCharacter.json',
-		'egg'			:'Assets/characters/egg.png',
-		'chicken'		:'Assets/characters/chicken.png',
-		'bg_1'			:'Assets/backgrounds/1_bg.png',
-		'bg_2'			:'Assets/backgrounds/2_bg.png',
-		'bg_3'			:'Assets/backgrounds/3_bg.png',
-		'bg_4'			:'Assets/backgrounds/4_bg.png',
-		'bg_5'			:'Assets/backgrounds/5_bg.png',
-		'bg_6'			:'Assets/backgrounds/6_bg.png',
-		'bg_7'			:'Assets/backgrounds/7_bg.png',
-		'bg_8'			:'Assets/backgrounds/8_bg.png',
-		'bg_9'			:'Assets/backgrounds/9_bg.png',
-		'bg_10'			:'Assets/backgrounds/10_bg.png',
-		'bg_11'			:'Assets/backgrounds/11_bg.png',
+		'mainChar_ske'		:'Assets/characters/mainChar_ske.json',
+		'mainChar_tex_data'	:'Assets/characters/mainChar_tex.json',
+		'mainChar_tex'		:'Assets/characters/mainChar_tex.png'
 	}
 
 	TextureManager.load(textureList, ()=>{

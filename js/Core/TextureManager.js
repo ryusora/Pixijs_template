@@ -18,9 +18,14 @@ TextureManager.prototype.load = function(listTextures, callback)
 	})
 }
 
-TextureManager.prototype.get = function(textureName)
+TextureManager.prototype.getTexture = function(textureName)
 {
 	return this.resources[textureName].texture
+}
+
+TextureManager.prototype.getDragonbonesData = function(textureName)
+{
+	return this.resources[textureName].data
 }
 
 module.exports = new TextureManager()

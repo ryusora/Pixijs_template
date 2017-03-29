@@ -14,6 +14,12 @@ Application.prototype.getDeltaTime = function()
 	return this.instance.ticker.deltaTime
 }
 
+Application.prototype.Align = function(stage)
+{
+	stage.position.set(this.getScreenWidth() / 2, this.getScreenHeight() / 2);
+	stage.pivot.set(this.getScreenWidth() / 2, this.getScreenHeight() / 2);
+}
+
 Application.prototype.getScreenWidth = function()
 {
 	return this.instance.renderer.width

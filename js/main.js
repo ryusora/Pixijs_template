@@ -1,5 +1,10 @@
 require('pixi.js')
 require('firebase')
+// dragonBones defines
+window.dragonBones			= window.dragonBones || {};
+require('./Core/dragonBones/dragonBones.js')
+require('./Core/dragonBones/dragonBonesPixi.js')
+// main defines
 window.Application 			= require('./Core/Application.js')
 window.InputManager			= require('./Core/InputManager.js')
 window.TextureManager 		= require('./Core/TextureManager.js')
