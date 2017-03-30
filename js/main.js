@@ -14,7 +14,20 @@ window.GameStates			= require('./States/GameStates.js')
 
 function run(){
 	var deltaTime = Application.getDeltaTime()
+
+	FixedUpdate(deltaTime)
+	Update(deltaTime)
+}
+
+function FixedUpdate(deltaTime)
+{
+	StatesManager.FixedUpdate(deltaTime)
+}
+
+function Update(deltaTime)
+{
 	StatesManager.Update(deltaTime)
+	InputManager.Update(deltaTime)
 }
 
 

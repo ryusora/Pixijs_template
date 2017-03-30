@@ -36,7 +36,7 @@ Character.prototype.UpdatePosition = function()
 	}
 }
 
-Character.prototype.Update = function(dt)
+Character.prototype.FixedUpdate = function(dt)
 {
 	var gravity = new Vector2();
 	gravity.clone(Defines.GRAVITY)
@@ -53,6 +53,24 @@ Character.prototype.Update = function(dt)
 	this.UpdatePosition()
 
 	this.accelerator.zero()
+}
+
+Character.prototype.Update = function(dt)
+{
+	if(InputManager.IsTouchPress())
+	{
+		if(Math.abs(InputManager.deltaX) > 10)
+		{
+			if(InputManager.deltaX > 0)
+			{
+				// console.log("Swipe right")
+			}
+			else
+			{
+				// console.log("Swipe left")
+			}
+		}
+	}
 }
 
 module.exports = Character
