@@ -17,7 +17,10 @@ StateLoading.prototype.Init = function(){
 	var textureList = {
 		'mainChar_ske'		:'Assets/characters/mainChar_ske.json',
 		'mainChar_tex_data'	:'Assets/characters/mainChar_tex.json',
-		'mainChar_tex'		:'Assets/characters/mainChar_tex.png'
+		'mainChar_tex'		:'Assets/characters/mainChar_tex.png',
+		'enemy_ske'			:'Assets/characters/Enemy_ske.json',
+		'enemy_tex_data'	:'Assets/characters/Enemy_tex.json',
+		'enemy_tex'			:'Assets/characters/Enemy_tex.png',
 	}
 
 	TextureManager.load(textureList, ()=>{

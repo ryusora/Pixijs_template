@@ -6,8 +6,9 @@ var Defines = function()
 	this.GRAVITY		= {x:0, y:1}
 	this.LINE_LENGTH	= 250
 	this.SWIPE_OFFSET	= 10
-	this.JUMP_FORCE		= {x:0, y:-5}
-	this.MOVE_FORCE		= {x:5, y:0}
+	this.JUMP_FORCE		= {x:0, y:-18}
+	this.MOVE_FORCE		= {x:15, y:0}
+	this.ITEMS_POOL		= 10
 }
 
 module.exports = new Defines()

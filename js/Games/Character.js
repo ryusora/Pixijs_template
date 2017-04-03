@@ -123,7 +123,7 @@ Character.prototype.Jump = function()
 
 Character.prototype.Run = function()
 {
-	if(this.IsState(STATE_RUNNING | ~STATE_MOVE_LEFT | ~STATE_MOVE_RIGHT)) return
+	if(this.IsState(STATE_RUNNING)) return
 
 	this.SetAnimation(ANIM_RUN)
 	this.ResetState(STATE_JUMPING)
@@ -167,7 +167,7 @@ Character.prototype.FixedUpdate = function(dt)
 			this.position.x = destinationX
 			this.velocity.x = 0
 			this.ResetState(STATE_MOVE_LEFT)
-			this.Run()
+			this.SetAnimation(ANIM_RUN)
 		}
 	}
 	else if(this.IsState(STATE_MOVE_RIGHT))
@@ -178,7 +178,7 @@ Character.prototype.FixedUpdate = function(dt)
 			this.position.x = destinationX
 			this.velocity.x = 0
 			this.ResetState(STATE_MOVE_RIGHT)
-			this.Run()
+			this.SetAnimation(ANIM_RUN)
 		}
 	}
 
@@ -210,7 +210,7 @@ Character.prototype.Update = function(dt)
 		{
 			if(Math.abs(InputManager.deltaY) > Defines.SWIPE_OFFSET)
 			{
-				if(InputManager.deltaY > 0)
+				if(InputManager.deltaY < 0)
 				{
 					// swipe up
 					this.Jump()

@@ -1,4 +1,5 @@
-const Character = require('../Games/Character.js')
+const Character 			= require('../Games/Character.js')
+window.ItemsManager			= require('../Games/ItemsManager.js')
 
 var StateInGame = function(){
 	this.isLoadingDone = false
