@@ -17,7 +17,9 @@ StateInGame.prototype.Init = function(){
 	this.player.SetPos(Application.getScreenWidth()/2, Application.getScreenHeight()/2)
 
 	this.stage.addChild(this.player.armatureDisplay)
-	window.mainCharacter = this.player
+
+	ItemsManager.InitPool()
+	this.stage.addChild(ItemsManager.stage)
 }
 
 StateInGame.prototype.IsLoadDone = function()
@@ -32,11 +34,13 @@ StateInGame.prototype.Destroy = function(){
 StateInGame.prototype.FixedUpdate = function(dt)
 {
 	this.player.FixedUpdate(dt)
+	ItemsManager.FixedUpdate(dt)
 }
 
 StateInGame.prototype.Update = function(dt)
 {
 	this.player.Update(dt)
+	ItemsManager.Update(dt)
 }
 
 module.exports = StateInGame

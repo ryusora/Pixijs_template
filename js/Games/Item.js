@@ -2,6 +2,7 @@ var Item = function()
 {
 	this.armatureDisplay = null
 	this.position = { x:0, y:0, z:0 }
+	this.scale = 1
 }
 
 Item.prototype.SetupDragonBones = function()
@@ -24,7 +25,7 @@ Item.prototype.SetPos = function(pos)
 Item.prototype.ResetAll = function()
 {
 	this.position = { x:0, y:0, z:0 }
-	this.scale = 0
+	this.scale = 1
 	this.UpdateScale()
 }
 
