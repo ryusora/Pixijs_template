@@ -1,5 +1,6 @@
 const Character 			= require('../Games/Character.js')
 window.ItemsManager			= require('../Games/ItemsManager.js')
+window.Camera				= require('../Games/Camera.js')
 
 var StateInGame = function(){
 	this.isLoadingDone = false
@@ -12,14 +13,15 @@ StateInGame.prototype.Init = function(){
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
 
+	this.stage.addChild(ItemsManager.stage)
 	this.player = new Character()
 	this.player.InitSprite()
-	this.player.SetPos(Application.getScreenWidth()/2, Application.getScreenHeight()/2)
+	this.player.SetPos(0, 0, 0)
 
 	this.stage.addChild(this.player.armatureDisplay)
 
 	ItemsManager.InitPool()
-	this.stage.addChild(ItemsManager.stage)
+	Camera.Init()
 }
 
 StateInGame.prototype.IsLoadDone = function()

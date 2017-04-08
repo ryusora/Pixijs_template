@@ -9,6 +9,19 @@ Vector2.prototype.add = function(vec2)
 	this.y += vec2.y
 }
 
+Vector2.prototype.sub = function(vec2)
+{
+	this.x -= vec2.x
+	this.y -= vec2.y
+}
+
+Vector2.prototype.normalize = function()
+{
+	var distance = Math.sqrt(this.x*this.x + this.y*this.y)
+	this.x /= distance
+	this.y /= distance
+}
+
 Vector2.prototype.zero = function()
 {
 	this.x = 0

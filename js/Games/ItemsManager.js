@@ -6,6 +6,7 @@ var ItemsManager = function()
 	this.items_actived = []
 	this.stage = new PIXI.Container()
 	this.timer = 0
+	this.directionList = [Defines.LEFT_DIRECTION, Defines.RIGHT_DIRECTION, Defines.CENTER_DIRECTION]
 }
 
 ItemsManager.prototype.InitPool = function()
@@ -26,6 +27,8 @@ ItemsManager.prototype.GetItem = function()
 		// item.SetDisable(false)
 		this.items_actived.push(item)
 		this.stage.addChild(item.armatureDisplay)
+		item.SetActive(true)
+		console.log("Activate item")
 	}
 	return item;
 }
@@ -35,19 +38,27 @@ ItemsManager.prototype.DeactiveItem = function(item)
 	var index = this.items_actived.indexOf(item)
 	if(index > -1 && index < this.items_actived.length)
 	{
-		var item = this.items_actived.splice(index, 1)
-		this.stage.removeChild(item)
-		item.ResetAll()
-		this.items_deactived.push(item)
+		var item = this.items_actived.splice(index, 1)[0]
+		if(item)
+		{
+			item.ResetAll()
+			this.items_deactived.push(item)
+			this.stage.removeChild(item)
+			console.log("Deactivate item")
+		}
+		else{
+			console.log("WFT!!!")
+			console.log(item)
+		}
 	}
 }
 
-ItemsManager.prototype.SpawnItem = function(pos)
+ItemsManager.prototype.SpawnItem = function(direction)
 {
 	var item = this.GetItem()
 	if(item)
 	{
-		item.SetPos(pos)
+		item.SetDirection(direction)
 	}
 }
 
@@ -58,15 +69,24 @@ ItemsManager.prototype.Update = function(dt)
 	if(this.timer >= Defines.SPAWN_ITEM_TIME)
 	{
 		this.timer = 0
-		// calculate random pos
-		var pos = {x:0, y:0, z:0}
-		this.SpawnItem(pos)
+		var randomNumber = Math.floor(Math.random()*this.directionList.length)
+		this.SpawnItem(this.directionList[randomNumber])
 	}
 
-
+	var deActivedItems = []
 	for(let item in this.items_actived)
 	{
+		// console.log()
 		this.items_actived[item].Update(dt)
+		if(!this.items_actived[item].isActived)
+		{
+			deActivedItems.push(this.items_actived[item])
+		}
+	}
+
+	for(let i = 0; i < deActivedItems.length; i++)
+	{
+		this.DeactiveItem(deActivedItems[i])
 	}
 }
 
