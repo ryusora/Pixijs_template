@@ -2,10 +2,13 @@ var Item = function()
 {
 	this.armatureDisplay = null
 	this.position = { x:0, y:0, z:0 }
+	this.originScale = 0.8
 	this.scale = 0
 	this.isActived = false
 	this.direction = null
 	this.speed = 0
+	this.isOnBackStage = false
+	this.shouldPutBackStage = false
 }
 
 Item.prototype.SetActive = function(actived)
@@ -25,21 +28,18 @@ Item.prototype.SetDirection = function(direction)
 	{
 		case Defines.LEFT_DIRECTION:
 		{
-			console.log("spawn left")
 			this.SetPos({x:(Application.getScreenWidth()/2 - Defines.ITEM_OFFSET_X), y:Defines.TOP_Y_BASE, z:0})
 		}
 		break;
 
 		case Defines.CENTER_DIRECTION:
 		{
-			console.log("spawn center")
 			this.SetPos({x:(Application.getScreenWidth()/2), y:Defines.TOP_Y_BASE, z:0})
 		}
 		break;
 
 		case Defines.RIGHT_DIRECTION:
 		{
-			console.log("spawn right")
 			this.SetPos({x:(Application.getScreenWidth()/2 + Defines.ITEM_OFFSET_X), y:Defines.TOP_Y_BASE, z:0})
 		}
 		break;
@@ -71,27 +71,22 @@ Item.prototype.ResetAll = function()
 	this.armatureDisplay.armature.display.width = this.original.width
 	this.armatureDisplay.armature.display.height = this.original.height
 	this.UpdateScale()
+	this.isOnBackStage = false
+	this.shouldPutBackStage = false
 }
 
-Item.prototype.UpdatePosition = function()
+Item.prototype.UpdatePosition = function(dt)
 {
-	this.position.x += this.direction.x
-	this.position.y += this.direction.y
-	// recalculate position if it's wrong
 	if(this.armatureDisplay)
 	{
-		this.armatureDisplay.x = this.position.x
-		this.armatureDisplay.y = this.position.y
+		this.armatureDisplay.x = Camera.GetDrawX(this.position)
+		this.armatureDisplay.y = Camera.GetDrawY(this.position)
 	}
 }
 
 Item.prototype.UpdateScale = function()
 {
-	var maxDistance = Defines.GROUND_Y - Defines.TOP_Y_BASE
-	var itemDistance = Defines.GROUND_Y - this.position.y
-
-	this.scale = (1 - (itemDistance/maxDistance))/2
-
+	this.scale = this.originScale * Camera.GetDrawScale(this.position.z)
 	if(this.armatureDisplay)
 	{
 		this.armatureDisplay.armature.display.width = this.original.width * this.scale
@@ -99,14 +94,36 @@ Item.prototype.UpdateScale = function()
 	}
 }
 
+Item.prototype.CheckCollision = function(box)
+{
+	if(box.z - (box.depth*0.5) < this.position.z && this.position.z < box.z + (box.depth*0.5))
+	{
+		if(box.x - (box.width*0.5) < this.position.x && this.position.x < box.x + (box.width*0.5))
+		{
+			if(box.y < this.position.y && this.position.y < box.y + box.height)
+			{
+				return true
+			}
+		}
+	}
+
+	return false
+}
+
 Item.prototype.Update = function(dt)
 {
 	if(!this.isActived) return
 
+	this.position.z -= Defines.GAME_SPEED * dt
 	this.UpdatePosition()
 	this.UpdateScale()
 
-	if(this.position.y > Application.getScreenHeight())
+	if(!this.shouldPutBackStage && this.position.z < 0)
+	{
+		this.shouldPutBackStage = true
+	}
+
+	if(this.position.z < Camera.GetCameraPosZ())
 	{
 		this.SetActive(false)
 	}

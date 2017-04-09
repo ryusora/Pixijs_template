@@ -27,6 +27,8 @@ var Character = function(){
 	this.currentLine = LINE_CENTER
 	this.currentState = STATE_IDLE
 	this.baseX = 0
+	this.scale = 0
+	this.original = {width:0, height: 0}
 }
 
 Character.prototype.SetupDragonBones = function()
@@ -36,6 +38,9 @@ Character.prototype.SetupDragonBones = function()
 
 	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay("mainCharacter");
 	this.armatureDisplay.animation.play("run");
+	// init origin
+	this.original.width = this.armatureDisplay.armature.display.width
+	this.original.height = this.armatureDisplay.armature.display.height
 }
 
 Character.prototype.InitSprite = function()
@@ -44,19 +49,49 @@ Character.prototype.InitSprite = function()
 	this.Jump()
 }
 
-Character.prototype.SetPos = function(x, y)
+Character.prototype.SetPos = function(x, y, z)
 {
 	this.position.x = x
 	this.position.y = y
+	this.position.z = z
 	this.baseX = x
+}
+
+Character.prototype.GetWidth = function()
+{
+	if(this.armatureDisplay)
+	{
+		return this.armatureDisplay.armature.display.width
+	}
+	return 0
+}
+
+Character.prototype.GetHeight = function()
+{
+	if(this.armatureDisplay)
+	{
+		return this.armatureDisplay.armature.display.height
+	}
+	return 0
+}
+
+Character.prototype.UpdateScale = function()
+{
+	this.scale = Camera.GetDrawScale(this.position.z)
+
+	if(this.armatureDisplay)
+	{
+		this.armatureDisplay.armature.display.width = this.original.width * this.scale
+		this.armatureDisplay.armature.display.height = this.original.height * this.scale
+	}
 }
 
 Character.prototype.UpdatePosition = function()
 {
 	if(this.armatureDisplay)
 	{
-		this.armatureDisplay.x = this.position.x
-		this.armatureDisplay.y = this.position.y
+		this.armatureDisplay.x = Camera.GetDrawX(this.position)
+		this.armatureDisplay.y = Camera.GetDrawY(this.position)
 	}
 }
 
@@ -183,6 +218,7 @@ Character.prototype.FixedUpdate = function(dt)
 	}
 
 	this.UpdatePosition()
+	this.UpdateScale()
 
 	this.accelerator.zero()
 }

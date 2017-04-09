@@ -9,6 +9,7 @@ window.Application 			= require('./Core/Application.js')
 window.InputManager			= require('./Core/InputManager.js')
 window.TextureManager 		= require('./Core/TextureManager.js')
 window.Defines				= require('./Defines.js');
+window.Camera				= require('./Games/Camera.js')
 window.StatesManager 		= require('./States/StatesManager.js')
 window.GameStates			= require('./States/GameStates.js')
 

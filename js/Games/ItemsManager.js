@@ -4,7 +4,8 @@ var ItemsManager = function()
 {
 	this.items_deactived = []
 	this.items_actived = []
-	this.stage = new PIXI.Container()
+	this.frontStage = new PIXI.Container()
+	this.backStage = new PIXI.Container()
 	this.timer = 0
 	this.directionList = [Defines.LEFT_DIRECTION, Defines.RIGHT_DIRECTION, Defines.CENTER_DIRECTION]
 }
@@ -26,9 +27,8 @@ ItemsManager.prototype.GetItem = function()
 	{
 		// item.SetDisable(false)
 		this.items_actived.push(item)
-		this.stage.addChild(item.armatureDisplay)
+		this.frontStage.addChild(item.armatureDisplay)
 		item.SetActive(true)
-		console.log("Activate item")
 	}
 	return item;
 }
@@ -43,11 +43,9 @@ ItemsManager.prototype.DeactiveItem = function(item)
 		{
 			item.ResetAll()
 			this.items_deactived.push(item)
-			this.stage.removeChild(item)
-			console.log("Deactivate item")
+			this.backStage.removeChild(item)
 		}
 		else{
-			console.log("WFT!!!")
 			console.log(item)
 		}
 	}
@@ -58,7 +56,7 @@ ItemsManager.prototype.SpawnItem = function(direction)
 	var item = this.GetItem()
 	if(item)
 	{
-		item.SetDirection(direction)
+		item.SetPos({x:direction,y:10,z:Defines.ITEM_OFFSET_Z})
 	}
 }
 
@@ -68,19 +66,27 @@ ItemsManager.prototype.Update = function(dt)
 	this.timer += dt
 	if(this.timer >= Defines.SPAWN_ITEM_TIME)
 	{
+		console.log("vo day")
 		this.timer = 0
 		var randomNumber = Math.floor(Math.random()*this.directionList.length)
 		this.SpawnItem(this.directionList[randomNumber])
 	}
 
 	var deActivedItems = []
-	for(let item in this.items_actived)
+	for(let idx in this.items_actived)
 	{
-		// console.log()
-		this.items_actived[item].Update(dt)
-		if(!this.items_actived[item].isActived)
+		var item = this.items_actived[idx]
+		item.Update(dt)
+		if(item.shouldPutBackStage && !item.isOnBackStage)
 		{
-			deActivedItems.push(this.items_actived[item])
+			this.frontStage.removeChild(item)
+			item.isOnBackStage = true
+			this.backStage.addChild(item.armatureDisplay)
+		}
+
+		if(!item.isActived)
+		{
+			deActivedItems.push(item)
 		}
 	}
 
@@ -96,6 +102,18 @@ ItemsManager.prototype.FixedUpdate = function(dt)
 	{
 		this.items_actived[item].FixedUpdate(dt)
 	}
+}
+
+ItemsManager.prototype.CheckCollision = function(box)
+{
+	for(let idx in this.items_actived)
+	{
+		if(this.items_actived[idx].CheckCollision(box))
+		{
+			return this.items_actived[idx]
+		}
+	}
+	return null
 }
 
 module.exports = new ItemsManager()
