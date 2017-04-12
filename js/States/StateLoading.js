@@ -12,7 +12,10 @@ StateLoading.prototype.Init = function(){
 	this.loadingIcon.anchor.set(0.5)
 	this.loadingIcon.x = (Application.getScreenWidth()/2)
 	this.loadingIcon.y = (Application.getScreenHeight()/2)
-	Application.addChild(this.loadingIcon)
+	this.stage = new PIXI.Container()
+	this.stage.addChild(this.loadingIcon)
+	Application.addChild(this.stage)
+	Application.Align(this.stage)
 	// loading texture
 	var textureList = {
 		'mainChar_ske'		:'Assets/characters/mainChar_ske.json',
@@ -34,7 +37,7 @@ StateLoading.prototype.IsLoadDone = function()
 }
 
 StateLoading.prototype.Destroy = function(){
-	Application.removeChild(this.loadingIcon)
+	Application.removeChild(this.stage)
 	this.loadingIcon = null
 }
 

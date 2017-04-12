@@ -17,10 +17,13 @@ StateLogo.prototype.Init = function(){
 		this.logoSprite.x = (Application.getScreenWidth()/2)
 		this.logoSprite.y = (Application.getScreenHeight()/2)
 		this.logoSprite.alpha = 0
-		Application.addChild(this.logoSprite)
+		this.stage = new PIXI.Container()
+		this.stage.addChild(this.logoSprite)
+		Application.addChild(this.stage)
+		Application.Align(this.stage)
 		this.isLoadingDone = true
 	})
-	// Init 
+	// Init
 }
 
 StateLogo.prototype.IsLoadDone = function()
@@ -29,7 +32,7 @@ StateLogo.prototype.IsLoadDone = function()
 }
 
 StateLogo.prototype.Destroy = function(){
-	Application.removeChild(this.logoSprite)
+	Application.removeChild(this.stage)
 	this.logoSprite = null
 }
 

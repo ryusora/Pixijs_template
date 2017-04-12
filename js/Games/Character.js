@@ -29,6 +29,29 @@ var Character = function(){
 	this.baseX = 0
 	this.scale = 0
 	this.original = {width:0, height: 0}
+
+	document.addEventListener('keydown', e=>{
+		switch(e.keyCode)
+		{
+			case 37: // left
+			{
+				this.MoveLeft()
+			}
+			break
+
+			case 38: // up
+			{
+				this.Jump()
+			}
+			break
+
+			case 39: // right
+			{
+				this.MoveRight()
+			}
+			break
+		}
+	})
 }
 
 Character.prototype.SetupDragonBones = function()
@@ -92,6 +115,7 @@ Character.prototype.UpdatePosition = function()
 	{
 		this.armatureDisplay.x = Camera.GetDrawX(this.position)
 		this.armatureDisplay.y = Camera.GetDrawY(this.position)
+		// console.log({x:this.armatureDisplay.x, y:this.armatureDisplay.y})
 	}
 }
 

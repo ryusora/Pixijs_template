@@ -6,12 +6,6 @@ require('./Core/dragonBones/dragonBones.js')
 require('./Core/dragonBones/dragonBonesPixi.js')
 // main defines
 window.Application 			= require('./Core/Application.js')
-window.InputManager			= require('./Core/InputManager.js')
-window.TextureManager 		= require('./Core/TextureManager.js')
-window.Defines				= require('./Defines.js');
-window.Camera				= require('./Games/Camera.js')
-window.StatesManager 		= require('./States/StatesManager.js')
-window.GameStates			= require('./States/GameStates.js')
 
 function run(){
 	var deltaTime = Application.getDeltaTime()
@@ -33,7 +27,29 @@ function Update(deltaTime)
 
 var main = function(){
 	StatesManager.ChangeState(GameStates.stateLogo)
-	Application.initialize(run)
 }
 
-main()
+var checkReady = function(){
+	var width = Math.max(window.innerWidth, document.documentElement.clientWidth)
+	var height = Math.max(window.innerHeight, document.documentElement.clientHeight)
+	if(width != 0 && height != 0)
+	{
+		Application.initialize(run, width, height)
+		window.Defines				= require('./Defines.js')
+		window.InputManager			= require('./Core/InputManager.js')
+		window.TextureManager 		= require('./Core/TextureManager.js')
+		window.Camera				= require('./Games/Camera.js')
+		window.StatesManager 		= require('./States/StatesManager.js')
+		window.GameStates			= require('./States/GameStates.js')
+		main()
+	}
+	else
+	{
+		setTimeout(checkReady, 1000)
+	}
+}
+
+window.onload = function()
+{
+	checkReady()
+}

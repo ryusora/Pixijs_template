@@ -3,7 +3,7 @@ var StateMainMenu = function(){
 }
 
 StateMainMenu.prototype.Init = function(){
-	
+
 }
 
 StateMainMenu.prototype.IsLoadDone = function()
