@@ -48,8 +48,8 @@ StateLoading.prototype.Update = function(dt)
 	if(this.isLoadingDone && FireBaseManager.isInitialized)
 	{
 		// do something when textures are loaded
-		// StatesManager.ChangeState(GameStates.stateInGame)
-		StatesManager.ChangeState(GameStates.stateQuiz)
+		StatesManager.ChangeState(GameStates.stateInGame)
+		// StatesManager.ChangeState(GameStates.stateQuiz)
 	}
 	else
 	{

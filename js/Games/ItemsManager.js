@@ -56,7 +56,7 @@ ItemsManager.prototype.SpawnItem = function(direction)
 	var item = this.GetItem()
 	if(item)
 	{
-		item.SetPos({x:direction,y:10,z:Defines.ITEM_OFFSET_Z})
+		item.SetPos({x:direction,y:10,z:Defines.ITEM_OFFSET_Z + Camera.GetCameraPosZ()})
 	}
 }
 

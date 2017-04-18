@@ -114,7 +114,6 @@ Item.prototype.Update = function(dt)
 {
 	if(!this.isActived) return
 
-	this.position.z -= Defines.GAME_SPEED * dt
 	this.UpdatePosition()
 	this.UpdateScale()
 
