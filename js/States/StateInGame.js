@@ -1,5 +1,6 @@
 const Character 			= require('../Games/Character.js')
 window.ItemsManager			= require('../Games/ItemsManager.js')
+window.GroundsManager		= require('../Games/GroundsManager.js')
 
 var StateInGame = function()
 {
@@ -12,10 +13,11 @@ StateInGame.prototype.Init = function()
 {
 	Defines.UpdateParams()
 	Camera.Init()
+	GroundsManager.initialize()
 	this.stage = new PIXI.Container()
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
-
+	this.stage.addChild(GroundsManager.stage)
 	this.stage.addChild(ItemsManager.frontStage)
 	this.player = new Character()
 	this.player.InitSprite()
@@ -45,6 +47,7 @@ StateInGame.prototype.FixedUpdate = function(dt)
 
 StateInGame.prototype.Update = function(dt)
 {
+	GroundsManager.Update(dt)
 	this.player.Update(dt)
 	ItemsManager.Update(dt)
 
@@ -60,7 +63,7 @@ StateInGame.prototype.Update = function(dt)
 
 	if(isCollide)
 	{
-		console.log("Collide obstacle")
+		// console.log("Collide obstacle")
 	}
 }
 

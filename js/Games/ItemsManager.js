@@ -66,7 +66,7 @@ ItemsManager.prototype.Update = function(dt)
 	this.timer += dt
 	if(this.timer >= Defines.SPAWN_ITEM_TIME)
 	{
-		console.log("vo day")
+		// console.log("vo day")
 		this.timer = 0
 		var randomNumber = Math.floor(Math.random()*this.directionList.length)
 		this.SpawnItem(this.directionList[randomNumber])
@@ -79,7 +79,6 @@ ItemsManager.prototype.Update = function(dt)
 		item.Update(dt)
 		if(item.shouldPutBackStage && !item.isOnBackStage)
 		{
-			this.frontStage.removeChild(item)
 			item.isOnBackStage = true
 			this.backStage.addChild(item.armatureDisplay)
 		}

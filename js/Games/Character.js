@@ -251,33 +251,26 @@ Character.prototype.Update = function(dt)
 {
 	if(InputManager.IsTouchPress())
 	{
-		if(!this.IsState(STATE_MOVE_LEFT | STATE_MOVE_RIGHT))
+		if(Math.abs(InputManager.deltaY) > Defines.SWIPE_OFFSET)
 		{
-			if(Math.abs(InputManager.deltaX) > Defines.SWIPE_OFFSET)
+			if(InputManager.deltaY < 0)
 			{
-				if(InputManager.deltaX > 0)
-				{
-					this.MoveRight()
-				}
-				else
-				{
-					this.MoveLeft()
-				}
+				// swipe up
+				this.Jump()
 			}
 		}
-
-		if(!this.IsState(STATE_JUMPING))
+		else if(Math.abs(InputManager.deltaX) > Defines.SWIPE_OFFSET)
 		{
-			if(Math.abs(InputManager.deltaY) > Defines.SWIPE_OFFSET)
+			if(InputManager.deltaX > 0)
 			{
-				if(InputManager.deltaY < 0)
-				{
-					// swipe up
-					this.Jump()
-				}
+				this.MoveRight()
+			}
+			else
+			{
+				this.MoveLeft()
 			}
 		}
-
+		InputManager.Reset()
 	}
 }
 

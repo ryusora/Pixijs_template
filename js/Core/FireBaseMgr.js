@@ -1,25 +1,47 @@
-const firebase = require('firebase')
 function FireBaseMgr()
 {
 	this.defaultApp = null
 	this.database = null
 	this.currentUser = null
+	this.quizList = null
+	this.isInitialized = false
 }
 
 FireBaseMgr.prototype.initialize = function()
 {
 	// Initialize Firebase
 	var config = {
-		apiKey: "AIzaSyCxByIYPGU6bmXnG_fVknGAx5ouqLzxb0Y",
-		authDomain: "catcheggs-ba7c0.firebaseapp.com",
-		databaseURL: "https://catcheggs-ba7c0.firebaseio.com",
-		storageBucket: "catcheggs-ba7c0.appspot.com",
-		messagingSenderId: "144968775208"
+		apiKey: "AIzaSyBDq-M1o_5B-ELr2_suPg6q_EPLtIahfKU",
+		authDomain: "testabottapp.firebaseapp.com",
+		databaseURL: "https://testabottapp.firebaseio.com",
+		projectId: "testabottapp",
+		storageBucket: "testabottapp.appspot.com",
+		messagingSenderId: "508686023016"
+		// catcheggs // remove bacause forget password
+		// apiKey: "AIzaSyCxByIYPGU6bmXnG_fVknGAx5ouqLzxb0Y",
+		// authDomain: "catcheggs-ba7c0.firebaseapp.com",
+		// databaseURL: "https://catcheggs-ba7c0.firebaseio.com",
+		// storageBucket: "catcheggs-ba7c0.appspot.com",
+		// messagingSenderId: "144968775208"
 	};
 
 	this.defaultApp = firebase.initializeApp(config)
 	this.database = firebase.database()
-	this.login()
+	// sign-in anonymously
+	firebase.auth().signInAnonymously().catch(function(error) {
+		// Handle Errors here.
+		console.log('login failed with reason ' + error.message)
+	});
+	
+	// get QUIZs database
+	this.database.ref("quizs").once("value", (snapshot) =>{
+		this.quizList = JSON.parse(JSON.stringify(snapshot))
+		this.isInitialized = true
+	}, (reason)=>
+	{
+		// failed
+		console.log(reason)
+	})
 }
 
 FireBaseMgr.prototype.isLogin = function()

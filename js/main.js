@@ -1,10 +1,12 @@
 require('pixi.js')
-require('firebase')
+window.firebase = require('firebase')
+
 // dragonBones defines
 window.dragonBones			= window.dragonBones || {};
 require('./Core/dragonBones/dragonBones.js')
 require('./Core/dragonBones/dragonBonesPixi.js')
 // main defines
+window.FireBaseManager		= require('./Core/FireBaseMgr.js')
 window.Application 			= require('./Core/Application.js')
 
 function run(){
@@ -42,6 +44,7 @@ var checkReady = function(){
 		window.StatesManager 		= require('./States/StatesManager.js')
 		window.GameStates			= require('./States/GameStates.js')
 		main()
+		FireBaseManager.initialize();
 	}
 	else
 	{
