@@ -39,10 +39,10 @@ var Defines = function()
     this.PLAYER_BOX_DEPTH	= 10
 
 	// Grounds
-	this.GROUND_SIZE_Z				= 0.5*25
-	this.GROUND_SIZE_X				= 5*25
+	this.GROUND_SIZE_Z				= 1
+	this.GROUND_SIZE_X				= 75*25
 	this.GROUND_HEIGHT				= 20
-	this.DISTANCE_ALPHA				= 4*25
+	this.DISTANCE_ALPHA				= this.ITEM_OFFSET_Z//4*25
 	this.DISTANCE_Z_MAKE_OBJECT		= this.ITEM_OFFSET_Z//30*25
 
 	this.UpdateParams = ()=>{

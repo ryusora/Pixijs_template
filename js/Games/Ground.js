@@ -16,12 +16,13 @@ Ground.prototype.SetSprite = function(sprite)
 
 Ground.prototype.SetPos = function(pos)
 {
-    this.position = pos
+    this.position.x = pos.x
+    this.position.y = pos.y
+    this.position.z = pos.z
 }
 
 Ground.prototype.UpdateScale = function()
 {
-    /*
     var newPos = {x: this.position.x, y: this.position.y, z: this.position.z + Defines.GROUND_SIZE_Z}
     var height = Camera.GetDrawY(this.position) - Camera.GetDrawY(newPos) + 4;
     var width  = Camera.GetDrawScale(this.position.z) * Defines.GROUND_SIZE_X;
@@ -29,11 +30,11 @@ Ground.prototype.UpdateScale = function()
     this.sprite.scale.set(
         width/this.originalWidth,
         height/this.originalHeight
-    );*/
+    );
 
-    var scale = Camera.GetDrawScale(this.position.z)
+    // var scale = Camera.GetDrawScale(this.position.z)
 
-    this.sprite.scale.set(scale, scale)
+    // this.sprite.scale.set(scale, scale)
 }
 
 Ground.prototype.SetActive = function (active)
@@ -50,7 +51,6 @@ Ground.prototype.UpdatePos = function(dt)
         // set position
         this.sprite.position.set(drawX, drawY)
         // set alpha
-        /*
         if(this.position.z - Camera.GetCameraPosZ() > Defines.DISTANCE_Z_MAKE_OBJECT)
         {
             this.sprite.alpha = 0;
@@ -58,16 +58,23 @@ Ground.prototype.UpdatePos = function(dt)
         else
         {
             this.sprite.alpha = 1-((this.position.z - Camera.GetCameraPosZ() - (Defines.DISTANCE_Z_MAKE_OBJECT - Defines.DISTANCE_ALPHA)) / Defines.DISTANCE_ALPHA);
-        }*/
+        }
     }
 }
 
 Ground.prototype.Update = function(dt)
 {
-    if(!this.isActived) return
-    this.position.z -= Defines.GAME_SPEED * dt
+    if(!this.isActived) return false
+    
     this.UpdatePos(dt)
     this.UpdateScale()
+
+    if(this.position.z < Camera.GetCameraPosZ())
+    {
+        this.SetActive(false)
+    }
+
+    return true
 }
 
 module.exports = Ground

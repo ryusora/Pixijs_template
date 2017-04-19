@@ -82,7 +82,7 @@ function Camera()
     {   
         SetPos(
             m_x, 
-            y + Defines.CAMERA_DELTA_POS_WITH_PLAYER_Y, 
+            m_y, 
             z + Defines.CAMERA_DELTA_POS_WITH_PLAYER_Z
             );
     }
