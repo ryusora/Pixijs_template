@@ -21,31 +21,6 @@ Item.prototype.SetSpeed = function(speed)
 	this.speed = speed
 }
 
-Item.prototype.SetDirection = function(direction)
-{
-	this.direction = direction
-	switch(direction)
-	{
-		case Defines.LEFT_DIRECTION:
-		{
-			this.SetPos({x:(Application.getScreenWidth()/2 - Defines.ITEM_OFFSET_X), y:Defines.TOP_Y_BASE, z:0})
-		}
-		break;
-
-		case Defines.CENTER_DIRECTION:
-		{
-			this.SetPos({x:(Application.getScreenWidth()/2), y:Defines.TOP_Y_BASE, z:0})
-		}
-		break;
-
-		case Defines.RIGHT_DIRECTION:
-		{
-			this.SetPos({x:(Application.getScreenWidth()/2 + Defines.ITEM_OFFSET_X), y:Defines.TOP_Y_BASE, z:0})
-		}
-		break;
-	}
-}
-
 Item.prototype.SetupDragonBones = function()
 {
 	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('enemy_ske'))
@@ -81,6 +56,19 @@ Item.prototype.UpdatePosition = function(dt)
 	{
 		this.armatureDisplay.x = Camera.GetDrawX(this.position)
 		this.armatureDisplay.y = Camera.GetDrawY(this.position)
+
+		// set alpha
+	    if(this.position.z - Camera.GetCameraPosZ() > Defines)
+	    {
+	        this.armatureDisplay.alpha = 0;
+	    }
+	    else
+        {
+        	var offset = (this.position.z - Camera.GetCameraPosZ())/Defines.ITEM_OFFSET_Z
+        	var alpha = 1-offset + 0.5
+        	if(alpha > 1) alpha = 1
+            this.armatureDisplay.alpha = alpha
+        }
 	}
 }
 

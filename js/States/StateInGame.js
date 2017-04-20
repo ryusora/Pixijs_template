@@ -1,6 +1,7 @@
 const Character 			= require('../Games/Character.js')
 window.ItemsManager			= require('../Games/ItemsManager.js')
 window.GroundsManager		= require('../Games/GroundsManager.js')
+window.DecorationsManager 	= require('../Games/DecorationsManager.js')
 
 var StateInGame = function()
 {
@@ -11,14 +12,21 @@ var StateInGame = function()
 
 StateInGame.prototype.Init = function()
 {
-	Defines.UpdateParams()
-	Camera.Init()
-	GroundsManager.initialize()
 	this.stage = new PIXI.Container()
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
+	Application.SetBackGroundColor(0xe4c29c)
+
+	Defines.UpdateParams()
+	Camera.Init()
+
+	GroundsManager.Initialize()
+	DecorationsManager.Initialize()
+
 	this.stage.addChild(GroundsManager.stage)
+	this.stage.addChild(DecorationsManager.stage)
 	this.stage.addChild(ItemsManager.frontStage)
+
 	this.player = new Character()
 	this.player.InitSprite()
 	this.player.SetPos(Defines.PLAYER_START_POS_X, Defines.PLAYER_START_POS_Y, Defines.PLAYER_START_POS_Z )
@@ -47,9 +55,10 @@ StateInGame.prototype.FixedUpdate = function(dt)
 
 StateInGame.prototype.Update = function(dt)
 {
-	GroundsManager.Update(dt)
+	GroundsManager.Update()
+	DecorationsManager.Update()
 	this.player.Update(dt)
-	ItemsManager.Update(dt)
+	ItemsManager.Update()
 
 	//check collision
 	var isCollide = ItemsManager.CheckCollision({

@@ -35,7 +35,7 @@ FireBaseMgr.prototype.initialize = function()
 	
 	// get QUIZs database
 	this.database.ref("quizs").once("value", (snapshot) =>{
-		this.quizList = JSON.parse(JSON.stringify(snapshot))
+		// this.quizList = JSON.parse(JSON.stringify(snapshot))
 		this.isInitialized = true
 	}, (reason)=>
 	{

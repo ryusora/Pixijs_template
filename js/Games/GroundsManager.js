@@ -9,17 +9,17 @@ var GroundsManager = function()
 	this.groundIndex = 0
 }
 
-GroundsManager.prototype.initialize = function()
+GroundsManager.prototype.Initialize = function()
 {
 	this.stage = new PIXI.Container()
 	var background = new PIXI.Sprite(TextureManager.getTexture("background"))
 	background.position.set(Application.getScreenWidth()*0.5, 0)
-	background.anchor.set(0.5, 0.3)
+	background.anchor.set(0.5, 0.45)
 	this.stage.addChild(background)
-	this.initSprites()
+	this.InitSprites()
 }
 
-GroundsManager.prototype.initSprites = function()
+GroundsManager.prototype.InitSprites = function()
 {
 	var texture = TextureManager.getTexture("grounds")
 	if(texture)
@@ -35,9 +35,9 @@ GroundsManager.prototype.initSprites = function()
 		for(let i = 0; i < countTexture; i++)
 		{
 			var pool = []
-			for(let j = 0; j < 10; j++)
+			for(let j = 0; j < Defines.GROUND_POOL_SIZE; j++)
 			{
-				var groundTexture = new PIXI.Texture(texture, new PIXI.Rectangle(0, i * Defines.GROUND_HEIGHT, textureWidth, Defines.GROUND_HEIGHT))
+				var groundTexture = new PIXI.Texture(texture, new PIXI.Rectangle(0, i * Defines.GROUND_HEIGHT_TEST, textureWidth, Defines.GROUND_HEIGHT_TEST))
 				var sprite = new PIXI.Sprite(groundTexture)
 				sprite.anchor.set(0.5, 0.5)
 				var ground = new Ground()
@@ -51,30 +51,12 @@ GroundsManager.prototype.initSprites = function()
 
 GroundsManager.prototype.GetGround = function(groundIndex)
 {
-	// var ground = null
-	// for(let i = 0; i < this.groundsArray.length; i++)
-	// {
-	// 	if(!this.groundsArray[i].isActive)
-	// 	{
-	// 		ground = this.groundsArray[i]
-	// 		break
-	// 	}
-	// }
-
-	// if(ground == null)
-	// {
-	// 	ground = new Ground()
-	// 	this.groundsArray.push(ground)
-	// }
-
 	var pool = this.groundSprites[groundIndex]
 	var length = pool.length
 	for(let i = 0; i < length; i++)
 	{
 		if(!pool[i].isActived)
 		{
-			if(groundIndex == 0 && i == 0)
-				console.log("get Ground["+groundIndex+"]["+i+"]")
 			return pool[i]
 		}
 	}
@@ -86,7 +68,6 @@ GroundsManager.prototype.GetGround = function(groundIndex)
 	ground.SetSprite(sprite)
 	pool.push(ground)
 
-	console.error("not enough ground : "+ groundIndex)
 	return ground
 }
 

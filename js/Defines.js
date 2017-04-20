@@ -15,7 +15,7 @@ var Defines = function()
 	this.JUMP_FORCE			= {x:0, y:-12}
 	this.MOVE_FORCE			= {x:10, y:0}
 	this.ITEMS_POOL			= 3
-	this.ITEM_OFFSET_Z		= 100
+	this.ITEM_OFFSET_Z		= 200
 	this.SPAWN_ITEM_TIME	= 1 * 100
 	this.LEFT_DIRECTION 	= {x:0, y:0}
 	this.CENTER_DIRECTION	= {x:0, y:0}
@@ -43,7 +43,9 @@ var Defines = function()
 	this.GROUND_SIZE_X				= 75*25
 	this.GROUND_HEIGHT				= 20
 	this.DISTANCE_ALPHA				= this.ITEM_OFFSET_Z//4*25
-	this.DISTANCE_Z_MAKE_OBJECT		= this.ITEM_OFFSET_Z//30*25
+	this.DISTANCE_Z_MAKE_OBJECT		= 100//30*25
+
+	this.GROUND_POOL_SIZE			= 5
 
 	this.UpdateParams = ()=>{
 		//calculate left direction

@@ -252,10 +252,8 @@ Character.prototype.Update = function(dt)
 	this.position.z += Defines.GAME_SPEED * dt
 	Camera.CameraUpdatePlayerPos(this.position.x, this.position.y, this.position.z)
 
-	if(InputManager.IsTouchPress())
-	{
-		if(Math.abs(InputManager.deltaY) > Defines.SWIPE_OFFSET)
-		{
+	if(InputManager.IsTouchPress()) {
+		if(Math.abs(InputManager.deltaY) > Defines.SWIPE_OFFSET) {
 			if(InputManager.deltaY < 0)
 			{
 				// swipe up

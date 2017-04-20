@@ -17,11 +17,16 @@ var Application = function(){
 Application.prototype.initialize = function(gameLoop, width, height)
 {
 	this.instance = new PIXI.Application(width, height)
-	this.instance.renderer.backgroundColor = 0x000000
 	document.body.appendChild(this.instance.view)
 	// this.UpdateScale(width, height)
 	this.Resize(width, height)
 	this.instance.ticker.add(gameLoop)
+	this.SetBackGroundColor(0x000000);
+}
+
+Application.prototype.SetBackGroundColor = function(color)
+{
+	this.instance.renderer.backgroundColor = color
 }
 
 Application.prototype.Resize = function(width, height)
@@ -61,30 +66,6 @@ Application.prototype.Rotate = function(isRotate)
 		this.instance.stage.position.set(0, 0);
 		this.instance.stage.rotation = 0;
 	}
-}
-
-Application.prototype.UpdateScale = function(width, height)
-{
-	// this.scale = height / 667
-	// this.scale_x = width / 375
-	// var scale = this.scale
-	// var context = this.instance.view.getContext("2d")
-
-	// if(context)
-	// {
-	// 	// init ratio offset
-	// 	this.ratioOffset.x = (width - 375 * scale) / 2 / scale
-	// 	this.ratioOffset.y = (height - 667 * scale) / 2 / scale
-
-	// 	console.log(this.ratioOffset)
-	// 	context.translate(0, 0)
-	// 	context.scale(scale, scale)
-	// 	context.rotate(0)
-	// }
-	// else
-	// {
-	// 	console.log('WTF')
-	// }
 }
 
 Application.prototype.getDeltaTime = function()
