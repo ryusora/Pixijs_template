@@ -26,6 +26,9 @@ StateLoading.prototype.Init = function(){
 		'enemy_tex'			:'Assets/characters/Enemy_tex.png',
 		'grounds'			:'Assets/backgrounds/grounds.png',
 		'background'		:'Assets/backgrounds/bg.jpg',
+		'log'				:'Assets/backgrounds/log.png',
+		'rock'				:'Assets/backgrounds/rock.png',
+		'bush'				:'Assets/backgrounds/bush.png',
 	}
 
 	TextureManager.load(textureList, ()=>{

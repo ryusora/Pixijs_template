@@ -58,17 +58,10 @@ Item.prototype.UpdatePosition = function(dt)
 		this.armatureDisplay.y = Camera.GetDrawY(this.position)
 
 		// set alpha
-	    if(this.position.z - Camera.GetCameraPosZ() > Defines)
-	    {
-	        this.armatureDisplay.alpha = 0;
-	    }
-	    else
-        {
-        	var offset = (this.position.z - Camera.GetCameraPosZ())/Defines.ITEM_OFFSET_Z
-        	var alpha = 1-offset + 0.5
-        	if(alpha > 1) alpha = 1
-            this.armatureDisplay.alpha = alpha
-        }
+		var offset = (this.position.z - Camera.GetCameraPosZ())/Defines.ITEM_OFFSET_Z
+		var alpha = 1-offset + 0.5
+		if(alpha > 1) alpha = 1
+		this.armatureDisplay.alpha = alpha
 	}
 }
 

@@ -37,7 +37,7 @@ GroundsManager.prototype.InitSprites = function()
 			var pool = []
 			for(let j = 0; j < Defines.GROUND_POOL_SIZE; j++)
 			{
-				var groundTexture = new PIXI.Texture(texture, new PIXI.Rectangle(0, i * Defines.GROUND_HEIGHT_TEST, textureWidth, Defines.GROUND_HEIGHT_TEST))
+				var groundTexture = new PIXI.Texture(texture, new PIXI.Rectangle(0, i * Defines.GROUND_HEIGHT, textureWidth, Defines.GROUND_HEIGHT))
 				var sprite = new PIXI.Sprite(groundTexture)
 				sprite.anchor.set(0.5, 0.5)
 				var ground = new Ground()
@@ -69,22 +69,6 @@ GroundsManager.prototype.GetGround = function(groundIndex)
 	pool.push(ground)
 
 	return ground
-}
-
-GroundsManager.prototype.GetGroundSprite = function(groundIndex)
-{
-	var pool = this.groundSprites[groundIndex]
-	var length = pool.length
-	for(let i = 0; i < length; i++)
-	{
-		if(!pool[i].activeSelf)
-		{
-			pool[i].activeSelf = true
-			return pool[i]
-		}
-	}
-
-	console.error("not enough grounds sprite : " + groundIndex)
 }
 
 GroundsManager.prototype.Update = function(dt)

@@ -5,6 +5,7 @@ var Defines = function()
 	// defines game
 	this.GAME_SPEED			= 0.5
 
+	this.DECORATION_TIMER	= 0.5 * 100
 	this.LOGO_TIME 			= 1.5 * 100
 	this.TOP_Y_BASE 		= 100
 	this.GROUND_Y_BASE 		= 100
@@ -45,7 +46,8 @@ var Defines = function()
 	this.DISTANCE_ALPHA				= this.ITEM_OFFSET_Z//4*25
 	this.DISTANCE_Z_MAKE_OBJECT		= 100//30*25
 
-	this.GROUND_POOL_SIZE			= 5
+	this.GROUND_POOL_SIZE			= 10
+	this.DECORATION_POOL_SIZE		= 5
 
 	this.UpdateParams = ()=>{
 		//calculate left direction

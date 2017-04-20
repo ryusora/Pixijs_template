@@ -31,14 +31,11 @@ Ground.prototype.UpdateScale = function()
         width/this.originalWidth,
         height/this.originalHeight
     );
+    
     if(this.sprite.scale.x < 0 || this.sprite.scale.y < 0)
     {
         this.sprite.alpha = 0
     }
-
-    // var scale = Camera.GetDrawScale(this.position.z)
-
-    // this.sprite.scale.set(scale, scale)
 }
 
 Ground.prototype.SetActive = function (active)

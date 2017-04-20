@@ -55,10 +55,10 @@ StateInGame.prototype.FixedUpdate = function(dt)
 
 StateInGame.prototype.Update = function(dt)
 {
-	GroundsManager.Update()
-	DecorationsManager.Update()
+	GroundsManager.Update(dt)
+	DecorationsManager.Update(dt)
 	this.player.Update(dt)
-	ItemsManager.Update()
+	ItemsManager.Update(dt)
 
 	//check collision
 	var isCollide = ItemsManager.CheckCollision({

@@ -42,7 +42,7 @@ Decoration.prototype.UpdatePos = function()
         this.sprite.position.set(drawX, drawY)
         // set alpha
     	var offset = (this.position.z - Camera.GetCameraPosZ())/Defines.ITEM_OFFSET_Z
-    	var alpha = 1-offset + 0.5
+    	var alpha = 1-offset + 0.6
     	if(alpha > 1) alpha = 1
         this.sprite.alpha = alpha
     }
