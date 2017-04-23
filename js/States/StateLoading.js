@@ -24,6 +24,9 @@ StateLoading.prototype.Init = function(){
 		'enemy_ske'			:'Assets/characters/Enemy_ske.json',
 		'enemy_tex_data'	:'Assets/characters/Enemy_tex.json',
 		'enemy_tex'			:'Assets/characters/Enemy_tex.png',
+		'coins_ske'			:'Assets/items/coins_ske.json',
+		'coins_tex_data'	:'Assets/items/coins_tex.json',
+		'coins_tex'			:'Assets/items/coins_tex.png',
 		'grounds'			:'Assets/backgrounds/grounds.png',
 		'background'		:'Assets/backgrounds/bg.jpg',
 		'log'				:'Assets/backgrounds/log.png',
@@ -48,7 +51,8 @@ StateLoading.prototype.Destroy = function(){
 
 StateLoading.prototype.Update = function(dt)
 {
-	if(this.isLoadingDone && FireBaseManager.isInitialized)
+	// if(this.isLoadingDone && FireBaseManager.isInitialized)
+	if(this.isLoadingDone)
 	{
 		// do something when textures are loaded
 		StatesManager.ChangeState(GameStates.stateInGame)

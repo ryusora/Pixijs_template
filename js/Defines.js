@@ -39,6 +39,11 @@ var Defines = function()
 
     this.PLAYER_BOX_DEPTH	= 10
 
+	// Score
+	this.SCORE_TIMER		= 0.3 * 100
+	this.SCORE_SPEED		= 10
+	this.ITEM_SCORE			= 10
+
 	// Grounds
 	this.GROUND_SIZE_Z				= 1
 	this.GROUND_SIZE_X				= 75*25

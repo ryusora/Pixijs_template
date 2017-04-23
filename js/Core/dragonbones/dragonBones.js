@@ -8144,6 +8144,7 @@ var dragonBones;
                         var isReverse = this._currentPlayTimes === prevPlayTimes && prevTime > this._currentTime;
                         var crossedFrame = this._currentFrame;
                         this._currentFrame = currentFrame;
+
                         if (!crossedFrame) {
                             var prevFrameIndex = Math.floor(prevTime * this._frameRate);
                             crossedFrame = this._timelineData.frames[prevFrameIndex];
