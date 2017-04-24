@@ -53,6 +53,11 @@ StateInGame.prototype.FixedUpdate = function(dt)
 	ItemsManager.FixedUpdate(dt)
 }
 
+StateInGame.prototype.GetPlayerPosZ = function()
+{
+	return this.player.position.z
+}
+
 StateInGame.prototype.Update = function(dt)
 {
 	GroundsManager.Update(dt)
@@ -72,7 +77,7 @@ StateInGame.prototype.Update = function(dt)
 
 	if(isCollide)
 	{
-		// console.log("Collide obstacle")
+		ItemsManager.DeactiveItem(isCollide)
 	}
 }
 

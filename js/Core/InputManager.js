@@ -24,27 +24,25 @@ InputManager.prototype.OnTouchStart = function(e)
 {
 	var evLength = this.touchesQueue.length
 	if((e.touches && e.touches.length === 1) || evLength <= 0 || this.touchesQueue[evLength - 1].state != TOUCH_DOWN)
-	    this.touchesQueue.push({event:e, state:TOUCH_DOWN});
-
-	if (e.target.tagName != "H1") {
-        e.preventDefault();
-	}
+	    this.touchesQueue.push({event:e, state:TOUCH_DOWN})
+    e.preventDefault();
 }
 
 InputManager.prototype.OnTouchMove = function(e)
 {
 	if ((this.state & TOUCH_PRESSED) != 0)
     {
-        this.state |= TOUCH_MOVE;
-        this.GetTouchDelta(e);
+        this.state |= TOUCH_MOVE
+        this.GetTouchDelta(e)
     }
-    e.preventDefault();
+    e.preventDefault()
 }
 
 InputManager.prototype.OnTouchEnd = function(e)
 {
-	this.touchesQueue.push({event:e, state:TOUCH_UP});
-    e.preventDefault();
+	this.touchesQueue.push({event:e, state:TOUCH_UP})
+    e.preventDefault()
+    return true
 }
 
 InputManager.prototype.Reset = function()
