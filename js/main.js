@@ -30,8 +30,15 @@ function Update(deltaTime)
 var main = function(){
 	StatesManager.ChangeState(GameStates.stateLogo)
 }
-
+var callback = null
 var checkReady = function(){
+
+	if(callback)
+	{
+		clearTimeout(callback)
+		callback = null
+	}
+
 	var width = Math.max(window.innerWidth, document.documentElement.clientWidth)
 	var height = Math.max(window.innerHeight, document.documentElement.clientHeight)
 	if(width != 0 && height != 0)
@@ -48,7 +55,7 @@ var checkReady = function(){
 	}
 	else
 	{
-		setTimeout(checkReady, 1000)
+		callback = setTimeout(checkReady, 1000)
 	}
 }
 

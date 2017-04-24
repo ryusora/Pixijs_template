@@ -32,15 +32,26 @@ FireBaseMgr.prototype.initialize = function()
 		// Handle Errors here.
 		console.log('login failed with reason ' + error.message)
 	});
-	
-	// get QUIZs database
-	this.database.ref("quizs").once("value", (snapshot) =>{
-		// this.quizList = JSON.parse(JSON.stringify(snapshot))
-		this.isInitialized = true
-	}, (reason)=>
-	{
-		// failed
-		console.log(reason)
+	firebase.auth().onAuthStateChanged(user=>{
+		if(user)
+		{
+			this.currentUser = user
+			console.log("log in success : " + user.uid )
+			// get QUIZs database
+			this.database.ref("quizs").once("value", (snapshot) =>{
+				console.log("load : " + JSON.stringify(snapshot.val()) )
+				this.quizList = snapshot.val()
+				this.isInitialized = true
+			}, (reason)=>
+			{
+				// failed
+				console.log(reason)
+			})
+		}
+		else
+		{
+			console.log("User is signed out")
+		}
 	})
 }
 

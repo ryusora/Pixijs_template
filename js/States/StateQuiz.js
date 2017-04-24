@@ -11,8 +11,9 @@ StateQuiz.prototype.Init = function()
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
 
-    var quiz = QuizManager.GetRandomQuiz()
-    console.log(quiz)
+    this.currentQuiz = QuizManager.GetRandomQuiz()
+    this.title = new PIXI.Text("hello");
+    this.state.addChild(this.title);
 }
 
 StateQuiz.prototype.Destroy = function()
