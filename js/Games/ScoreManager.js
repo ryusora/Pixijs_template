@@ -21,16 +21,26 @@ ScoreManager.prototype.InitPool = function()
 
 ScoreManager.prototype.GetItem = function(score, position)
 {
-    this.currentScore += score
     var scoreItem = this.scores_deactived.pop()
+	var bonus = GameStates.stateInGame.IsFrenzy()?2:1
+    this.currentScore += score*bonus
+	console.log("Add Score : " + this.currentScore + " with bonus : " + bonus)
 	if(scoreItem)
 	{
 		// score.SetDisable(false)
 		this.scores_actived.push(scoreItem)
 		this.stage.addChild(scoreItem.sprite)
 		scoreItem.SetActive(true)
-        scoreItem.SetScore(score)
+        scoreItem.SetScore(score*bonus)
         scoreItem.SetPosition(position)
+		if(GameStates.stateInGame.IsFrenzy())
+		{
+			scoreItem.ActiveBonusStyle()
+		}
+		else
+		{
+			scoreItem.ActiveDefaultStyle()
+		}
 	}
 	return scoreItem;
 }

@@ -1,6 +1,6 @@
 var Score = function()
 {
-    this.textStyle = new PIXI.TextStyle({
+    this.defaultStyle = new PIXI.TextStyle({
         fontFamily: 'Arial',
         fontSize: 50,
         fontStyle: 'italic',
@@ -16,12 +16,40 @@ var Score = function()
         wordWrap: true,
         wordWrapWidth: 440
     })
-    this.sprite = new PIXI.Text("test", this.textStyle)
+
+    this.bonusStyle = new PIXI.TextStyle({
+        fontFamily: 'Arial',
+        fontSize: 65,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        fill: ['#ffffff', '#00ff00'], // gradient
+        stroke: '#4a1850',
+        strokeThickness: 5,
+        dropShadow: true,
+        dropShadowColor: '#000000',
+        dropShadowBlur: 4,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowDistance: 6,
+        wordWrap: true,
+        wordWrapWidth: 440
+    })
+
+    this.sprite = new PIXI.Text("test", this.defaultStyle)
     this.sprite.anchor.set(0.5, 0.5)
 
     this.isActived = false
 
     this.timer = 0
+}
+
+Score.prototype.ActiveBonusStyle = function()
+{
+    this.sprite.style = this.bonusStyle
+}
+
+Score.prototype.ActiveDefaultStyle = function()
+{
+    this.sprite.style = this.defaultStyle
 }
 
 Score.prototype.ResetAll = function(){

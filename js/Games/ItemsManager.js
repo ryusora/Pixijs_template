@@ -118,11 +118,10 @@ ItemsManager.prototype.SpawnEffectAt = function(pos)
 	}
 }
 
-
 ItemsManager.prototype.Update = function(dt)
 {
 	// check spawn item
-	this.timer += dt
+	this.timer += (dt * ( 1 + GameStates.stateInGame.GetPlayerOffsetSpeed()/Defines.GAME_SPEED))
 	if(this.timer >= Defines.SPAWN_ITEM_TIME)
 	{
 		this.timer = 0

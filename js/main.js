@@ -9,8 +9,8 @@ require('./Core/dragonBones/dragonBonesPixi.js')
 window.FireBaseManager		= require('./Core/FireBaseMgr.js')
 window.Application 			= require('./Core/Application.js')
 
-function run(){
-	var deltaTime = Application.getDeltaTime()
+function run(deltaTime){
+	deltaTime = deltaTime / (60 * Application.instance.ticker.speed)
 	FixedUpdate(deltaTime)
 	Update(deltaTime)
 }

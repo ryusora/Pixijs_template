@@ -19,6 +19,11 @@ const ANIM_RUN 		= "run"
 const ANIM_DEAD		= "run"
 const ANIM_JUMP		= "run"
 
+const FRENZY_STATE_NONE 	= -1
+const FRENZY_STATE_FORWARD 	= 0
+const FRENZY_STATE_IDLE		= 1
+const FRENZY_STATE_BACKWARD = 2
+
 var Character = function(){
 	this.armatureDisplay = null
 	this.velocity = new Vector2()
@@ -29,11 +34,15 @@ var Character = function(){
 	this.baseX = 0
 	this.scale = 0
 	this.original = {width:0, height: 0}
-	this.offsetSpeed = 1
+	this.offsetSpeed = 0
+
+	this.speed = 0
 
 	this.frenzyCamOffsetX = 0
 	this.frenzyCamOffsetY = 0
 	this.frenzyCamOffsetZ = 0
+
+	this.frenzyState = FRENZY_STATE_NONE
 
 	document.addEventListener('keydown', e=>{
 		console.log(e.keyCode)
@@ -259,43 +268,84 @@ Character.prototype.FixedUpdate = function(dt)
 	this.accelerator.zero()
 }
 
+Character.prototype.UpdateFrenzy = function()
+{
+	var step = (this.frenzyState == FRENZY_STATE_FORWARD)?1:-1
+
+	// update offset Speed
+	this.offsetSpeed 		+= Defines.FRENZY_FADE_SPEED * step
+	this.frenzyCamOffsetX 	+= Defines.FRENZY_CAM_SPEED * step
+	this.frenzyCamOffsetY 	+= Defines.FRENZY_CAM_SPEED * step*(-1)
+	this.frenzyCamOffsetZ 	+= Defines.FRENZY_CAM_SPEED/5 * step*(-1)
+
+	if(this.frenzyState == FRENZY_STATE_FORWARD)
+	{
+		this.offsetSpeed 		= Math.min(this.offsetSpeed, Defines.MAX_FRENZY_OFFSET_SPEED)
+		this.frenzyCamOffsetX 	= Math.min(this.frenzyCamOffsetX, Defines.FRENZY_CAM_OFFSET_X)
+		this.frenzyCamOffsetY 	= Math.max(this.frenzyCamOffsetY, Defines.FRENZY_CAM_OFFSET_Y)
+		this.frenzyCamOffsetZ 	= Math.max(this.frenzyCamOffsetZ, Defines.FRENZY_CAM_OFFSET_Z)
+		console.log(this.frenzyCamOffsetY)
+		if(this.frenzyCamOffsetY == Defines.FRENZY_CAM_OFFSET_Y)
+		{
+			this.frenzyState = FRENZY_STATE_IDLE
+		}
+	}
+	else if(this.frenzyState == FRENZY_STATE_BACKWARD)
+	{
+		this.offsetSpeed 		= Math.max(this.offsetSpeed, 0)
+		this.frenzyCamOffsetX 	= Math.max(this.frenzyCamOffsetX, 0)
+		this.frenzyCamOffsetY 	= Math.min(this.frenzyCamOffsetY, 0)
+		this.frenzyCamOffsetZ 	= Math.min(this.frenzyCamOffsetZ, 0)
+		console.log(this.frenzyCamOffsetY)
+		if(this.frenzyCamOffsetY == 0)
+		{
+			this.frenzyState = FRENZY_STATE_NONE
+		}
+	}
+}
+
+Character.prototype.IsFrenzy = function()
+{
+	return this.frenzyState != FRENZY_STATE_NONE
+}
+
 Character.prototype.UpdateFrenzyMode = function(dt)
 {
-	if(this.isFrenzyMode)
+	if(this.IsFrenzy())
 	{
-		this.frenzyTimer -= dt
-		// update offset Speed
-		this.offsetSpeed += Defines.FRENZY_FADE_SPEED
-		this.offsetSpeed = Math.max(this.offsetSpeed, Defines.MAX_FRENZY_OFFSET_SPEED)
-		if(this.frenzyTimer < 0)
+		if(this.frenzyState == FRENZY_STATE_IDLE)
 		{
-			this.frenzyTimer = 0
-			this.isFrenzyMode = false
-			this.offsetSpeed = 1
-			this.frenzyCamOffsetX = 0
-			this.frenzyCamOffsetY = 0
-			this.frenzyCamOffsetZ = 0
+			this.frenzyTimer -= dt
+			if(this.frenzyTimer <= 0)
+			{
+				this.frenzyTimer = 0
+				this.frenzyState = FRENZY_STATE_BACKWARD
+			}
+		}
+		else
+		{
+			this.UpdateFrenzy();
 		}
 	}
 }
 
 Character.prototype.ActiveFrenzy = function()
 {
-	this.isFrenzyMode = true
+	this.frenzyState = FRENZY_STATE_FORWARD
 	this.frenzyTimer = Defines.FRENZY_TIME
-	this.frenzyCamOffsetX = Defines.FRENZY_CAM_OFFSET_X
-	this.frenzyCamOffsetY = Defines.FRENZY_CAM_OFFSET_Y
-	this.frenzyCamOffsetZ = Defines.FRENZY_CAM_OFFSET_Z
 }
 
 
 Character.prototype.Update = function(dt)
 {
 	this.UpdateFrenzyMode(dt)
-
-	this.position.z += Defines.GAME_SPEED * dt * this.offsetSpeed
+	this.speed = (Defines.GAME_SPEED + this.offsetSpeed) * dt
+	this.position.z += this.speed
 	Camera.CameraUpdatePlayerPos(this.frenzyCamOffsetX, this.frenzyCamOffsetY, this.position.z + this.frenzyCamOffsetZ)
+}
 
+Character.prototype.UpdateControl = function()
+{
 	if(InputManager.IsTouchPress()) {
 		if(Math.abs(InputManager.deltaY) > Defines.SWIPE_OFFSET) {
 			if(InputManager.deltaY < 0)

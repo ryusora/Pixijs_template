@@ -73,6 +73,16 @@ StateInGame.prototype.GetPlayerPosZ = function()
 	return this.player.position.z
 }
 
+StateInGame.prototype.IsFrenzy = function()
+{
+	return this.player.IsFrenzy()
+}
+
+StateInGame.prototype.GetPlayerOffsetSpeed = function()
+{
+	return this.player.offsetSpeed
+}
+
 StateInGame.prototype.Update = function(dt)
 {
 	GroundsManager.Update(dt)

@@ -4,7 +4,7 @@ var StateLogo = function(){
 	this.logoSprite = null
 	this.isLoadingDone = false
 	this.ticker = 0
-	this.fadeValue = 1
+	this.fadeValue = 50
 }
 
 StateLogo.prototype.Init = function(){

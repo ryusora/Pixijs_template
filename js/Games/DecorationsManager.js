@@ -63,7 +63,7 @@ DecorationsManager.prototype.SpawnRandom = function()
 
 DecorationsManager.prototype.Update = function(dt)
 {
-	this.timer -= dt
+	this.timer -= (dt * ( 1 + GameStates.stateInGame.GetPlayerOffsetSpeed()/Defines.GAME_SPEED))
 	if(this.timer < 0)
 	{
 		this.timer = Defines.DECORATION_TIMER

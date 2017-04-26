@@ -3,32 +3,33 @@ const Vector2 = require('./Games/Vector2.js')
 var Defines = function()
 {
 	// defines game
-	this.GAME_SPEED			= 0.5
+	this.GAME_SPEED			= 100
 
-	this.DECORATION_TIMER	= 0.5 * 100
-	this.LOGO_TIME 			= 1.5 * 100
+	this.DECORATION_TIMER	= 0.5
+	this.LOGO_TIME 			= 1.5
 	this.TOP_Y_BASE 		= 100
 	this.GROUND_Y_BASE 		= 100
 	this.GROUND_Y  			= 0
-	this.GRAVITY			= {x:0, y:0.5}
+	this.GRAVITY			= {x:0, y:25}
 	this.LINE_LENGTH		= 150
 	this.SWIPE_OFFSET		= 10
 	this.JUMP_FORCE			= {x:0, y:-12}
 	this.MOVE_FORCE			= {x:10, y:0}
 	this.ITEMS_POOL			= 3
 	this.ITEM_OFFSET_Z		= 200
-	this.SPAWN_ITEM_TIME	= 1 * 100
+	this.SPAWN_ITEM_TIME	= 1
 	this.LEFT_DIRECTION 	= {x:0, y:0}
 	this.CENTER_DIRECTION	= {x:0, y:0}
 	this.RIGHT_DIRECTION	= {x:0, y:0}
 
 	// FRENZY
-	this.FRENZY_FADE_SPEED			= 0.1
-	this.FRENZY_TIME				= 5*100
-	this.MAX_FRENZY_OFFSET_SPEED	= 1.2
+	this.FRENZY_FADE_SPEED			= 5
+	this.FRENZY_CAM_SPEED			= 2	
+	this.FRENZY_TIME				= 10
+	this.MAX_FRENZY_OFFSET_SPEED	= 50
 	this.FRENZY_CAM_OFFSET_X		= 0
-	this.FRENZY_CAM_OFFSET_Y		= 5
-	this.FRENZY_CAM_OFFSET_Z		= -5
+	this.FRENZY_CAM_OFFSET_Y		= -100
+	this.FRENZY_CAM_OFFSET_Z		= -20
 
 	//CAMERA
     this.CAMERA_ON_SCREEN_POS_X = 0.5*Application.getScreenWidth()
@@ -48,8 +49,8 @@ var Defines = function()
     this.PLAYER_BOX_DEPTH	= 10
 
 	// Score
-	this.SCORE_TIMER		= 0.3 * 100
-	this.SCORE_SPEED		= 10
+	this.SCORE_TIMER		= 0.7
+	this.SCORE_SPEED		= 500
 	this.ITEM_SCORE			= 10
 
 	// Grounds
