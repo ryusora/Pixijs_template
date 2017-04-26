@@ -22,6 +22,14 @@ var Defines = function()
 	this.CENTER_DIRECTION	= {x:0, y:0}
 	this.RIGHT_DIRECTION	= {x:0, y:0}
 
+	// FRENZY
+	this.FRENZY_FADE_SPEED			= 0.1
+	this.FRENZY_TIME				= 5*100
+	this.MAX_FRENZY_OFFSET_SPEED	= 1.2
+	this.FRENZY_CAM_OFFSET_X		= 0
+	this.FRENZY_CAM_OFFSET_Y		= 5
+	this.FRENZY_CAM_OFFSET_Z		= -5
+
 	//CAMERA
     this.CAMERA_ON_SCREEN_POS_X = 0.5*Application.getScreenWidth()
     this.CAMERA_ON_SCREEN_POS_Y = 0.25*Application.getScreenHeight()

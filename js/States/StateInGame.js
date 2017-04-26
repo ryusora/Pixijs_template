@@ -51,6 +51,21 @@ StateInGame.prototype.FixedUpdate = function(dt)
 {
 	this.player.FixedUpdate(dt)
 	ItemsManager.FixedUpdate(dt)
+
+	//check collision
+	var collidedItem = ItemsManager.CheckCollision({
+		x:this.player.position.x,
+		y:this.player.position.y,
+		z:this.player.position.z,
+		width:this.player.GetWidth(),
+		height:this.player.GetHeight(),
+		depth:Defines.PLAYER_BOX_DEPTH
+	})
+
+	if(collidedItem)
+	{
+		ItemsManager.DeactiveItem(collidedItem)
+	}
 }
 
 StateInGame.prototype.GetPlayerPosZ = function()
@@ -64,21 +79,6 @@ StateInGame.prototype.Update = function(dt)
 	DecorationsManager.Update(dt)
 	this.player.Update(dt)
 	ItemsManager.Update(dt)
-
-	//check collision
-	var isCollide = ItemsManager.CheckCollision({
-		x:this.player.position.x,
-		y:this.player.position.y,
-		z:this.player.position.z,
-		width:this.player.GetWidth(),
-		height:this.player.GetHeight(),
-		depth:Defines.PLAYER_BOX_DEPTH
-	})
-
-	if(isCollide)
-	{
-		ItemsManager.DeactiveItem(isCollide)
-	}
 }
 
 module.exports = StateInGame

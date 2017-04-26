@@ -29,8 +29,14 @@ var Character = function(){
 	this.baseX = 0
 	this.scale = 0
 	this.original = {width:0, height: 0}
+	this.offsetSpeed = 1
+
+	this.frenzyCamOffsetX = 0
+	this.frenzyCamOffsetY = 0
+	this.frenzyCamOffsetZ = 0
 
 	document.addEventListener('keydown', e=>{
+		console.log(e.keyCode)
 		switch(e.keyCode)
 		{
 			case 37: // left
@@ -48,6 +54,12 @@ var Character = function(){
 			case 39: // right
 			{
 				this.MoveRight()
+			}
+			break
+
+			case 32:
+			{
+				this.ActiveFrenzy()
 			}
 			break
 		}
@@ -247,10 +259,42 @@ Character.prototype.FixedUpdate = function(dt)
 	this.accelerator.zero()
 }
 
+Character.prototype.UpdateFrenzyMode = function(dt)
+{
+	if(this.isFrenzyMode)
+	{
+		this.frenzyTimer -= dt
+		// update offset Speed
+		this.offsetSpeed += Defines.FRENZY_FADE_SPEED
+		this.offsetSpeed = Math.max(this.offsetSpeed, Defines.MAX_FRENZY_OFFSET_SPEED)
+		if(this.frenzyTimer < 0)
+		{
+			this.frenzyTimer = 0
+			this.isFrenzyMode = false
+			this.offsetSpeed = 1
+			this.frenzyCamOffsetX = 0
+			this.frenzyCamOffsetY = 0
+			this.frenzyCamOffsetZ = 0
+		}
+	}
+}
+
+Character.prototype.ActiveFrenzy = function()
+{
+	this.isFrenzyMode = true
+	this.frenzyTimer = Defines.FRENZY_TIME
+	this.frenzyCamOffsetX = Defines.FRENZY_CAM_OFFSET_X
+	this.frenzyCamOffsetY = Defines.FRENZY_CAM_OFFSET_Y
+	this.frenzyCamOffsetZ = Defines.FRENZY_CAM_OFFSET_Z
+}
+
+
 Character.prototype.Update = function(dt)
 {
-	this.position.z += Defines.GAME_SPEED * dt
-	Camera.CameraUpdatePlayerPos(this.position.x, this.position.y, this.position.z)
+	this.UpdateFrenzyMode(dt)
+
+	this.position.z += Defines.GAME_SPEED * dt * this.offsetSpeed
+	Camera.CameraUpdatePlayerPos(this.frenzyCamOffsetX, this.frenzyCamOffsetY, this.position.z + this.frenzyCamOffsetZ)
 
 	if(InputManager.IsTouchPress()) {
 		if(Math.abs(InputManager.deltaY) > Defines.SWIPE_OFFSET) {

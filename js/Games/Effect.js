@@ -60,7 +60,10 @@ Effect.prototype.Update = function(dt)
 	this.UpdatePosition()
 	this.UpdateScale()
 
-    // this.SetActive(false)
+    if(this.position.z < Camera.GetCameraPosZ())
+    {
+        this.SetActive(false)
+    }
 }
 
 Effect.prototype.OnAnimEnd = function(eventObj)
