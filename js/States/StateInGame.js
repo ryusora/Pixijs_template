@@ -8,6 +8,12 @@ var StateInGame = function()
 	this.isLoadingDone = false
 	this.player = null
 	this.stage = null
+	this.combo = 0
+}
+
+StateInGame.prototype.ResetCombo = function()
+{
+	this.combo = 0
 }
 
 StateInGame.prototype.Init = function()
@@ -65,6 +71,13 @@ StateInGame.prototype.FixedUpdate = function(dt)
 	if(collidedItem)
 	{
 		ItemsManager.DeactiveItem(collidedItem)
+		if(!this.IsFrenzy()) this.combo++
+	}
+
+	if(this.combo == Defines.MAX_COMBO_COUNT && !this.IsFrenzy())
+	{
+		this.combo = 0
+		this.player.ActiveFrenzy()
 	}
 }
 
