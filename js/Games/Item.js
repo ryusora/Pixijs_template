@@ -113,6 +113,7 @@ Item.prototype.Update = function(dt)
 	if(this.position.z < Camera.GetCameraPosZ())
 	{
 		this.SetActive(false)
+		GameStates.stateInGame.ResetCombo()
 	}
 }
 

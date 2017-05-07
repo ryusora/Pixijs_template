@@ -25,11 +25,12 @@ var Defines = function()
 	// FRENZY
 	this.FRENZY_FADE_SPEED			= 5
 	this.FRENZY_CAM_SPEED			= 2	
-	this.FRENZY_TIME				= 10
+	this.FRENZY_TIME				= 5
 	this.MAX_FRENZY_OFFSET_SPEED	= 50
 	this.FRENZY_CAM_OFFSET_X		= 0
 	this.FRENZY_CAM_OFFSET_Y		= -100
 	this.FRENZY_CAM_OFFSET_Z		= -20
+	this.MAX_COMBO_COUNT			= 10
 
 	//CAMERA
     this.CAMERA_ON_SCREEN_POS_X = 0.5*Application.getScreenWidth()
