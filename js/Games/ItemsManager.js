@@ -1,7 +1,12 @@
 const Item = require("./Item.js")
 const Effect = require("./Effect.js")
-
 window.ScoreManager = require("./ScoreManager.js")
+
+const TYPE_ITEM 	= 0
+const TYPE_ENEMY_1 	= 1
+const TYPE_ENEMY_2 	= 2
+const TYPE_ENEMY_3 	= 3
+const TYPE_ENEMY_4 	= 4
 
 var ItemsManager = function()
 {
@@ -21,12 +26,50 @@ ItemsManager.prototype.InitPool = function()
 	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('coins_ske'))
 	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('coins_tex_data'), TextureManager.getTexture('coins_tex'))
 
+	var item_pool = []
 	for(let i = 0; i < Defines.ITEMS_POOL; i++)
 	{
 		var item = new Item()
-		item.SetupDragonBones()
-		this.items_deactived.push(item)
+		item.SetupDragonBones(TYPE_ITEM)
+		item_pool.push(item)
 	}
+	this.items_deactived.push(item_pool)
+
+	var enemy1_pool = []
+	for(let i = 0; i < Defines.ITEMS_POOL; i++)
+	{
+		var item = new Item()
+		item.SetupDragonBones(TYPE_ENEMY_1)
+		enemy1_pool.push(item)
+	}
+	this.items_deactived.push(enemy1_pool)
+
+	var enemy2_pool = []
+	for(let i = 0; i < Defines.ITEMS_POOL; i++)
+	{
+		var item = new Item()
+		item.SetupDragonBones(TYPE_ENEMY_2)
+		enemy2_pool.push(item)
+	}
+	this.items_deactived.push(enemy2_pool)
+
+	var enemy3_pool = []
+	for(let i = 0; i < Defines.ITEMS_POOL; i++)
+	{
+		var item = new Item()
+		item.SetupDragonBones(TYPE_ENEMY_3)
+		enemy3_pool.push(item)
+	}
+	this.items_deactived.push(enemy3_pool)
+
+	var enemy4_pool = []
+	for(let i = 0; i < Defines.ITEMS_POOL; i++)
+	{
+		var item = new Item()
+		item.SetupDragonBones(TYPE_ENEMY_4)
+		enemy4_pool.push(item)
+	}
+	this.items_deactived.push(enemy4_pool)
 
 	for(let i = 0; i < Defines.ITEMS_POOL; i++)
 	{
@@ -38,9 +81,9 @@ ItemsManager.prototype.InitPool = function()
 	ScoreManager.InitPool()
 }
 
-ItemsManager.prototype.GetItem = function()
+ItemsManager.prototype.GetItem = function(type)
 {
-	var item = this.items_deactived.pop()
+	var item = this.items_deactived[type].pop()
 	if(item)
 	{
 		// item.SetDisable(false)
@@ -49,6 +92,24 @@ ItemsManager.prototype.GetItem = function()
 		item.SetActive(true)
 	}
 	return item;
+}
+
+ItemsManager.prototype.DeactiveItem = function(item)
+{
+	var index = this.items_actived.indexOf(item)
+	if(index > -1 && index < this.items_actived.length)
+	{
+		var item = this.items_actived.splice(index, 1)[0]
+		if(item)
+		{
+			item.ResetAll()
+			this.items_deactived[item.type].push(item)
+			this.backStage.removeChild(item.armatureDisplay)
+		}
+		else{
+			console.log(item)
+		}
+	}
 }
 
 ItemsManager.prototype.GetEffect = function()
@@ -82,27 +143,18 @@ ItemsManager.prototype.DeactiveEffect = function(effect)
 	}
 }
 
-ItemsManager.prototype.DeactiveItem = function(item)
-{
-	var index = this.items_actived.indexOf(item)
-	if(index > -1 && index < this.items_actived.length)
-	{
-		var item = this.items_actived.splice(index, 1)[0]
-		if(item)
-		{
-			item.ResetAll()
-			this.items_deactived.push(item)
-			this.backStage.removeChild(item.armatureDisplay)
-		}
-		else{
-			console.log(item)
-		}
-	}
-}
+const type_names = [
+	"item_pool",
+	"enemy1_pool",
+	"enemy2_pool",
+	"enemy3_pool",
+	"enemy4_pool"
+]
 
 ItemsManager.prototype.SpawnItem = function(direction)
 {
-	var item = this.GetItem()
+	var type = Math.floor(Math.random() * type_names.length)
+	var item = this.GetItem(type)
 	if(item)
 	{
 		item.SetPos({x:direction,y:10,z:Defines.ITEM_OFFSET_Z + Camera.GetCameraPosZ()})

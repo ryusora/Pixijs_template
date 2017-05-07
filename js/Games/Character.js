@@ -17,7 +17,7 @@ const ANIM_LEFT 	= "turn_left"
 const ANIM_RIGHT 	= "turn_right"
 const ANIM_RUN 		= "run"
 const ANIM_DEAD		= "run"
-const ANIM_JUMP		= "run"
+const ANIM_JUMP		= "jump"
 
 const FRENZY_STATE_NONE 	= -1
 const FRENZY_STATE_FORWARD 	= 0
@@ -33,7 +33,9 @@ var Character = function(){
 	this.currentState = STATE_IDLE
 	this.baseX = 0
 	this.scale = 0
-	this.original = {width:0, height: 0}
+
+	this.localScale = 0.5
+	
 	this.offsetSpeed = 0
 
 	this.speed = 0
@@ -81,10 +83,7 @@ Character.prototype.SetupDragonBones = function()
 	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('mainChar_tex_data'), TextureManager.getTexture('mainChar_tex'));
 
 	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay("mainCharacter");
-	this.armatureDisplay.animation.play("run");
-	// init origin
-	this.original.width = this.armatureDisplay.armature.display.width
-	this.original.height = this.armatureDisplay.armature.display.height
+	this.armatureDisplay.animation.play(ANIM_RUN);
 }
 
 Character.prototype.InitSprite = function()
@@ -121,12 +120,11 @@ Character.prototype.GetHeight = function()
 
 Character.prototype.UpdateScale = function()
 {
-	this.scale = Camera.GetDrawScale(this.position.z)
+	this.scale = Camera.GetDrawScale(this.position.z) * this.localScale
 
 	if(this.armatureDisplay)
 	{
-		this.armatureDisplay.armature.display.width = this.original.width * this.scale
-		this.armatureDisplay.armature.display.height = this.original.height * this.scale
+		this.armatureDisplay.armature.display.scale.set(this.scale, this.scale)
 	}
 }
 
@@ -148,9 +146,11 @@ Character.prototype.SetState = function(state)
 	}
 }
 
-Character.prototype.SetAnimation = function(anim_name)
+Character.prototype.SetAnimation = function(anim_name, loop = true)
 {
-	this.armatureDisplay.animation.play(anim_name);
+	var playTime = loop?-1:1
+	console.log("play anim : " + anim_name + " with play time : " + playTime)
+	this.armatureDisplay.animation.play(anim_name, playTime);
 }
 
 Character.prototype.MoveLeft = function()
@@ -165,7 +165,7 @@ Character.prototype.MoveLeft = function()
 	}
 
 	this.SetState(STATE_MOVE_LEFT)
-	this.SetAnimation(ANIM_LEFT)
+	this.SetAnimation(ANIM_LEFT, false)
 	// add force
 	var moveLeftForce = new Vector2()
 	moveLeftForce.clone(Defines.MOVE_FORCE)
@@ -185,7 +185,7 @@ Character.prototype.MoveRight = function()
 	}
 
 	this.SetState(STATE_MOVE_RIGHT)
-	this.SetAnimation(ANIM_RIGHT)
+	this.SetAnimation(ANIM_RIGHT, false)
 	// add force
 	this.velocity.add(Defines.MOVE_FORCE)
 }
@@ -196,7 +196,7 @@ Character.prototype.Jump = function()
 
 	this.ResetState(STATE_RUNNING)
 	this.SetState(STATE_JUMPING)
-	this.SetAnimation(ANIM_JUMP)
+	this.SetAnimation(ANIM_JUMP, false)
 
 	this.velocity.add(Defines.JUMP_FORCE)
 }

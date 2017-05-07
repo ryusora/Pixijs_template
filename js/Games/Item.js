@@ -1,8 +1,17 @@
+const item_names = [
+	"item",
+	"enemy_1",
+	"enemy_2",
+	"enemy_3",
+	"enemy_4"
+]
+
+
 var Item = function()
 {
 	this.armatureDisplay = null
 	this.position = { x:0, y:0, z:0 }
-	this.originScale = 1
+	this.localScale = 1
 	this.scale = 0
 	this.isActived = false
 	this.direction = null
@@ -10,6 +19,7 @@ var Item = function()
 	this.isOnBackStage = false
 	this.shouldPutBackStage = false
 	this.score = Defines.ITEM_SCORE
+	this.type = -1
 }
 
 Item.prototype.SetActive = function(actived)
@@ -22,10 +32,12 @@ Item.prototype.SetSpeed = function(speed)
 	this.speed = speed
 }
 
-Item.prototype.SetupDragonBones = function()
+Item.prototype.SetupDragonBones = function(type)
 {
-	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay("coins")
-	this.armatureDisplay.animation.play("rotate")
+	this.type = (type < item_names.length)?type:0
+	this.localScale = (this.type == 0)?0.5:1
+	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay(item_names[type])
+	this.armatureDisplay.animation.play("idle")
 
 	this.original = {width:this.armatureDisplay.armature.display.width, height:this.armatureDisplay.armature.display.height}
 }
@@ -63,7 +75,7 @@ Item.prototype.UpdatePosition = function(dt)
 
 Item.prototype.UpdateScale = function()
 {
-	this.scale = this.originScale * Camera.GetDrawScale(this.position.z)
+	this.scale = this.localScale * Camera.GetDrawScale(this.position.z)
 	if(this.armatureDisplay)
 	{
 		this.armatureDisplay.armature.display.scale.set(this.scale, this.scale)
