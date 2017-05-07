@@ -4,6 +4,8 @@ var GameConfig = function(){
 	this.height = 1334
 	this.originalWidth = 0
 	this.originalHeight = 0
+	this.isShaking = false
+	this.shakeTicker = 0
 }
 
 var GameConfig = new GameConfig()
@@ -14,6 +16,12 @@ var Application = function(){
 	this.scale_x = 1
 }
 
+Application.prototype.Shake = function()
+{
+	this.isShaking = true
+	this.shakeTicker = 60
+}
+
 Application.prototype.initialize = function(gameLoop, width, height)
 {
 	this.instance = new PIXI.Application(width, height)
@@ -21,7 +29,7 @@ Application.prototype.initialize = function(gameLoop, width, height)
 	// this.UpdateScale(width, height)
 	this.Resize(width, height)
 	this.instance.ticker.add(gameLoop)
-	this.SetBackGroundColor(0x000000);
+	this.SetBackGroundColor(0xffffff);
 }
 
 Application.prototype.SetBackGroundColor = function(color)

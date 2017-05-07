@@ -13,10 +13,11 @@ GroundsManager.prototype.Initialize = function()
 {
 	this.stage = new PIXI.Container()
 	var background = new PIXI.Sprite(TextureManager.getTexture("background"))
-	background.position.set(Application.getScreenWidth()*0.5, 0)
-	background.anchor.set(0.5, 0.45)
+	// background.position.set(Application.getScreenWidth()*0.5, 0)
+	background.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
+	background.anchor.set(0.5, 0.5)
 	this.stage.addChild(background)
-	this.InitSprites()
+	// this.InitSprites()
 }
 
 GroundsManager.prototype.InitSprites = function()
@@ -73,6 +74,7 @@ GroundsManager.prototype.GetGround = function(groundIndex)
 
 GroundsManager.prototype.Update = function(dt)
 {
+	/*
 	var children = []
 	while(this.position.z - Camera.GetCameraPosZ() < Defines.DISTANCE_Z_MAKE_OBJECT)
 	{
@@ -101,6 +103,7 @@ GroundsManager.prototype.Update = function(dt)
 			}
 		}
 	}
+	*/
 }
 
 module.exports = new GroundsManager()

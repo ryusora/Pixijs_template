@@ -3,10 +3,14 @@ const Vector2 = require('./Games/Vector2.js')
 var Defines = function()
 {
 	// defines game
-	this.GAME_SPEED			= 100
+	this.GAME_SPEED			= 50
+	this.SPEED_RATE			= 1.5
+
+	this.INITIAL_LIFE		= 3
+	this.RED_FADE_TICKER	= 1
 
 	this.DECORATION_TIMER	= 0.5
-	this.LOGO_TIME 			= 1.5
+	this.LOGO_TIME 			= 5
 	this.TOP_Y_BASE 		= 100
 	this.GROUND_Y_BASE 		= 100
 	this.GROUND_Y  			= 0
@@ -22,19 +26,26 @@ var Defines = function()
 	this.CENTER_DIRECTION	= {x:0, y:0}
 	this.RIGHT_DIRECTION	= {x:0, y:0}
 
-	// FRENZY
+	// HUD
+	this.HUD_ITEM_Y				= 78
+	this.HUD_SCORE_OFFSET_X 	= 0
+	this.HUD_LIVE_OFFSET_X		= 0
+	this.SCORE_TEXT_OFFSET_X	= 50
+	this.LIVE_TEXT_OFFSET_X		= 165
+
+	// FRENZYR
 	this.FRENZY_FADE_SPEED			= 5
 	this.FRENZY_CAM_SPEED			= 2	
 	this.FRENZY_TIME				= 5
 	this.MAX_FRENZY_OFFSET_SPEED	= 50
 	this.FRENZY_CAM_OFFSET_X		= 0
-	this.FRENZY_CAM_OFFSET_Y		= -100
-	this.FRENZY_CAM_OFFSET_Z		= -20
+	this.FRENZY_CAM_OFFSET_Y		= 0
+	this.FRENZY_CAM_OFFSET_Z		= 0
 	this.MAX_COMBO_COUNT			= 10
 
 	//CAMERA
     this.CAMERA_ON_SCREEN_POS_X = 0.5*Application.getScreenWidth()
-    this.CAMERA_ON_SCREEN_POS_Y = 0.25*Application.getScreenHeight()
+    this.CAMERA_ON_SCREEN_POS_Y = 0.325*Application.getScreenHeight()
 
     this.CAMERA_DELTA_POS_WITH_PLAYER_X = 0
     this.CAMERA_DELTA_POS_WITH_PLAYER_Y = -0.25*Application.getScreenHeight()

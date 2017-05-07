@@ -4,23 +4,23 @@ var StateLogo = function(){
 	this.logoSprite = null
 	this.isLoadingDone = false
 	this.ticker = 0
-	this.fadeValue = 50
+	this.fadeValue = 5
 }
 
 StateLogo.prototype.Init = function(){
 	TextureManager.load({
-		'LOGO'		:'Assets/logo.png',
+		'LOGO'		:'Assets/abbott-logo.jpg',
 		'LOADING'	:'Assets/loading-icon.png'
 	}, ()=>{
 		this.logoSprite = new PIXI.Sprite(TextureManager.getTexture('LOGO'))
-		this.logoSprite.anchor.set(0.5)
+		this.logoSprite.anchor.set(0.5, 0.5)
 		this.logoSprite.x = (Application.getScreenWidth()/2)
 		this.logoSprite.y = (Application.getScreenHeight()/2)
 		this.logoSprite.alpha = 0
 		this.stage = new PIXI.Container()
 		this.stage.addChild(this.logoSprite)
 		Application.addChild(this.stage)
-		Application.Align(this.stage)
+		//Application.Align(this.stage)
 		this.isLoadingDone = true
 	})
 	// Init

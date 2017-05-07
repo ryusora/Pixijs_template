@@ -1,7 +1,9 @@
 const Character 			= require('../Games/Character.js')
+window.ScoreManager 		= require("../Games/ScoreManager.js")
 window.ItemsManager			= require('../Games/ItemsManager.js')
 window.GroundsManager		= require('../Games/GroundsManager.js')
-window.DecorationsManager 	= require('../Games/DecorationsManager.js')
+// window.DecorationsManager 	= require('../Games/DecorationsManager.js')
+window.HudManager 			= require('../Games/HudManager.js')
 
 var StateInGame = function()
 {
@@ -9,6 +11,11 @@ var StateInGame = function()
 	this.player = null
 	this.stage = null
 	this.combo = 0
+	this.fadeEffect = new PIXI.Graphics()
+	// init graphic
+	this.fadeEffect.beginFill(0xFF0000)
+	this.fadeEffect.drawRect(0,0,Application.getScreenWidth(), Application.getScreenHeight())
+	this.fadeEffect.alpha = 0
 }
 
 StateInGame.prototype.ResetCombo = function()
@@ -27,10 +34,12 @@ StateInGame.prototype.Init = function()
 	Camera.Init()
 
 	GroundsManager.Initialize()
-	DecorationsManager.Initialize()
+	HudManager.Initialize()
+	HudManager.UpdateLife(ScoreManager.life)
+	// DecorationsManager.Initialize()
 
 	this.stage.addChild(GroundsManager.stage)
-	this.stage.addChild(DecorationsManager.stage)
+	// this.stage.addChild(DecorationsManager.stage)
 	this.stage.addChild(ItemsManager.frontStage)
 
 	this.player = new Character()
@@ -41,6 +50,9 @@ StateInGame.prototype.Init = function()
 	this.stage.addChild(ItemsManager.backStage)
 
 	ItemsManager.InitPool()
+
+	this.stage.addChild(this.fadeEffect)
+	this.stage.addChild(HudManager.stage)
 }
 
 StateInGame.prototype.IsLoadDone = function()
@@ -55,9 +67,14 @@ StateInGame.prototype.Destroy = function()
 
 StateInGame.prototype.FixedUpdate = function(dt)
 {
+	if(this.isGameOver)
+	{
+		return
+	}
+
 	this.player.FixedUpdate(dt)
 	ItemsManager.FixedUpdate(dt)
-
+	var oldLife = ScoreManager.life
 	//check collision
 	var collidedItem = ItemsManager.CheckCollision({
 		x:this.player.position.x,
@@ -70,8 +87,22 @@ StateInGame.prototype.FixedUpdate = function(dt)
 
 	if(collidedItem)
 	{
+		if(oldLife > ScoreManager.life)
+		{
+			this.fadeEffect.alpha = 1
+			if(ScoreManager.life < 0)
+			{
+				this.isGameOver = true
+				return
+			}
+			this.player.speed = 0
+			Application.Shake()
+			this.ResetCombo()
+		}
 		ItemsManager.DeactiveItem(collidedItem)
 		if(!this.IsFrenzy()) this.combo++
+		HudManager.UpdateScore(ScoreManager.currentScore)
+		HudManager.UpdateLife(ScoreManager.life)
 	}
 
 	if(this.combo == Defines.MAX_COMBO_COUNT && !this.IsFrenzy())
@@ -96,10 +127,37 @@ StateInGame.prototype.GetPlayerOffsetSpeed = function()
 	return this.player.offsetSpeed
 }
 
+StateInGame.prototype.RestartGame = function()
+{
+	// reset player position
+	this.player.ResetAll()
+
+	ItemsManager.ResetAll()
+	ScoreManager.ResetAll()
+	HudManager.ResetAll()
+
+	this.isGameOver = false
+	this.fadeEffect.alpha = 0
+}
+
 StateInGame.prototype.Update = function(dt)
 {
+	if(this.isGameOver)
+	{
+		if(InputManager.IsTouchDown())
+		{
+			this.RestartGame()
+		}
+		return
+	}
+
+	if(this.fadeEffect.alpha > 0)
+	{
+		this.fadeEffect.alpha -= Defines.RED_FADE_TICKER * dt
+	}
+
 	GroundsManager.Update(dt)
-	DecorationsManager.Update(dt)
+	// DecorationsManager.Update(dt)
 	this.player.Update(dt)
 	ItemsManager.Update(dt)
 }

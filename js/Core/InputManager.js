@@ -130,6 +130,7 @@ InputManager.prototype.IsTouchMove = function()
 
 InputManager.prototype.IsTouchPress = function()
 {
+    console.log("is touch pressed : " + ((this.state & TOUCH_PRESSED) != 0?true:false))
 	return ((this.state & TOUCH_PRESSED) != 0?true:false);
 };
 
@@ -177,6 +178,8 @@ InputManager.prototype.Update = function(dt)
             }
         }
     }
+
+    // console.log("{" + this.deltaX +","+ this.deltaY+"}")
 
     // reset delta
     this.deltaX = this.deltaY = 0

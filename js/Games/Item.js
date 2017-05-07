@@ -3,7 +3,8 @@ const item_names = [
 	"enemy_1",
 	"enemy_2",
 	"enemy_3",
-	"enemy_4"
+	"enemy_4",
+	"enemy_5"
 ]
 
 
@@ -35,6 +36,7 @@ Item.prototype.SetSpeed = function(speed)
 Item.prototype.SetupDragonBones = function(type)
 {
 	this.type = (type < item_names.length)?type:0
+	this.score = (this.type == 0)?Defines.ITEM_SCORE:-1
 	this.localScale = (this.type == 0)?0.5:1
 	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay(item_names[type])
 	this.armatureDisplay.animation.play("idle")
@@ -88,7 +90,7 @@ Item.prototype.CheckCollision = function(box)
 	{
 		if(box.x - (box.width*0.5) < this.position.x && this.position.x < box.x + (box.width*0.5))
 		{
-			if(box.y < this.position.y && this.position.y < box.y + box.height)
+			if(Math.abs(box.y) >= this.position.y && this.position.y + (this.original.height/2) > Math.abs(box.y))
 			{
 				return true
 			}
@@ -113,7 +115,10 @@ Item.prototype.Update = function(dt)
 	if(this.position.z < Camera.GetCameraPosZ())
 	{
 		this.SetActive(false)
-		GameStates.stateInGame.ResetCombo()
+		if(this.type == 0)
+		{
+			GameStates.stateInGame.ResetCombo()
+		}
 	}
 }
 

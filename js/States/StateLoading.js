@@ -21,17 +21,18 @@ StateLoading.prototype.Init = function(){
 		'mainChar_ske'		:'Assets/characters/mainChar_ske.json',
 		'mainChar_tex_data'	:'Assets/characters/mainChar_tex.json',
 		'mainChar_tex'		:'Assets/characters/mainChar_tex.png',
-		'enemy_ske'			:'Assets/characters/Enemy_ske.json',
-		'enemy_tex_data'	:'Assets/characters/Enemy_tex.json',
-		'enemy_tex'			:'Assets/characters/Enemy_tex.png',
 		'coins_ske'			:'Assets/items/coins_ske.json',
 		'coins_tex_data'	:'Assets/items/coins_tex.json',
 		'coins_tex'			:'Assets/items/coins_tex.png',
 		'grounds'			:'Assets/backgrounds/grounds.png',
-		'background'		:'Assets/backgrounds/bg.jpg',
+		'background'		:'Assets/backgrounds/bg.png',
 		'log'				:'Assets/backgrounds/log.png',
 		'rock'				:'Assets/backgrounds/rock.png',
 		'bush'				:'Assets/backgrounds/bush.png',
+		'hud_bg'			:'Assets/backgrounds/hud_bar_bg.png',
+		'hud_live'			:'Assets/backgrounds/hud_bar_live.png',
+		'hud_score'			:'Assets/backgrounds/hud_bar_score.png',
+		'hud_pause'			:'Assets/backgrounds/hud_btn_pause.png',
 	}
 
 	TextureManager.load(textureList, ()=>{

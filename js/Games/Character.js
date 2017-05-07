@@ -29,8 +29,6 @@ var Character = function(){
 	this.velocity = new Vector2()
 	this.accelerator = new Vector2()
 	this.position = new Vector2()
-	this.currentLine = LINE_CENTER
-	this.currentState = STATE_IDLE
 	this.baseX = 0
 	this.scale = 0
 
@@ -43,6 +41,8 @@ var Character = function(){
 	this.frenzyCamOffsetX = 0
 	this.frenzyCamOffsetY = 0
 	this.frenzyCamOffsetZ = 0
+	this.currentLine = LINE_CENTER
+	this.currentState = STATE_IDLE
 
 	this.frenzyState = FRENZY_STATE_NONE
 
@@ -136,6 +136,19 @@ Character.prototype.UpdatePosition = function()
 		this.armatureDisplay.y = Camera.GetDrawY(this.position)
 		// console.log({x:this.armatureDisplay.x, y:this.armatureDisplay.y})
 	}
+}
+
+Character.prototype.ResetAll = function()
+{
+	this.SetPos(Defines.PLAYER_START_POS_X, Defines.PLAYER_START_POS_Y, Defines.PLAYER_START_POS_Z )
+	Camera.CameraUpdatePlayerPos()
+	this.frenzyCamOffsetX = 0
+	this.frenzyCamOffsetY = 0
+	this.frenzyCamOffsetZ = 0
+	this.currentLine = LINE_CENTER
+	this.currentState = STATE_IDLE
+
+	this.frenzyState = FRENZY_STATE_NONE
 }
 
 Character.prototype.SetState = function(state)
@@ -285,7 +298,7 @@ Character.prototype.UpdateFrenzy = function()
 		this.frenzyCamOffsetY 	= Math.max(this.frenzyCamOffsetY, Defines.FRENZY_CAM_OFFSET_Y)
 		this.frenzyCamOffsetZ 	= Math.max(this.frenzyCamOffsetZ, Defines.FRENZY_CAM_OFFSET_Z)
 		console.log(this.frenzyCamOffsetY)
-		if(this.frenzyCamOffsetY == Defines.FRENZY_CAM_OFFSET_Y)
+		if(this.offsetSpeed == Defines.FRENZY_FADE_SPEED)
 		{
 			this.frenzyState = FRENZY_STATE_IDLE
 		}
@@ -338,15 +351,19 @@ Character.prototype.ActiveFrenzy = function()
 
 Character.prototype.Update = function(dt)
 {
+	this.UpdateControl()
 	this.UpdateFrenzyMode(dt)
-	this.speed = (Defines.GAME_SPEED + this.offsetSpeed) * dt
-	this.position.z += this.speed
+	this.speed += Defines.SPEED_RATE
+	if(this.speed > (Defines.GAME_SPEED + this.offsetSpeed))
+		this.speed = (Defines.GAME_SPEED + this.offsetSpeed)
+	this.position.z += this.speed * dt
 	Camera.CameraUpdatePlayerPos(this.frenzyCamOffsetX, this.frenzyCamOffsetY, this.position.z + this.frenzyCamOffsetZ)
 }
 
 Character.prototype.UpdateControl = function()
 {
 	if(InputManager.IsTouchPress()) {
+		console.log("{" + InputManager.deltaX +","+ InputManager.deltaY+"}")
 		if(Math.abs(InputManager.deltaY) > Defines.SWIPE_OFFSET) {
 			if(InputManager.deltaY < 0)
 			{
@@ -365,7 +382,7 @@ Character.prototype.UpdateControl = function()
 				this.MoveLeft()
 			}
 		}
-		InputManager.Reset()
+		//InputManager.Reset()
 	}
 }
 

@@ -13,6 +13,17 @@ function run(deltaTime){
 	deltaTime = deltaTime / (60 * Application.instance.ticker.speed)
 	FixedUpdate(deltaTime)
 	Update(deltaTime)
+
+	if(Application.isShaking)
+	{
+		var randomX = Math.random() * 10
+		var randomY = Math.random() * 10
+		Application.instance.stage.position.set(randomX, randomY)
+		if(--Application.shakeTicker < 0)
+		{
+			Application.isShaking = false
+		}
+	}
 }
 
 function FixedUpdate(deltaTime)

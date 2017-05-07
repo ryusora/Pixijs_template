@@ -1,12 +1,13 @@
 const Item = require("./Item.js")
 const Effect = require("./Effect.js")
-window.ScoreManager = require("./ScoreManager.js")
 
 const TYPE_ITEM 	= 0
 const TYPE_ENEMY_1 	= 1
 const TYPE_ENEMY_2 	= 2
 const TYPE_ENEMY_3 	= 3
 const TYPE_ENEMY_4 	= 4
+const TYPE_ENEMY_5 	= 5
+const TYPE_MAX	 	= 6
 
 var ItemsManager = function()
 {
@@ -71,6 +72,15 @@ ItemsManager.prototype.InitPool = function()
 	}
 	this.items_deactived.push(enemy4_pool)
 
+	var enemy5_pool = []
+	for(let i = 0; i < Defines.ITEMS_POOL; i++)
+	{
+		var item = new Item()
+		item.SetupDragonBones(TYPE_ENEMY_5)
+		enemy5_pool.push(item)
+	}
+	this.items_deactived.push(enemy5_pool)
+
 	for(let i = 0; i < Defines.ITEMS_POOL; i++)
 	{
 		var effect = new Effect()
@@ -88,7 +98,7 @@ ItemsManager.prototype.GetItem = function(type)
 	{
 		// item.SetDisable(false)
 		this.items_actived.push(item)
-		this.frontStage.addChild(item.armatureDisplay)
+		this.frontStage.addChildAt(item.armatureDisplay, 0)
 		item.SetActive(true)
 	}
 	return item;
@@ -105,6 +115,7 @@ ItemsManager.prototype.DeactiveItem = function(item)
 			item.ResetAll()
 			this.items_deactived[item.type].push(item)
 			this.backStage.removeChild(item.armatureDisplay)
+			this.frontStage.removeChild(item.armatureDisplay)
 		}
 		else{
 			console.log(item)
@@ -143,21 +154,14 @@ ItemsManager.prototype.DeactiveEffect = function(effect)
 	}
 }
 
-const type_names = [
-	"item_pool",
-	"enemy1_pool",
-	"enemy2_pool",
-	"enemy3_pool",
-	"enemy4_pool"
-]
 
 ItemsManager.prototype.SpawnItem = function(direction)
 {
-	var type = Math.floor(Math.random() * type_names.length)
+	var type = Math.floor(Math.random() * TYPE_MAX)
 	var item = this.GetItem(type)
 	if(item)
 	{
-		item.SetPos({x:direction,y:10,z:Defines.ITEM_OFFSET_Z + Camera.GetCameraPosZ()})
+		item.SetPos({x:direction,y:0,z:Defines.ITEM_OFFSET_Z + Camera.GetCameraPosZ()})
 	}
 }
 
@@ -241,15 +245,36 @@ ItemsManager.prototype.FixedUpdate = function(dt)
 	}
 }
 
+ItemsManager.prototype.ResetAll = function()
+{
+	var deActivedItems = []
+	for(let idx in this.items_actived)
+	{
+		this.items_actived[idx].active = false
+		deActivedItems.push(this.items_actived[idx])
+	}
+
+	for(let i = 0; i < deActivedItems.length; i++)
+	{
+		this.DeactiveItem(deActivedItems[i])
+	}
+}
+
 ItemsManager.prototype.CheckCollision = function(box)
 {
 	for(let idx in this.items_actived)
 	{
 		if(this.items_actived[idx].CheckCollision(box))
 		{
-			this.SpawnEffectAt(this.items_actived[idx].position)
-			ScoreManager.GetItem(this.items_actived[idx].score, this.items_actived[idx].position)
-
+			// this.SpawnEffectAt(this.items_actived[idx].position)
+			if(this.items_actived[idx].score < 0)
+			{
+				ScoreManager.life--
+			}
+			else
+			{
+				ScoreManager.GetItem(this.items_actived[idx].score, this.items_actived[idx].position)
+			}
 			return this.items_actived[idx]
 		}
 	}
