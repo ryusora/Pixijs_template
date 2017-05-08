@@ -135,6 +135,7 @@ StateInGame.prototype.RestartGame = function()
 	ItemsManager.ResetAll()
 	ScoreManager.ResetAll()
 	HudManager.ResetAll()
+	HudManager.UpdateLife(ScoreManager.life)
 
 	this.isGameOver = false
 	this.fadeEffect.alpha = 0

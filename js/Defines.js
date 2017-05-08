@@ -26,6 +26,9 @@ var Defines = function()
 	this.CENTER_DIRECTION	= {x:0, y:0}
 	this.RIGHT_DIRECTION	= {x:0, y:0}
 
+	// ALIGNMENT
+	this.PLAY_BTN_OFFSET_Y	= 100
+
 	// HUD
 	this.HUD_ITEM_Y				= 78
 	this.HUD_SCORE_OFFSET_X 	= 0

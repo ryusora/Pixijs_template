@@ -10,7 +10,9 @@ var StateLogo = function(){
 StateLogo.prototype.Init = function(){
 	TextureManager.load({
 		'LOGO'		:'Assets/abbott-logo.jpg',
-		'LOADING'	:'Assets/loading-icon.png'
+		'LOADING'	:'Assets/loading-icon.png',
+		'MENU_BG'	:'Assets/main_menu_bg.png',
+		'BTN_PLAY'	:'Assets/btn_play.png'
 	}, ()=>{
 		this.logoSprite = new PIXI.Sprite(TextureManager.getTexture('LOGO'))
 		this.logoSprite.anchor.set(0.5, 0.5)
@@ -49,7 +51,7 @@ StateLogo.prototype.Update = function(dt)
 		}
 		else if(this.ticker < 0)
 		{
-			StatesManager.ChangeState(GameStates.stateLoading)
+			StatesManager.ChangeState(GameStates.stateMainMenu)
 		}
 	}
 }
