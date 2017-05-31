@@ -12,7 +12,11 @@ StateLogo.prototype.Init = function(){
 		'LOGO'		:'Assets/abbott-logo.jpg',
 		'LOADING'	:'Assets/loading-icon.png',
 		'MENU_BG'	:'Assets/main_menu_bg.png',
-		'BTN_PLAY'	:'Assets/btn_play.png'
+		'BTN_PLAY'	:'Assets/btn_play.png',
+		// choose level animation
+		'ChooseCharacters_ske'		:'Assets/Menu/ChooseCharacters/ChooseCharacters_ske.json',
+		'ChooseCharacters_tex_data'	:'Assets/Menu/ChooseCharacters/ChooseCharacters_tex.json',
+		'ChooseCharacters_tex'		:'Assets/Menu/ChooseCharacters/ChooseCharacters_tex.png',
 	}, ()=>{
 		this.logoSprite = new PIXI.Sprite(TextureManager.getTexture('LOGO'))
 		this.logoSprite.anchor.set(0.5, 0.5)

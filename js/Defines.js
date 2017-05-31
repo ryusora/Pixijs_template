@@ -26,6 +26,12 @@ var Defines = function()
 	this.CENTER_DIRECTION	= {x:0, y:0}
 	this.RIGHT_DIRECTION	= {x:0, y:0}
 
+	// STATES
+	// CHOOSE CHARACTERS
+	this.CC_FEMALE_OFFSET_X = Application.getScreenWidth()/2 + 100
+	this.CC_MALE_OFFSET_X 	= Application.getScreenWidth()/2 - 100
+	this.CC_OFFSET_POS_Y	= Application.getScreenHeight()*3/4
+
 	// ALIGNMENT
 	this.PLAY_BTN_OFFSET_Y	= 100
 
