@@ -24,8 +24,9 @@ var ItemsManager = function()
 
 ItemsManager.prototype.InitPool = function()
 {
-	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('coins_ske'))
-	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('coins_tex_data'), TextureManager.getTexture('coins_tex'))
+	// init enemy
+	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('enemy_ske'))
+	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('enemy_tex_data'), TextureManager.getTexture('enemy_tex'))
 
 	var item_pool = []
 	for(let i = 0; i < Defines.ITEMS_POOL; i++)
@@ -80,6 +81,10 @@ ItemsManager.prototype.InitPool = function()
 		enemy5_pool.push(item)
 	}
 	this.items_deactived.push(enemy5_pool)
+
+
+	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('effect_ske'))
+	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('effect_tex_data'), TextureManager.getTexture('effect_tex'))
 
 	for(let i = 0; i < Defines.ITEMS_POOL; i++)
 	{

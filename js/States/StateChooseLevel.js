@@ -1,6 +1,7 @@
 var StateChooseLevel = function()
 {
 	this.isLoadingDone = false
+	this.currentLevelName = "hohap"
 	this.levels = []
 }
 

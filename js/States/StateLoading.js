@@ -16,23 +16,38 @@ StateLoading.prototype.Init = function(){
 	this.stage.addChild(this.loadingIcon)
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
+
+	var characterName = GameStates.stateChooseCharacter.characterName
+	var currentLevel = GameStates.stateChooseLevel.currentLevelName
 	// loading texture
 	var textureList = {
-		'mainChar_ske'		:'Assets/characters/mainChar_ske.json',
-		'mainChar_tex_data'	:'Assets/characters/mainChar_tex.json',
-		'mainChar_tex'		:'Assets/characters/mainChar_tex.png',
-		'coins_ske'			:'Assets/items/coins_ske.json',
-		'coins_tex_data'	:'Assets/items/coins_tex.json',
-		'coins_tex'			:'Assets/items/coins_tex.png',
+		// HUD
+		'hud_bg'			:'Assets/HUD/hud_bar_bg.png',
+		'hud_live'			:'Assets/HUD/hud_bar_live.png',
+		'hud_score'			:'Assets/HUD/hud_bar_score.png',
+		'hud_pause'			:'Assets/HUD/hud_btn_pause.png',
+		// effect
+		'effect_ske'		:'Assets/items/effect_ske.json',
+		'effect_tex_data'	:'Assets/items/effect_tex.json',
+		'effect_tex'		:'Assets/items/effect_tex.png',
+		// Tutorial
+
+		// Character
+		'mainChar_ske'		:'Assets/characters/' + characterName + '/mainChar_ske.json',
+		'mainChar_tex_data'	:'Assets/characters/' + characterName + '/mainChar_tex.json',
+		'mainChar_tex'		:'Assets/characters/' + characterName + '/mainChar_tex.png',
+		// BG
+		'background'		:'Assets/backgrounds/' + currentLevel + '/bg.png',
+		// Enemy
+		'enemy_ske'			:'Assets/enemy/' + currentLevel + '/enemy_ske.json',
+		'enemy_tex_data'	:'Assets/enemy/' + currentLevel + '/enemy_tex.json',
+		'enemy_tex'			:'Assets/enemy/' + currentLevel + '/enemy_tex.png',
+		/*
 		'grounds'			:'Assets/backgrounds/grounds.png',
-		'background'		:'Assets/backgrounds/bg.png',
 		'log'				:'Assets/backgrounds/log.png',
 		'rock'				:'Assets/backgrounds/rock.png',
 		'bush'				:'Assets/backgrounds/bush.png',
-		'hud_bg'			:'Assets/backgrounds/hud_bar_bg.png',
-		'hud_live'			:'Assets/backgrounds/hud_bar_live.png',
-		'hud_score'			:'Assets/backgrounds/hud_bar_score.png',
-		'hud_pause'			:'Assets/backgrounds/hud_btn_pause.png',
+		*/
 	}
 
 	TextureManager.load(textureList, ()=>{
