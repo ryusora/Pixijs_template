@@ -1,13 +1,11 @@
 const Item = require("./Item.js")
 const Effect = require("./Effect.js")
 
-const TYPE_ITEM 	= 0
-const TYPE_ENEMY_1 	= 1
-const TYPE_ENEMY_2 	= 2
-const TYPE_ENEMY_3 	= 3
-const TYPE_ENEMY_4 	= 4
-const TYPE_ENEMY_5 	= 5
-const TYPE_MAX	 	= 6
+const TYPE_ITEM_MAX		= 9
+const TYPE_ENEMY_MAX	= 7
+
+const ITEM_IDX 	= 0
+const ENEMY_IDX = 1
 
 var ItemsManager = function()
 {
@@ -28,60 +26,37 @@ ItemsManager.prototype.InitPool = function()
 	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('enemy_ske'))
 	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('enemy_tex_data'), TextureManager.getTexture('enemy_tex'))
 
-	var item_pool = []
-	for(let i = 0; i < Defines.ITEMS_POOL; i++)
+	var items = []
+	for(let i = 0; i < TYPE_ITEM_MAX; i++)
 	{
-		var item = new Item()
-		item.SetupDragonBones(TYPE_ITEM)
-		item_pool.push(item)
+		var pool = []
+		for(let j = 0; j < Defines.ITEMS_POOL; j++)
+		{
+			var item = new Item()
+			item.SetupDragonBones("item_" + (i+1))
+			item.type = ITEM_IDX
+			item.index = i
+			pool.push(item)
+		}
+		items.push(pool)
 	}
-	this.items_deactived.push(item_pool)
+	this.items_deactived.push(items)
 
-	var enemy1_pool = []
-	for(let i = 0; i < Defines.ITEMS_POOL; i++)
+	var enemies = []
+	for(let i = 0; i < TYPE_ENEMY_MAX; i++)
 	{
-		var item = new Item()
-		item.SetupDragonBones(TYPE_ENEMY_1)
-		enemy1_pool.push(item)
+		var pool = []
+		for(let i = 0; i < Defines.ITEMS_POOL; i++)
+		{
+			var item = new Item()
+			item.SetupDragonBones("enemy_" + (i+1))
+			item.type = ENEMY_IDX
+			item.index = i
+			pool.push(item)
+		}
+		enemies.push(pool)
 	}
-	this.items_deactived.push(enemy1_pool)
-
-	var enemy2_pool = []
-	for(let i = 0; i < Defines.ITEMS_POOL; i++)
-	{
-		var item = new Item()
-		item.SetupDragonBones(TYPE_ENEMY_2)
-		enemy2_pool.push(item)
-	}
-	this.items_deactived.push(enemy2_pool)
-
-	var enemy3_pool = []
-	for(let i = 0; i < Defines.ITEMS_POOL; i++)
-	{
-		var item = new Item()
-		item.SetupDragonBones(TYPE_ENEMY_3)
-		enemy3_pool.push(item)
-	}
-	this.items_deactived.push(enemy3_pool)
-
-	var enemy4_pool = []
-	for(let i = 0; i < Defines.ITEMS_POOL; i++)
-	{
-		var item = new Item()
-		item.SetupDragonBones(TYPE_ENEMY_4)
-		enemy4_pool.push(item)
-	}
-	this.items_deactived.push(enemy4_pool)
-
-	var enemy5_pool = []
-	for(let i = 0; i < Defines.ITEMS_POOL; i++)
-	{
-		var item = new Item()
-		item.SetupDragonBones(TYPE_ENEMY_5)
-		enemy5_pool.push(item)
-	}
-	this.items_deactived.push(enemy5_pool)
-
+	this.items_deactived.push(enemies)
 
 	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('effect_ske'))
 	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('effect_tex_data'), TextureManager.getTexture('effect_tex'))
@@ -98,7 +73,8 @@ ItemsManager.prototype.InitPool = function()
 
 ItemsManager.prototype.GetItem = function(type)
 {
-	var item = this.items_deactived[type].pop()
+	var random = Math.floor(Math.random()*((type == ENEMY_IDX)?TYPE_ENEMY_MAX:TYPE_ITEM_MAX))
+	var item = this.items_deactived[type][random].pop()
 	if(item)
 	{
 		// item.SetDisable(false)
@@ -118,7 +94,7 @@ ItemsManager.prototype.DeactiveItem = function(item)
 		if(item)
 		{
 			item.ResetAll()
-			this.items_deactived[item.type].push(item)
+			this.items_deactived[item.type][item.index].push(item)
 			this.backStage.removeChild(item.armatureDisplay)
 			this.frontStage.removeChild(item.armatureDisplay)
 		}
@@ -159,10 +135,10 @@ ItemsManager.prototype.DeactiveEffect = function(effect)
 	}
 }
 
-
+const MAX_PERCENT = 1000
 ItemsManager.prototype.SpawnItem = function(direction)
 {
-	var type = Math.floor(Math.random() * TYPE_MAX)
+	var type = (Math.floor(Math.random() * MAX_PERCENT)>700)?ENEMY_IDX:ITEM_IDX
 	var item = this.GetItem(type)
 	if(item)
 	{

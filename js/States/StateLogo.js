@@ -13,6 +13,11 @@ StateLogo.prototype.Init = function(){
 		'LOADING'	:'Assets/loading-icon.png',
 		'MENU_BG'	:'Assets/main_menu_bg.png',
 		'BTN_PLAY'	:'Assets/btn_play.png',
+		'BTN_START'	:'Assets/btn_play.png',
+		// Menu Choose Characters
+		'BTN_ACTIVE'	:'Assets/btn_play.png',
+		'BTN_DEACTIVE'	:'Assets/btn_play.png',
+		
 		// choose level animation
 		'ChooseCharacters_ske'		:'Assets/Menu/ChooseCharacters/ChooseCharacters_ske.json',
 		'ChooseCharacters_tex_data'	:'Assets/Menu/ChooseCharacters/ChooseCharacters_tex.json',
@@ -55,7 +60,7 @@ StateLogo.prototype.Update = function(dt)
 		}
 		else if(this.ticker < 0)
 		{
-			StatesManager.ChangeState(GameStates.stateMainMenu)
+			StatesManager.ChangeState(GameStates.stateChooseCharacter)
 		}
 	}
 }

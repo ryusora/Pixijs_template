@@ -9,7 +9,6 @@ StateResult.prototype.Init = function()
 	this.stage = new PIXI.Container()
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
-
 	// init leaderboards
 }
 

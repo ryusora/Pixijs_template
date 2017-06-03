@@ -13,10 +13,37 @@ StateChooseCharacter.prototype.Init = function()
 	this.frontStage = new PIXI.Container()
 	this.backStage = new PIXI.Container()
 
+	// init background
+	var bg = new PIXI.Sprite(TextureManager.getTexture('MENU_BG'))
+	bg.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
+	bg.anchor.set(0.5, 0.5)
+
+	var defaultStyle = new PIXI.TextStyle({
+        fontFamily: 'Arial',
+        fontSize: 50,
+        fontStyle: 'italic',
+        fontWeight: 'bold',
+        fill: ['#ffffff', '#ff0000'], // gradient
+        stroke: '#4a1850',
+        strokeThickness: 5,
+        dropShadow: true,
+        dropShadowColor: '#000000',
+        dropShadowBlur: 4,
+        dropShadowAngle: Math.PI / 6,
+        dropShadowDistance: 6,
+        wordWrap: true,
+        wordWrapWidth: 750
+    })
+	var title = new PIXI.Text("Chọn Nhân Vật", defaultStyle)
+	title.anchor.set(0.5, 0.5)
+	title.position.set(Application.getScreenWidth()*0.5, 100)
+
+	this.stage.addChild(bg)
+	this.stage.addChild(title)
 	this.stage.addChild(this.backStage)
 	this.stage.addChild(this.frontStage)
 	this.InitCharacters()
-	//this.InitButton()
+	this.InitButton()
 
     this.isLoadingDone = true
 }
@@ -48,7 +75,7 @@ StateChooseCharacter.prototype.InitButton = function()
 {
     // init male button
     var btnMale = new PIXI.Sprite(TextureManager.getTexture('BTN_ACTIVE'))
-	btnMale.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight() - Defines.PLAY_BTN_OFFSET_Y)
+	btnMale.position.set(Defines.CC_MALE_BTN_OFFSET_X, Defines.CHOOSE_BTN_OFFSET_Y)
 	btnMale.anchor.set(0.5, 0.5)
 	btnMale.interactive = true
 	btnMale.on('pointerdown', ()=>{
@@ -57,12 +84,13 @@ StateChooseCharacter.prototype.InitButton = function()
             // update sprite
             this.characterName = "male"
         }
+		StatesManager.ChangeState(GameStates.stateChooseLevel)
 	})
 
     this.stage.addChild(btnMale)
 
     var btnFemale = new PIXI.Sprite(TextureManager.getTexture('BTN_DEACTIVE'))
-	btnFemale.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight() - Defines.PLAY_BTN_OFFSET_Y)
+	btnFemale.position.set(Defines.CC_FEMALE_BTN_OFFSET_X, Defines.CHOOSE_BTN_OFFSET_Y)
 	btnFemale.anchor.set(0.5, 0.5)
 	btnFemale.interactive = true
 	btnFemale.on('pointerdown', ()=>{
@@ -71,6 +99,7 @@ StateChooseCharacter.prototype.InitButton = function()
             // update sprite
             this.characterName = "female"
         }
+		StatesManager.ChangeState(GameStates.stateChooseLevel)
 	})
 
 	this.stage.addChild(btnFemale)

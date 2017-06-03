@@ -31,6 +31,7 @@ StateLoading.prototype.Init = function(){
 		'effect_tex_data'	:'Assets/items/effect_tex.json',
 		'effect_tex'		:'Assets/items/effect_tex.png',
 		// Tutorial
+		'TUTORIAL'			:'Assets/Menu/Cach_choi.jpg',
 
 		// Character
 		'mainChar_ske'		:'Assets/characters/' + characterName + '/mainChar_ske.json',
@@ -71,7 +72,7 @@ StateLoading.prototype.Update = function(dt)
 	if(this.isLoadingDone)
 	{
 		// do something when textures are loaded
-		StatesManager.ChangeState(GameStates.stateInGame)
+		StatesManager.ChangeState(GameStates.stateTutorial)
 		// StatesManager.ChangeState(GameStates.stateQuiz)
 	}
 	else

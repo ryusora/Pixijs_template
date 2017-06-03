@@ -1,13 +1,3 @@
-const item_names = [
-	"item",
-	"enemy_1",
-	"enemy_2",
-	"enemy_3",
-	"enemy_4",
-	"enemy_5"
-]
-
-
 var Item = function()
 {
 	this.armatureDisplay = null
@@ -33,12 +23,10 @@ Item.prototype.SetSpeed = function(speed)
 	this.speed = speed
 }
 
-Item.prototype.SetupDragonBones = function(type)
+Item.prototype.SetupDragonBones = function(item_name)
 {
-	this.type = (type < item_names.length)?type:0
-	this.score = (this.type == 0)?Defines.ITEM_SCORE:-1
-	this.localScale = (this.type == 0)?0.5:1
-	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay(item_names[type])
+	this.score = (item_name.startsWith("item"))?Defines.ITEM_SCORE:-1
+	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay(item_name)
 	this.armatureDisplay.animation.play("idle")
 
 	this.original = {width:this.armatureDisplay.armature.display.width, height:this.armatureDisplay.armature.display.height}

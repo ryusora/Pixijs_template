@@ -47,7 +47,7 @@ var Character = function(){
 	this.frenzyState = FRENZY_STATE_NONE
 
 	document.addEventListener('keydown', e=>{
-		console.log(e.keyCode)
+		//console.log(e.keyCode)
 		switch(e.keyCode)
 		{
 			case 37: // left
@@ -162,7 +162,7 @@ Character.prototype.SetState = function(state)
 Character.prototype.SetAnimation = function(anim_name, loop = true)
 {
 	var playTime = loop?-1:1
-	console.log("play anim : " + anim_name + " with play time : " + playTime)
+	//console.log("play anim : " + anim_name + " with play time : " + playTime)
 	this.armatureDisplay.animation.play(anim_name, playTime);
 }
 
@@ -297,8 +297,8 @@ Character.prototype.UpdateFrenzy = function()
 		this.frenzyCamOffsetX 	= Math.min(this.frenzyCamOffsetX, Defines.FRENZY_CAM_OFFSET_X)
 		this.frenzyCamOffsetY 	= Math.max(this.frenzyCamOffsetY, Defines.FRENZY_CAM_OFFSET_Y)
 		this.frenzyCamOffsetZ 	= Math.max(this.frenzyCamOffsetZ, Defines.FRENZY_CAM_OFFSET_Z)
-		console.log(this.frenzyCamOffsetY)
-		if(this.offsetSpeed == Defines.FRENZY_FADE_SPEED)
+		//console.log(this.frenzyCamOffsetY)
+		if(this.offsetSpeed == Defines.MAX_FRENZY_OFFSET_SPEED)
 		{
 			this.frenzyState = FRENZY_STATE_IDLE
 		}
@@ -309,8 +309,8 @@ Character.prototype.UpdateFrenzy = function()
 		this.frenzyCamOffsetX 	= Math.max(this.frenzyCamOffsetX, 0)
 		this.frenzyCamOffsetY 	= Math.min(this.frenzyCamOffsetY, 0)
 		this.frenzyCamOffsetZ 	= Math.min(this.frenzyCamOffsetZ, 0)
-		console.log(this.frenzyCamOffsetY)
-		if(this.frenzyCamOffsetY == 0)
+		//console.log(this.frenzyCamOffsetY)
+		if(this.offsetSpeed == 0)
 		{
 			this.frenzyState = FRENZY_STATE_NONE
 		}
@@ -344,6 +344,7 @@ Character.prototype.UpdateFrenzyMode = function(dt)
 
 Character.prototype.ActiveFrenzy = function()
 {
+	console.log("Active Frenzy")
 	this.frenzyState = FRENZY_STATE_FORWARD
 	this.frenzyTimer = Defines.FRENZY_TIME
 }
@@ -363,7 +364,7 @@ Character.prototype.Update = function(dt)
 Character.prototype.UpdateControl = function()
 {
 	if(InputManager.IsTouchPress()) {
-		console.log("{" + InputManager.deltaX +","+ InputManager.deltaY+"}")
+		//console.log("{" + InputManager.deltaX +","+ InputManager.deltaY+"}")
 		if(Math.abs(InputManager.deltaY) > Defines.SWIPE_OFFSET) {
 			if(InputManager.deltaY < 0)
 			{

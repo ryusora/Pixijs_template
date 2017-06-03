@@ -53,6 +53,8 @@ StateInGame.prototype.Init = function()
 
 	this.stage.addChild(this.fadeEffect)
 	this.stage.addChild(HudManager.stage)
+
+	this.isGameOver = false
 }
 
 StateInGame.prototype.IsLoadDone = function()
@@ -93,6 +95,7 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			if(ScoreManager.life < 0)
 			{
 				this.isGameOver = true
+				StatesManager.ChangeState(GameStates.stateChooseCharacter)
 				return
 			}
 			this.player.speed = 0
@@ -143,14 +146,7 @@ StateInGame.prototype.RestartGame = function()
 
 StateInGame.prototype.Update = function(dt)
 {
-	if(this.isGameOver)
-	{
-		if(InputManager.IsTouchDown())
-		{
-			this.RestartGame()
-		}
-		return
-	}
+	if(this.isGameOver)	return
 
 	if(this.fadeEffect.alpha > 0)
 	{

@@ -3,7 +3,7 @@ const Vector2 = require('./Games/Vector2.js')
 var Defines = function()
 {
 	// defines game
-	this.GAME_SPEED			= 50
+	this.GAME_SPEED			= 80
 	this.SPEED_RATE			= 1.5
 
 	this.INITIAL_LIFE		= 3
@@ -28,9 +28,12 @@ var Defines = function()
 
 	// STATES
 	// CHOOSE CHARACTERS
-	this.CC_FEMALE_OFFSET_X = Application.getScreenWidth()/2 + 100
-	this.CC_MALE_OFFSET_X 	= Application.getScreenWidth()/2 - 100
-	this.CC_OFFSET_POS_Y	= Application.getScreenHeight()*3/4
+	this.CC_FEMALE_OFFSET_X 	= Application.getScreenWidth()/2 + 100
+	this.CC_MALE_OFFSET_X 		= Application.getScreenWidth()/2 - 100
+	this.CC_OFFSET_POS_Y		= Application.getScreenHeight()*3/4
+	this.CHOOSE_BTN_OFFSET_Y 	= Application.getScreenHeight() - 300
+	this.CC_MALE_BTN_OFFSET_X 	= Application.getScreenWidth()*0.5 - 100
+	this.CC_FEMALE_BTN_OFFSET_X = Application.getScreenWidth()*0.5 + 100
 
 	// ALIGNMENT
 	this.PLAY_BTN_OFFSET_Y	= 100

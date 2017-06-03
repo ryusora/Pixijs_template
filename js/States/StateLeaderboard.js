@@ -1,9 +1,9 @@
-var StateScore = function(){
+var StateLeaderboard = function(){
 	this.isLoadingDone = false
 	this.stage = new PIXI.Container()
 }
 
-StateScore.prototype.Init = function(){
+StateLeaderboard.prototype.Init = function(){
 	var bg = new PIXI.Sprite(TextureManager.getTexture('MENU_BG'))
 	bg.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
 	bg.anchor.set(0.5, 0.5)
@@ -17,18 +17,18 @@ StateScore.prototype.Init = function(){
 	this.stage.addChild(btnPlay)
 }
 
-StateScore.prototype.IsLoadDone = function()
+StateLeaderboard.prototype.IsLoadDone = function()
 {
 	return isLoadingDone
 }
 
-StateScore.prototype.Destroy = function(){
+StateLeaderboard.prototype.Destroy = function(){
 	this.stage = null
 }
 
-StateScore.prototype.Update = function(dt)
+StateLeaderboard.prototype.Update = function(dt)
 {
 
 }
 
-module.exports = StateScore
+module.exports = StateLeaderboard
