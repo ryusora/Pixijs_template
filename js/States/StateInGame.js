@@ -25,6 +25,7 @@ StateInGame.prototype.ResetCombo = function()
 
 StateInGame.prototype.Init = function()
 {
+	
 	this.stage = new PIXI.Container()
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
@@ -95,7 +96,7 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			if(ScoreManager.life < 0)
 			{
 				this.isGameOver = true
-				StatesManager.ChangeState(GameStates.stateChooseCharacter)
+				StatesManager.ChangeState(GameStates.stateQuiz)
 				return
 			}
 			this.player.speed = 0

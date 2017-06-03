@@ -6,7 +6,7 @@ var Defines = function()
 	this.GAME_SPEED			= 80
 	this.SPEED_RATE			= 1.5
 
-	this.INITIAL_LIFE		= 3
+	this.INITIAL_LIFE		= 1
 	this.RED_FADE_TICKER	= 1
 
 	this.DECORATION_TIMER	= 0.5
@@ -34,6 +34,10 @@ var Defines = function()
 	this.CHOOSE_BTN_OFFSET_Y 	= Application.getScreenHeight() - 300
 	this.CC_MALE_BTN_OFFSET_X 	= Application.getScreenWidth()*0.5 - 100
 	this.CC_FEMALE_BTN_OFFSET_X = Application.getScreenWidth()*0.5 + 100
+
+	// QUIZ
+	this.QUIZ_OFFSET_Y			= 300
+	this.QUIZ_OFFSET_Y_SPACING	= 100
 
 	// ALIGNMENT
 	this.PLAY_BTN_OFFSET_Y	= 100

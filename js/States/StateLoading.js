@@ -32,6 +32,9 @@ StateLoading.prototype.Init = function(){
 		'effect_tex'		:'Assets/items/effect_tex.png',
 		// Tutorial
 		'TUTORIAL'			:'Assets/Menu/Cach_choi.jpg',
+		// QUIZ
+		'answer_body'		:'Assets/Menu/QUIZ/button.png',
+		'question_body'		:'Assets/Menu/QUIZ/button.png',
 
 		// Character
 		'mainChar_ske'		:'Assets/characters/' + characterName + '/mainChar_ske.json',
