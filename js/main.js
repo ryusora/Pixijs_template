@@ -1,5 +1,8 @@
+String.prototype.startsWith||(String.prototype.startsWith=function(a,b){return this.substr(b||0,a.length)===a})
+
 require('pixi.js')
 window.firebase = require('firebase')
+window.QuizManager = require('./Quiz/QuizManager.js')
 
 // dragonBones defines
 window.dragonBones			= window.dragonBones || {};

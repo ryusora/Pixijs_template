@@ -6,7 +6,7 @@ var Defines = function()
 	this.GAME_SPEED			= 80
 	this.SPEED_RATE			= 1.5
 
-	this.INITIAL_LIFE		= 1
+	this.INITIAL_LIFE		= 3
 	this.RED_FADE_TICKER	= 1
 
 	this.DECORATION_TIMER	= 0.5
@@ -28,16 +28,21 @@ var Defines = function()
 
 	// STATES
 	// CHOOSE CHARACTERS
-	this.CC_FEMALE_OFFSET_X 	= Application.getScreenWidth()/2 + 100
-	this.CC_MALE_OFFSET_X 		= Application.getScreenWidth()/2 - 100
+	this.CC_FEMALE_OFFSET_X 	= Application.getScreenWidth()*0.5 + 100
+	this.CC_MALE_OFFSET_X 		= Application.getScreenWidth()*0.5 - 100
 	this.CC_OFFSET_POS_Y		= Application.getScreenHeight()*3/4
 	this.CHOOSE_BTN_OFFSET_Y 	= Application.getScreenHeight() - 300
-	this.CC_MALE_BTN_OFFSET_X 	= Application.getScreenWidth()*0.5 - 100
-	this.CC_FEMALE_BTN_OFFSET_X = Application.getScreenWidth()*0.5 + 100
+	this.CC_MALE_BTN_OFFSET_X 	= Application.getScreenWidth()*0.5 - 80
+	this.CC_FEMALE_BTN_OFFSET_X = Application.getScreenWidth()*0.5 + 80
+
+	// CHOOSE LEVELS
+	this.CL_BACK_BTN_OFFSET_X	= 100
 
 	// QUIZ
-	this.QUIZ_OFFSET_Y			= 300
-	this.QUIZ_OFFSET_Y_SPACING	= 100
+	this.QUIZ_OFFSET_Y			= -300
+	this.QUIZ_ANSWERS_OFFSET_Y	= -150
+	this.QUIZ_ANSWERS_OFFSET_X	= -200
+	this.QUIZ_OFFSET_Y_SPACING	= 90
 
 	// ALIGNMENT
 	this.PLAY_BTN_OFFSET_Y	= 100

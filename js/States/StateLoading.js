@@ -5,6 +5,9 @@ var StateLoading = function(){
 }
 
 StateLoading.prototype.Init = function(){
+
+	if(this.isLoadingDone) return
+	
 	// init loading icon
 	this.loadingIcon = new PIXI.Sprite(TextureManager.getTexture('LOADING'))
 	this.loadingIcon.width = 100
@@ -33,8 +36,8 @@ StateLoading.prototype.Init = function(){
 		// Tutorial
 		'TUTORIAL'			:'Assets/Menu/Cach_choi.jpg',
 		// QUIZ
-		'answer_body'		:'Assets/Menu/QUIZ/button.png',
-		'question_body'		:'Assets/Menu/QUIZ/button.png',
+		'square'		:'Assets/Menu/QUIZ/square.png',
+		'checkmark'		:'Assets/Menu/QUIZ/mark.png',
 
 		// Character
 		'mainChar_ske'		:'Assets/characters/' + characterName + '/mainChar_ske.json',
@@ -43,9 +46,9 @@ StateLoading.prototype.Init = function(){
 		// BG
 		'background'		:'Assets/backgrounds/' + currentLevel + '/bg.png',
 		// Enemy
-		'enemy_ske'			:'Assets/enemy/' + currentLevel + '/enemy_ske.json',
-		'enemy_tex_data'	:'Assets/enemy/' + currentLevel + '/enemy_tex.json',
-		'enemy_tex'			:'Assets/enemy/' + currentLevel + '/enemy_tex.png',
+		'enemy_ske'			:'Assets/Enemy/' + currentLevel + '/enemy_ske.json',
+		'enemy_tex_data'	:'Assets/Enemy/' + currentLevel + '/enemy_tex.json',
+		'enemy_tex'			:'Assets/Enemy/' + currentLevel + '/enemy_tex.png',
 		/*
 		'grounds'			:'Assets/backgrounds/grounds.png',
 		'log'				:'Assets/backgrounds/log.png',

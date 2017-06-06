@@ -4,7 +4,14 @@ function FireBaseMgr()
 	this.database = null
 	this.currentUser = null
 	this.quizList = null
-	this.isInitialized = false
+	this.initializeStep = 0
+	this.userPref = null
+	this.listUsers = null
+}
+
+FireBaseMgr.prototype.IsInitialized = function()
+{
+	return (this.initializeStep > 1)
 }
 
 FireBaseMgr.prototype.initialize = function()
@@ -28,20 +35,27 @@ FireBaseMgr.prototype.initialize = function()
 	this.defaultApp = firebase.initializeApp(config)
 	this.database = firebase.database()
 	// sign-in anonymously
-	firebase.auth().signInAnonymously().catch(function(error) {
-		// Handle Errors here.
-		console.log('login failed with reason ' + error.message)
-	});
+	// firebase.auth().signInAnonymously().catch(function(error) {
+	// 	// Handle Errors here.
+	// 	console.log('login failed with reason ' + error.message)
+	// });
 	firebase.auth().onAuthStateChanged(user=>{
 		if(user)
 		{
 			this.currentUser = user
 			console.log("log in success : " + user.uid )
+			// get userPref
+			this.userPref = this.database.ref("users")
+			this.userPref.once("value", (snapshot) =>{
+				console.log("load users : " + JSON.stringify(snapshot.val()) )
+				this.listUsers = snapshot.val()
+				this.initializeStep++
+			})
 			// get QUIZs database
 			this.database.ref("quizs").once("value", (snapshot) =>{
-				console.log("load : " + JSON.stringify(snapshot.val()) )
+				console.log("load quizs : " + JSON.stringify(snapshot.val()) )
 				this.quizList = snapshot.val()
-				this.isInitialized = true
+				this.initializeStep++
 			}, (reason)=>
 			{
 				// failed
@@ -50,7 +64,12 @@ FireBaseMgr.prototype.initialize = function()
 		}
 		else
 		{
-			console.log("User is signed out")
+			console.log("Try to sign in again");
+			// sign-in anonymously
+			firebase.auth().signInAnonymously().catch(function(error) {
+				// Handle Errors here.
+				console.log('login failed with reason ' + error.message)
+			});
 		}
 	})
 }
@@ -60,43 +79,12 @@ FireBaseMgr.prototype.isLogin = function()
 	return (this.currentUser != null)
 }
 
-FireBaseMgr.prototype.login = function(isGoogle = true)
-{
-	// login request
-	var provider = (isGoogle?(new firebase.auth.GoogleAuthProvider()):(new firebase.auth.FacebookAuthProvider()));
-
-	firebase.auth().signInWithPopup(provider).then((result) => {
-		this.currentUser = result.user
-		console.log('sign in successful with user : ' + this.currentUser.displayName)
-		this.saveRecord(1)
-		console.log(this.getRecord())
-	}).catch(function(error) {
-		// Handle Errors here.
-		console.error(error.message)
-		// sign in with anonymous if error
-		firebase.auth().signinAnonymously().catch(error=>{
-			console.error(error.message)
-		})
-
-		firebase.auth().onAuthStateChanged(user=>{
-			if(user)
-			{
-				this.currentUser = user
-			}
-			else
-			{
-				console.log("User is signed out")
-			}
-		})
-	});
-}
-
-FireBaseMgr.prototype.saveRecord = function(record)
+FireBaseMgr.prototype.SaveRecord = function(record)
 {
 	if(this.currentUser)
 	{
-		this.database.ref('users/' + this.currentUser.uid).set({
-			highestScore:record
+		this.userPref.child(this.currentUser.uid).set({
+			"score":record
 		})
 	}
 }

@@ -4,7 +4,8 @@ window.ItemsManager			= require('../Games/ItemsManager.js')
 window.GroundsManager		= require('../Games/GroundsManager.js')
 // window.DecorationsManager 	= require('../Games/DecorationsManager.js')
 window.HudManager 			= require('../Games/HudManager.js')
-
+const StateQuiz				= require('./StateQuiz.js')
+var quizPopup = null
 var StateInGame = function()
 {
 	this.isLoadingDone = false
@@ -16,6 +17,9 @@ var StateInGame = function()
 	this.fadeEffect.beginFill(0xFF0000)
 	this.fadeEffect.drawRect(0,0,Application.getScreenWidth(), Application.getScreenHeight())
 	this.fadeEffect.alpha = 0
+	this.invincible = 0
+	this.invincibleTicker = 0
+	this.alreadyInit = false
 }
 
 StateInGame.prototype.ResetCombo = function()
@@ -25,7 +29,20 @@ StateInGame.prototype.ResetCombo = function()
 
 StateInGame.prototype.Init = function()
 {
-	
+	// init quiz
+	if(quizPopup == null)
+	{
+		quizPopup = new StateQuiz()
+	}
+
+	if(this.alreadyInit)
+	{
+		Application.addChild(this.stage)
+		 return
+	}
+
+	this.alreadyInit = true
+
 	this.stage = new PIXI.Container()
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
@@ -56,6 +73,8 @@ StateInGame.prototype.Init = function()
 	this.stage.addChild(HudManager.stage)
 
 	this.isGameOver = false
+	
+	this.RestartGame()
 }
 
 StateInGame.prototype.IsLoadDone = function()
@@ -92,16 +111,31 @@ StateInGame.prototype.FixedUpdate = function(dt)
 	{
 		if(oldLife > ScoreManager.life)
 		{
-			this.fadeEffect.alpha = 1
-			if(ScoreManager.life < 0)
+
+			if(!this.invincible)
 			{
+				this.player.speed = 0
+				Application.Shake()
+				this.ResetCombo()
+				this.fadeEffect.alpha = 1
+			}
+			else
+			{
+				ScoreManager.life++
+			}
+
+			if(ScoreManager.life <= 0 && !this.invincible)
+			{
+				FireBaseManager.SaveRecord(ScoreManager.currentScore)
 				this.isGameOver = true
-				StatesManager.ChangeState(GameStates.stateQuiz)
+				//StatesManager.ChangeState(GameStates.stateQuiz)
+				//StatesManager.ChangeState(GameStates.stateResult)
+				if(!quizPopup.Show())
+				{
+					StatesManager.ChangeState(GameStates.stateResult)
+				}
 				return
 			}
-			this.player.speed = 0
-			Application.Shake()
-			this.ResetCombo()
 		}
 		ItemsManager.DeactiveItem(collidedItem)
 		if(!this.IsFrenzy()) this.combo++
@@ -145,9 +179,28 @@ StateInGame.prototype.RestartGame = function()
 	this.fadeEffect.alpha = 0
 }
 
+StateInGame.prototype.Revive = function()
+{
+	this.invincible = true
+	this.invincibleTicker = 3
+	this.isGameOver = false
+	this.player.ResetAll()
+	HudManager.UpdateLife(++ScoreManager.life)
+}
+
 StateInGame.prototype.Update = function(dt)
 {
 	if(this.isGameOver)	return
+
+	if(this.invincibleTicker > 0)
+	{
+		this.invincibleTicker -= 1 * dt
+		if(this.invincibleTicker < 0)
+		{
+			this.invincible = false
+			this.invincibleTicker = 0
+		}
+	}
 
 	if(this.fadeEffect.alpha > 0)
 	{

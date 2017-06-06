@@ -2,7 +2,7 @@ const Item = require("./Item.js")
 const Effect = require("./Effect.js")
 
 const TYPE_ITEM_MAX		= 9
-const TYPE_ENEMY_MAX	= 7
+const TYPE_ENEMY_MAX	= 8
 
 const ITEM_IDX 	= 0
 const ENEMY_IDX = 1
@@ -46,7 +46,7 @@ ItemsManager.prototype.InitPool = function()
 	for(let i = 0; i < TYPE_ENEMY_MAX; i++)
 	{
 		var pool = []
-		for(let i = 0; i < Defines.ITEMS_POOL; i++)
+		for(let j = 0; j < Defines.ITEMS_POOL; j++)
 		{
 			var item = new Item()
 			item.SetupDragonBones("enemy_" + (i+1))
@@ -81,6 +81,10 @@ ItemsManager.prototype.GetItem = function(type)
 		this.items_actived.push(item)
 		this.frontStage.addChildAt(item.armatureDisplay, 0)
 		item.SetActive(true)
+	}
+	else
+	{
+		console.log("item null : " + type + "/" +random)
 	}
 	return item;
 }
@@ -138,7 +142,7 @@ ItemsManager.prototype.DeactiveEffect = function(effect)
 const MAX_PERCENT = 1000
 ItemsManager.prototype.SpawnItem = function(direction)
 {
-	var type = (Math.floor(Math.random() * MAX_PERCENT)>700)?ENEMY_IDX:ITEM_IDX
+	var type = (Math.floor(Math.random() * MAX_PERCENT)>400)?ENEMY_IDX:ITEM_IDX
 	var item = this.GetItem(type)
 	if(item)
 	{
