@@ -18,6 +18,20 @@ var GameState = function(){
 	this.stateChooseLevel = new StateChooseLevel()
 	this.stateResult = new StateResult()
 	this.stateTutorial = new StateTutorial()
+
+	this.GetCharacterName = function()
+	{
+		if(this.stateChooseCharacter != null && typeof(this.stateChooseCharacter) != 'undefined')
+			return this.stateChooseCharacter.characterName
+		return "male"
+	}
+
+	this.GetLevel = function()
+	{
+		if(this.stateChooseLevel != null && typeof(this.stateChooseLevel) != 'undefined')
+			return this.stateChooseLevel.currentLevelName
+		return "HoHap"
+	}
 }
 
 module.exports = new GameState()

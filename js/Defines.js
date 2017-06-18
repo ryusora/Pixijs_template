@@ -37,6 +37,8 @@ var Defines = function()
 
 	// CHOOSE LEVELS
 	this.CL_BACK_BTN_OFFSET_X	= 100
+	this.CL_CHARACTER_OFFSET_Y	= 100
+	this.CL_CIRCLE_OFFSET_Y		= 0
 
 	// QUIZ
 	this.QUIZ_OFFSET_Y			= -300

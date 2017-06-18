@@ -1,6 +1,7 @@
 var StateResult = function()
 {
 	this.isLoadingDone = false
+	this.MAX_USERS = 5
 }
 
 StateResult.prototype.Init = function()
@@ -18,9 +19,9 @@ StateResult.prototype.Init = function()
 	board.position.set(Application.getScreenWidth()*0.5, 10)
 	board.anchor.set(0.5, 0)
 
-	var male = new PIXI.Sprite(TextureManager.getTexture('rs_male'))
-	male.position.set(Application.getScreenWidth()*0.5 + 260, 210)
-	male.anchor.set(0.5, 0)
+	var character = new PIXI.Sprite(TextureManager.getTexture('cl_characters_' + GameStates.GetCharacterName()))
+	character.position.set(Application.getScreenWidth()*0.5 + 260, 210)
+	character.anchor.set(0.5, 0)
 
 	var title = new PIXI.Sprite(TextureManager.getTexture("rs_title"))
 	title.position.set(Application.getScreenWidth()*0.5, 180)
@@ -70,7 +71,7 @@ StateResult.prototype.Init = function()
 
 	this.stage.addChild(bg)
 	this.stage.addChild(board)
-	this.stage.addChild(male)
+	this.stage.addChild(character)
 	this.stage.addChild(title)
 	this.stage.addChild(score_border)
 	this.stage.addChild(replayBtn)
@@ -101,7 +102,7 @@ StateResult.prototype.InitLeaderboard = function()
         wordWrap: true,
         wordWrapWidth: 750
 	})
-	var topten = new PIXI.Text("TOP 5 NGƯỜI CAO ĐIỂM NHẤT", normalStyle)
+	var topten = new PIXI.Text("TOP "+ this.MAX_USERS +" NGƯỜI CAO ĐIỂM NHẤT", normalStyle)
 	topten.position.set(Application.getScreenWidth()*0.5, 0)
 	topten.anchor.set(0.5, 0.5)
 
@@ -122,7 +123,7 @@ StateResult.prototype.InitLeaderboard = function()
 	
 	if(users != null)
 	{
-		var length = users.length
+		var length = users.length>this.MAX_USERS?this.MAX_USERS:users.length
 		quickSort(users, 0, length - 1)
 		console.log(users)
 		for(let i = 0; i < length; i++)

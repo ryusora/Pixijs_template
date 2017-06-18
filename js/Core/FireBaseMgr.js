@@ -88,13 +88,14 @@ FireBaseMgr.prototype.SaveRecord = function(record)
 		})
 
 		// update score
-		this.listUsers[this.currentUser.uid].score = record
+		if(this.listUsers != null)
+			this.listUsers[this.currentUser.uid].score = record
 	}
 }
 
 FireBaseMgr.prototype.getRecord = function()
 {
-	if(this.currentUser)
+	if(this.currentUser && this.listUsers != null)
 	{
 		return this.listUsers[this.currentUser.uid].score
 	}
