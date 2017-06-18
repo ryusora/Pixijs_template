@@ -79,25 +79,36 @@ FireBaseMgr.prototype.isLogin = function()
 	return (this.currentUser != null)
 }
 
-FireBaseMgr.prototype.SaveRecord = function(record)
+FireBaseMgr.prototype.SaveRecord = function(record, state)
 {
 	if(this.currentUser)
 	{
+		
 		this.userPref.child(this.currentUser.uid).set({
-			"score":record
+			state:{
+				"score":record
+			}
 		})
 
 		// update score
 		if(this.listUsers != null)
-			this.listUsers[this.currentUser.uid].score = record
+		{
+			if(typeof(this.listUsers[this.currentUser.uid]) != 'undefined' || this.listUsers[this.currentUser.uid].totalScore == null || typeof(this.listUsers[this.currentUser.uid].totalScore) == 'undefined')
+				this.listUsers[this.currentUser.uid].totalScore = 0
+			this.listUsers[this.currentUser.uid].totalScore += record
+		}
+
+		this.userPref.child(this.currentUser.uid).set({
+			"totalScore":this.listUsers[this.currentUser.uid].totalScore
+		})
 	}
 }
 
 FireBaseMgr.prototype.getRecord = function()
 {
-	if(this.currentUser && this.listUsers != null)
+	if(this.currentUser && this.listUsers != null && typeof(this.listUsers[this.currentUser.uid]) != 'undefined' && this.listUsers[this.currentUser.uid].totalScore != null)
 	{
-		return this.listUsers[this.currentUser.uid].score
+		return this.listUsers[this.currentUser.uid].totalScore
 	}
 	return 0
 }

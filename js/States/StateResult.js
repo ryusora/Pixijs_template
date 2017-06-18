@@ -24,16 +24,30 @@ StateResult.prototype.Init = function()
 	character.anchor.set(0.5, 0)
 
 	var title = new PIXI.Sprite(TextureManager.getTexture("rs_title"))
-	title.position.set(Application.getScreenWidth()*0.5, 180)
+	title.position.set(Application.getScreenWidth()*0.5, 130)
 	title.anchor.set(0.5, 0)
 
 	var score_border = new PIXI.Sprite(TextureManager.getTexture("rs_score_border"))
-	score_border.position.set(Application.getScreenWidth()*0.5 - 65, 330)
+	score_border.position.set(Application.getScreenWidth()*0.5 - 65, 280)
 	score_border.anchor.set(0.5, 0.5)
 
-	var score = new PIXI.Text(ScoreManager.currentScore  + "", new PIXI.TextStyle({
+	var hanhTrinh_title = new PIXI.Sprite(TextureManager.getTexture("rs_diem_hanh_trinh"))
+	hanhTrinh_title.position.set(Application.getScreenWidth()*0.5 - 65, 400)
+	hanhTrinh_title.anchor.set(0.5, 0.5)
+	var total_score = new PIXI.Text(FireBaseManager.getRecord()  + "", new PIXI.TextStyle({
 		fontFamily: 'Arial',
         fontSize: 70,
+        fontStyle: 'normal',
+        fontWeight: 'bold',
+        fill: ['#51b2d2'], // red
+        wordWrap: true,
+        wordWrapWidth: 750
+	}))
+	total_score.position.set(Application.getScreenWidth()*0.5 - 65, 450)
+	total_score.anchor.set(0.5, 0.5)
+	var score = new PIXI.Text(ScoreManager.currentScore  + "", new PIXI.TextStyle({
+		fontFamily: 'Arial',
+        fontSize: 85,
         fontStyle: 'normal',
         fontWeight: 'bold',
         fill: ['#ee175a'], // red
@@ -44,7 +58,7 @@ StateResult.prototype.Init = function()
 	score.anchor.set(0.5, 0.5)
 	score_border.addChild(score)
 	var x = Application.getScreenWidth()*0.5 - 280
-	var y = 330 + 180
+	var y = 330 + 230
 	var replayBtn = new PIXI.Sprite(TextureManager.getTexture("rs_replay_btn"))
 	replayBtn.position.set(x, y)
 	replayBtn.anchor.set(0, 0.5)
@@ -54,7 +68,7 @@ StateResult.prototype.Init = function()
 		StatesManager.ChangeState(GameStates.stateInGame)
 	})
 
-	y+=150
+	y+=130
 
 	var chooseLevelBtn = new PIXI.Sprite(TextureManager.getTexture("rs_chooseLevel"))
 	chooseLevelBtn.position.set(x, y)
@@ -74,6 +88,8 @@ StateResult.prototype.Init = function()
 	this.stage.addChild(character)
 	this.stage.addChild(title)
 	this.stage.addChild(score_border)
+	this.stage.addChild(hanhTrinh_title)
+	this.stage.addChild(total_score)
 	this.stage.addChild(replayBtn)
 	this.stage.addChild(chooseLevelBtn)
 	this.stage.addChild(this.leaderboardStage)
@@ -137,7 +153,7 @@ StateResult.prototype.InitLeaderboard = function()
 			name.position.set(name_x, y)
 			name.anchor.set(0, 0.5)
 
-			var score = new PIXI.Text(FireBaseManager.listUsers[users[i]].score + "", style)
+			var score = new PIXI.Text(FireBaseManager.listUsers[users[i]].totalScore + "", style)
 			score.position.set(score_x, y)
 			score.anchor.set(0, 0.5)
 

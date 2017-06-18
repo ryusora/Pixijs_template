@@ -129,11 +129,10 @@ StateInGame.prototype.FixedUpdate = function(dt)
 				var latestScore = FireBaseManager.getRecord()
 				if(latestScore < ScoreManager.currentScore)
 				{
-					FireBaseManager.SaveRecord(ScoreManager.currentScore)
+					FireBaseManager.SaveRecord(ScoreManager.currentScore, GameStates.GetLevel())
 				}
 				this.isGameOver = true
-				//StatesManager.ChangeState(GameStates.stateQuiz)
-				//StatesManager.ChangeState(GameStates.stateResult)
+				this.player.ResetAll()
 				if(!quizPopup.Show())
 				{
 					StatesManager.ChangeState(GameStates.stateResult)

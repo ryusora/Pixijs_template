@@ -5,9 +5,11 @@ var StateChooseLevel = function()
 	this.isLoadingDone = false
 	this.currentLevelName = "HoHap"
 	this.levels = []
+	this.ListNextPosition = []
 	this.chosenLevel = null
 	this.isAnimating = false
 	this.backStage = new PIXI.Container()
+	this.midStage = new PIXI.Container()
 	this.frontStage = new PIXI.Container()
 	this.stage = null
 	this.ListLevelsName = [
@@ -29,6 +31,8 @@ var StateChooseLevel = function()
 		{x:Application.getScreenWidth()*0.5 + 280, y:Application.getScreenHeight()*0.5 - 200, scale:0.7},
 		{x:Application.getScreenWidth()*0.5 + 280, y:Application.getScreenHeight()*0.5 - 30, scale:0.8},
 	]
+
+	this.ListIndex = []
 }
 
 StateChooseLevel.prototype.Init = function()
@@ -86,6 +90,7 @@ StateChooseLevel.prototype.Init = function()
 		this.stage.addChild(header)
 		this.stage.addChild(title)
 		this.stage.addChild(this.backStage)
+		this.stage.addChild(this.midStage)
 		this.stage.addChild(this.frontStage)
 		this.stage.addChild(btnPlay)
 		this.stage.addChild(btnBack)
@@ -136,15 +141,48 @@ StateChooseLevel.prototype.initLevels = function()
 			{
 				this.frontStage.addChild(level.sprite)
 			}
+
+			this.ListIndex.push(i)
+			this.ListNextPosition.push(i)
 		}
 	}
 
-	this.backStage.addChild(this.character)
-	this.backStage.addChild(this.circle)
+	this.midStage.addChild(this.character)
+	this.midStage.addChild(this.circle)
 }
 StateChooseLevel.prototype.OnTouchPress = function(idx)
 {
-	console.log("touch at : " + idx)
+	if(this.currentLevelName != this.ListLevelsName[idx])
+	{
+		this.currentLevelName = this.ListLevelsName[idx]
+		var sub = this.ListIndex[0] - idx
+		var steps = Math.abs(sub)
+		// reset scale 
+		this.levels[this.ListIndex[0]].SetScale(1)
+		this.levels[this.ListIndex[0]].SetActive(false)
+
+		this.frontStage.addChild(this.levels[this.ListIndex[3]].sprite)
+		this.frontStage.addChild(this.levels[this.ListIndex[4]].sprite)
+
+		// update list index
+		for(var i = 0; i < this.MAX_LEVELS; i++)
+		{
+			this.ListIndex[i] = (idx + i)%this.MAX_LEVELS
+		}
+		
+		this.backStage.addChild(this.levels[this.ListIndex[3]].sprite)
+		this.backStage.addChild(this.levels[this.ListIndex[4]].sprite)
+
+		this.levels[this.ListIndex[0]].SetScale(1)
+		this.levels[this.ListIndex[0]].SetActive(true)
+
+		// Update position
+		this.isAnimating = true
+		for(let i = 0; i < this.MAX_LEVELS; i++)
+		{
+			this.levels[this.ListIndex[i]].MoveTo(this.ListPosition[i])
+		}
+	}
 }
 
 StateChooseLevel.prototype.IsLoadDone = function()
@@ -160,15 +198,30 @@ var ticker = 0
 var sub = 1
 StateChooseLevel.prototype.Update = function(dt)
 {
-	if(this.levels[0] != null && !this.isAnimating)
+	if(this.isAnimating)
 	{
-		// update chosen level
-		if(ticker > 0.5 || ticker < 0)
+		this.isAnimating = false
+		for(let i = 0; i < this.MAX_LEVELS; i++)
 		{
-			sub*=-1
+			this.levels[i].Update(dt)
+			if(!this.levels[i].IsDoneMoving())
+			{
+				this.isAnimating = true
+			}
 		}
-		ticker+=0.02*sub
-		this.levels[0].sprite.scale.set(1 + ticker, 1 + ticker)
+	}
+	else
+	{
+		if(this.levels[this.ListIndex[0]] != null)
+		{
+			// update chosen level
+			if(ticker > 0.5 || ticker < 0)
+			{
+				sub*=-1
+			}
+			ticker+=0.02*sub
+			this.levels[this.ListIndex[0]].sprite.scale.set(1 + ticker, 1 + ticker)
+		}
 	}
 }
 

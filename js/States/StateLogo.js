@@ -52,11 +52,27 @@ StateLogo.prototype.Init = function(){
 		'rs_start'			:'Assets/Menu/Leaderboard/Star.png',
 		'rs_title'			:'Assets/Menu/Leaderboard/title.png',
 		'rs_score_border'	:'Assets/Menu/Leaderboard/score_border.png',
+		'rs_diem_hanh_trinh':'Assets/Menu/Leaderboard/diemhanhtrinh.png',
 
 		// choose character animation
 		'ChooseCharacters_ske'		:'Assets/Menu/ChooseCharacters/ChooseCharacters_ske.json',
 		'ChooseCharacters_tex_data'	:'Assets/Menu/ChooseCharacters/ChooseCharacters_tex.json',
 		'ChooseCharacters_tex'		:'Assets/Menu/ChooseCharacters/ChooseCharacters_tex.png',
+
+		// HUD
+		'hud_bg'			:'Assets/HUD/hud_bar_bg.png',
+		'hud_live'			:'Assets/HUD/hud_bar_live.png',
+		'hud_score'			:'Assets/HUD/hud_bar_score.png',
+		'hud_pause'			:'Assets/HUD/hud_btn_pause.png',
+		// effect
+		'effect_ske'		:'Assets/items/effect_ske.json',
+		'effect_tex_data'	:'Assets/items/effect_tex.json',
+		'effect_tex'		:'Assets/items/effect_tex.png',
+		// Tutorial
+		'TUTORIAL'			:'Assets/Menu/Cach_choi.jpg',
+		// QUIZ
+		'square'		:'Assets/Menu/QUIZ/square.png',
+		'checkmark'		:'Assets/Menu/QUIZ/mark.png',
 	}, ()=>{
 		this.logoSprite = new PIXI.Sprite(TextureManager.getTexture('LOGO'))
 		this.logoSprite.anchor.set(0.5, 0.5)

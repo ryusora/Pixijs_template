@@ -1,6 +1,6 @@
-var Vector2 = function(){
-	this.x = 0
-	this.y = 0
+var Vector2 = function(x = 0, y = 0){
+	this.x = x
+	this.y = y
 }
 
 Vector2.prototype.add = function(vec2)

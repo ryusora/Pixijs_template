@@ -5,9 +5,11 @@ var StateLoading = function(){
 }
 
 StateLoading.prototype.Init = function(){
+	if(this.isLoadingDone)
+	{
+		TextureManager.ResetLoader()
+	}
 
-	if(this.isLoadingDone) return
-	
 	// init loading icon
 	this.loadingIcon = new PIXI.Sprite(TextureManager.getTexture('LOADING'))
 	this.loadingIcon.width = 100
@@ -24,21 +26,6 @@ StateLoading.prototype.Init = function(){
 	var currentLevel = GameStates.stateChooseLevel.currentLevelName
 	// loading texture
 	var textureList = {
-		// HUD
-		'hud_bg'			:'Assets/HUD/hud_bar_bg.png',
-		'hud_live'			:'Assets/HUD/hud_bar_live.png',
-		'hud_score'			:'Assets/HUD/hud_bar_score.png',
-		'hud_pause'			:'Assets/HUD/hud_btn_pause.png',
-		// effect
-		'effect_ske'		:'Assets/items/effect_ske.json',
-		'effect_tex_data'	:'Assets/items/effect_tex.json',
-		'effect_tex'		:'Assets/items/effect_tex.png',
-		// Tutorial
-		'TUTORIAL'			:'Assets/Menu/Cach_choi.jpg',
-		// QUIZ
-		'square'		:'Assets/Menu/QUIZ/square.png',
-		'checkmark'		:'Assets/Menu/QUIZ/mark.png',
-
 		// Character
 		'mainChar_ske'		:'Assets/characters/' + characterName + '/mainChar_ske.json',
 		'mainChar_tex_data'	:'Assets/characters/' + characterName + '/mainChar_tex.json',
@@ -49,14 +36,7 @@ StateLoading.prototype.Init = function(){
 		'enemy_ske'			:'Assets/Enemy/' + currentLevel + '/enemy_ske.json',
 		'enemy_tex_data'	:'Assets/Enemy/' + currentLevel + '/enemy_tex.json',
 		'enemy_tex'			:'Assets/Enemy/' + currentLevel + '/enemy_tex.png',
-		/*
-		'grounds'			:'Assets/backgrounds/grounds.png',
-		'log'				:'Assets/backgrounds/log.png',
-		'rock'				:'Assets/backgrounds/rock.png',
-		'bush'				:'Assets/backgrounds/bush.png',
-		*/
 	}
-
 	TextureManager.load(textureList, ()=>{
 		this.isLoadingDone = true
 	})
