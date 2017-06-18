@@ -87,11 +87,21 @@ StateResult.prototype.InitLeaderboard = function()
         fontSize: 30,
         fontStyle: 'normal',
         fontWeight: 'bold',
-        fill: ['#ee175a'], // red
+        fill: ['#ee175a'],
         wordWrap: true,
         wordWrapWidth: 750
 	})
-	var topten = new PIXI.Text("TOP 10 NGƯỜI CAO ĐIỂM NHẤT", normalStyle)
+
+	var myStyle = new PIXI.TextStyle({
+		fontFamily: 'Arial',
+        fontSize: 30,
+        fontStyle: 'normal',
+        fontWeight: 'bold',
+        fill: ['#5a17ee'],
+        wordWrap: true,
+        wordWrapWidth: 750
+	})
+	var topten = new PIXI.Text("TOP 5 NGƯỜI CAO ĐIỂM NHẤT", normalStyle)
 	topten.position.set(Application.getScreenWidth()*0.5, 0)
 	topten.anchor.set(0.5, 0.5)
 
@@ -110,19 +120,18 @@ StateResult.prototype.InitLeaderboard = function()
 		users = null
 	}
 	
-	console.log(users)
 	if(users != null)
 	{
 		var length = users.length
+		quickSort(users, 0, length - 1)
+		console.log(users)
 		for(let i = 0; i < length; i++)
 		{
-			var style = normalStyle
+			var style = (users[i] != FireBaseManager.currentUser.uid)?normalStyle:myStyle
 			var stt = new PIXI.Text((i+1) + ".", style)
 			stt.position.set(stt_x, y)
 			stt.anchor.set(1, 0.5)
 			var strName = (users[i].length > 5)? users[i].substring(0, 5) + '.':users[i]
-			console.log(users[i])
-			console.log(FireBaseManager.listUsers[users[i]].score)
 			var name = new PIXI.Text(strName + "", style)
 			name.position.set(name_x, y)
 			name.anchor.set(0, 0.5)
@@ -155,6 +164,46 @@ StateResult.prototype.Update = function(dt)
 	{
 		
 	}
+}
+
+////////////////////////////
+var partition = function(arr, left, right)
+{
+	var i = left, j = right;
+	var tmp;
+	var pivot = FireBaseManager.listUsers[arr[Math.floor((left + right) / 2)]].score// arr[(left + right) / 2];
+
+	while (i <= j) {
+		var iScore, jScore
+		iScore = FireBaseManager.listUsers[arr[i]].score
+		while (iScore > pivot)
+		{
+			i++;
+			iScore = FireBaseManager.listUsers[arr[i]].score
+		}
+		jScore = FireBaseManager.listUsers[arr[j]].score
+		while (jScore < pivot){
+			j--
+			jScore = FireBaseManager.listUsers[arr[j]].score
+		}
+		if (i <= j) {
+		tmp = arr[i];
+		arr[i] = arr[j];
+		arr[j] = tmp;
+		i++;
+		j--;
+		}
+	}
+
+	return i;
+}
+
+var quickSort = function(arr, left, right) {
+	var index = partition(arr, left, right)
+	if (left < index - 1)
+		quickSort(arr, left, index - 1)
+	if (index < right)
+		quickSort(arr, index, right)
 }
 
 module.exports = StateResult

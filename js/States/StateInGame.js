@@ -126,7 +126,11 @@ StateInGame.prototype.FixedUpdate = function(dt)
 
 			if(ScoreManager.life <= 0 && !this.invincible)
 			{
-				FireBaseManager.SaveRecord(ScoreManager.currentScore)
+				var latestScore = FireBaseManager.getRecord()
+				if(latestScore < ScoreManager.currentScore)
+				{
+					FireBaseManager.SaveRecord(ScoreManager.currentScore)
+				}
 				this.isGameOver = true
 				//StatesManager.ChangeState(GameStates.stateQuiz)
 				//StatesManager.ChangeState(GameStates.stateResult)

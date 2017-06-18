@@ -86,6 +86,9 @@ FireBaseMgr.prototype.SaveRecord = function(record)
 		this.userPref.child(this.currentUser.uid).set({
 			"score":record
 		})
+
+		// update score
+		this.listUsers[this.currentUser.uid].score = record
 	}
 }
 
@@ -93,28 +96,9 @@ FireBaseMgr.prototype.getRecord = function()
 {
 	if(this.currentUser)
 	{
-		var score = 0
-		var job = []
-		job.push( new Promise( (resolve, reject) =>{
-			this.database.ref('users/' + this.currentUser.uid).once('value').then(snapshot=>{
-				score = snapshot.val().highestScore
-				resolve(true)
-			})
-		}))
-		var next = false
-		Promise.all(job).then(_=>{
-			next = true
-		}).catch(e=>{
-			console.log(e)
-		})
-		while(!next)
-		{
-			// do something
-			console.log('count')
-		}
-		return score
+		return this.listUsers[this.currentUser.uid].score
 	}
-	return null
+	return 0
 }
 
 module.exports = new FireBaseMgr()
