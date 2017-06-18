@@ -20,6 +20,14 @@ function StatesManager()
 		}
 	}
 
+	this.FixedUpdate = function(dt)
+	{
+		if(this.currentState != null && this.currentState.FixedUpdate)
+		{
+			this.currentState.FixedUpdate(dt)
+		}
+	}
+
 	this.Update = function(dt)
 	{
 		if(this.currentState != null)

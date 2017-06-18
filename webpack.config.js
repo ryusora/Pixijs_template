@@ -25,7 +25,7 @@ module.exports =
          exclude: /node_modules/,
          query:
          {
-            presets: [ 'es2015' ],
+            presets: [ 'es2015', 'stage-0' ],
             plugins:
             [
                'babel-plugin-syntax-flow',
@@ -52,10 +52,9 @@ module.exports =
 
 if (enviroment == 'development')
 {
-   console.log('[Development Plugins]', 'HotModuleReplacementPlugin', 'NoEmitOnErrorsPlugin');
+   console.log('[Development Plugins]', 'HotModuleReplacementPlugin');
    module.exports.plugins.push(
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoEmitOnErrorsPlugin()
+      new webpack.HotModuleReplacementPlugin()
    )
 }
 else
