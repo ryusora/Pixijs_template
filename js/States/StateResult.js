@@ -188,20 +188,20 @@ var partition = function(arr, left, right)
 {
 	var i = left, j = right;
 	var tmp;
-	var pivot = FireBaseManager.listUsers[arr[Math.floor((left + right) / 2)]].score// arr[(left + right) / 2];
+	var pivot = FireBaseManager.listUsers[arr[Math.floor((left + right) / 2)]].totalScore// arr[(left + right) / 2];
 
 	while (i <= j) {
 		var iScore, jScore
-		iScore = FireBaseManager.listUsers[arr[i]].score
+		iScore = FireBaseManager.listUsers[arr[i]].totalScore
 		while (iScore > pivot)
 		{
 			i++;
-			iScore = FireBaseManager.listUsers[arr[i]].score
+			iScore = FireBaseManager.listUsers[arr[i]].totalScore
 		}
-		jScore = FireBaseManager.listUsers[arr[j]].score
+		jScore = FireBaseManager.listUsers[arr[j]].totalScore
 		while (jScore < pivot){
 			j--
-			jScore = FireBaseManager.listUsers[arr[j]].score
+			jScore = FireBaseManager.listUsers[arr[j]].totalScore
 		}
 		if (i <= j) {
 		tmp = arr[i];

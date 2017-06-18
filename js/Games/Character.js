@@ -149,6 +149,7 @@ Character.prototype.ResetAll = function()
 	this.currentState = STATE_IDLE
 
 	this.frenzyState = FRENZY_STATE_NONE
+	InputManager.Reset()
 }
 
 Character.prototype.SetState = function(state)

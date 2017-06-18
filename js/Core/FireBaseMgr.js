@@ -93,7 +93,7 @@ FireBaseMgr.prototype.SaveRecord = function(record, state)
 		// update score
 		if(this.listUsers != null)
 		{
-			if(typeof(this.listUsers[this.currentUser.uid]) != 'undefined' || this.listUsers[this.currentUser.uid].totalScore == null || typeof(this.listUsers[this.currentUser.uid].totalScore) == 'undefined')
+			if(typeof(this.listUsers[this.currentUser.uid]) == 'undefined' || typeof(this.listUsers[this.currentUser.uid].totalScore) == 'undefined')
 				this.listUsers[this.currentUser.uid].totalScore = 0
 			this.listUsers[this.currentUser.uid].totalScore += record
 		}
