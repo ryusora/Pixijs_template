@@ -79,8 +79,8 @@ var Character = function(){
 
 Character.prototype.SetupDragonBones = function()
 {
-	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('mainChar_ske'));
-	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('mainChar_tex_data'), TextureManager.getTexture('mainChar_tex'));
+	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData(GameStates.GetCharacterName() + '_mainChar_ske'));
+	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData(GameStates.GetCharacterName() + '_mainChar_tex_data'), TextureManager.getTexture(GameStates.GetCharacterName() + '_mainChar_tex'));
 
 	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay("mainCharacter");
 	this.armatureDisplay.animation.play(ANIM_RUN);

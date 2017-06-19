@@ -8,6 +8,11 @@ const StateQuiz				= require('./StateQuiz.js')
 var quizPopup = null
 var StateInGame = function()
 {
+	this.ResetAll()
+}
+
+StateInGame.prototype.ResetAll = function()
+{
 	this.isLoadingDone = false
 	this.player = null
 	this.stage = null
@@ -35,13 +40,13 @@ StateInGame.prototype.Init = function()
 		quizPopup = new StateQuiz()
 	}
 
-	if(this.alreadyInit)
-	{
-		Application.addChild(this.stage)
-		 return
-	}
+	// if(this.alreadyInit)
+	// {
+	// 	Application.addChild(this.stage)
+	// 	return
+	// }
 
-	this.alreadyInit = true
+	// this.alreadyInit = true
 
 	this.stage = new PIXI.Container()
 	Application.addChild(this.stage)
@@ -73,8 +78,6 @@ StateInGame.prototype.Init = function()
 	this.stage.addChild(HudManager.stage)
 
 	this.isGameOver = false
-	
-	this.RestartGame()
 }
 
 StateInGame.prototype.IsLoadDone = function()
@@ -85,6 +88,7 @@ StateInGame.prototype.IsLoadDone = function()
 StateInGame.prototype.Destroy = function()
 {
 	Application.removeChild(this.stage)
+	this.ResetAll()
 }
 
 StateInGame.prototype.FixedUpdate = function(dt)
@@ -171,15 +175,16 @@ StateInGame.prototype.GetPlayerOffsetSpeed = function()
 StateInGame.prototype.RestartGame = function()
 {
 	// reset player position
-	this.player.ResetAll()
+	// this.player.ResetAll()
 
-	ItemsManager.ResetAll()
+	// ItemsManager.ResetAll()
+	ItemsManager.initialize()
 	ScoreManager.ResetAll()
 	HudManager.ResetAll()
 	HudManager.UpdateLife(ScoreManager.life)
 
-	this.isGameOver = false
-	this.fadeEffect.alpha = 0
+	// this.isGameOver = false
+	// this.fadeEffect.alpha = 0
 }
 
 StateInGame.prototype.Revive = function()

@@ -9,6 +9,11 @@ const ENEMY_IDX = 1
 
 var ItemsManager = function()
 {
+	this.initialize()
+}
+
+ItemsManager.prototype.initialize = function()
+{
 	this.items_deactived = []
 	this.items_actived = []
 	this.effects_actived = []
@@ -23,8 +28,8 @@ var ItemsManager = function()
 ItemsManager.prototype.InitPool = function()
 {
 	// init enemy
-	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('enemy_ske'))
-	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('enemy_tex_data'), TextureManager.getTexture('enemy_tex'))
+	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData(GameStates.GetLevel() + '_enemy_ske'))
+	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData(GameStates.GetLevel() + '_enemy_tex_data'), TextureManager.getTexture(GameStates.GetLevel() + '_enemy_tex'))
 
 	var items = []
 	for(let i = 0; i < TYPE_ITEM_MAX; i++)
