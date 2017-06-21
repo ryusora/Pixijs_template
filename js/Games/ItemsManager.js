@@ -1,7 +1,7 @@
 const Item = require("./Item.js")
 const Effect = require("./Effect.js")
 
-const TYPE_ITEM_MAX		= 9
+const TYPE_ITEM_MAX		= 10
 const TYPE_ENEMY_MAX	= 8
 
 const ITEM_IDX 	= 0
@@ -38,7 +38,14 @@ ItemsManager.prototype.InitPool = function()
 		for(let j = 0; j < Defines.ITEMS_POOL; j++)
 		{
 			var item = new Item()
-			item.SetupDragonBones("item_" + (i+1))
+			if(i < TYPE_ITEM_MAX - 1)
+			{
+				item.SetupDragonBones("item_" + (i+1))
+			}
+			else
+			{
+				item.SetupDragonBones("lucky_item")
+			}
 			item.type = ITEM_IDX
 			item.index = i
 			pool.push(item)
@@ -249,14 +256,16 @@ ItemsManager.prototype.CheckCollision = function(box)
 	{
 		if(this.items_actived[idx].CheckCollision(box))
 		{
-			// this.SpawnEffectAt(this.items_actived[idx].position)
-			if(this.items_actived[idx].score < 0)
+			if(!this.items_actived[idx].isLuckyItem)
 			{
-				ScoreManager.life--
-			}
-			else
-			{
-				ScoreManager.GetItem(this.items_actived[idx].score, this.items_actived[idx].position)
+				if(this.items_actived[idx].score < 0)
+				{
+					ScoreManager.life--
+				}
+				else
+				{
+					ScoreManager.GetItem(this.items_actived[idx].score, this.items_actived[idx].position)
+				}
 			}
 			return this.items_actived[idx]
 		}

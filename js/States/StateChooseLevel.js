@@ -75,7 +75,10 @@ StateChooseLevel.prototype.Init = function()
 		btnPlay.anchor.set(0.5, 0.5)
 		btnPlay.interactive = true
 		btnPlay.on('pointerdown', ()=>{
-			StatesManager.ChangeState(GameStates.stateLoading)
+			if(this.currentLevelName != "DacBiet")
+			{
+				StatesManager.ChangeState(GameStates.stateLoading)
+			}
 		})
 
 		var btnBack = new PIXI.Sprite(TextureManager.getTexture('cl_back_btn'))
@@ -127,6 +130,7 @@ StateChooseLevel.prototype.initLevels = function()
 		for(let i = 0; i < this.MAX_LEVELS; i++)
 		{
 			var level = new LevelItem(this.ListLevelsName[i], this.ListPosition[i])
+			level.SetActive((i==0))
 			this.levels.push(level)
 			level.sprite.interactive = true
 			level.sprite.on('pointerdown', ((index)=>{
@@ -155,8 +159,6 @@ StateChooseLevel.prototype.OnTouchPress = function(idx)
 	if(this.currentLevelName != this.ListLevelsName[idx])
 	{
 		this.currentLevelName = this.ListLevelsName[idx]
-		var sub = this.ListIndex[0] - idx
-		var steps = Math.abs(sub)
 		// reset scale 
 		this.levels[this.ListIndex[0]].SetScale(1)
 		this.levels[this.ListIndex[0]].SetActive(false)

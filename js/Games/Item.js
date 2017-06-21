@@ -11,6 +11,7 @@ var Item = function()
 	this.shouldPutBackStage = false
 	this.score = Defines.ITEM_SCORE
 	this.type = -1
+	this.isLuckyItem = false
 }
 
 Item.prototype.SetActive = function(actived)
@@ -25,7 +26,9 @@ Item.prototype.SetSpeed = function(speed)
 
 Item.prototype.SetupDragonBones = function(item_name)
 {
-	this.score = (item_name.startsWith("item"))?Defines.ITEM_SCORE:-1
+	this.isLuckyItem = (item_name == "lucky_item")
+	if(!this.isLuckyItem)
+		this.score = (item_name.startsWith("item"))?Defines.ITEM_SCORE:-1
 	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay(item_name)
 	this.armatureDisplay.animation.play("idle")
 
@@ -103,10 +106,6 @@ Item.prototype.Update = function(dt)
 	if(this.position.z < Camera.GetCameraPosZ())
 	{
 		this.SetActive(false)
-		if(this.type == 0)
-		{
-			GameStates.stateInGame.ResetCombo()
-		}
 	}
 }
 

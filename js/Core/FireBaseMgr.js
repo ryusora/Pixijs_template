@@ -106,11 +106,6 @@ FireBaseMgr.prototype.SaveRecord = function(record, state)
 
 		
 		this.currentUserPref.child(state).set(this.currentUserData)
-
-		this.currentUserPref.child(state).once('value', (snapshot)=>{
-			console.log("abc : " + JSON.stringify(snapshot.val()))
-		})
-
 		this.currentUserPref.set({
 			"totalScore":this.currentUserData.totalScore
 		})
@@ -120,8 +115,6 @@ FireBaseMgr.prototype.SaveRecord = function(record, state)
 			console.log(snapshot.val())
 			this.listUsers = snapshot.val()
 		})
-
-		this.userPref.once('value')
 	}
 }
 

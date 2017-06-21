@@ -107,7 +107,6 @@ StateInGame.prototype.FixedUpdate = function(dt)
 	{
 		if(oldLife > ScoreManager.life)
 		{
-
 			if(!this.invincible)
 			{
 				this.player.speed = 0
@@ -137,15 +136,9 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			}
 		}
 		ItemsManager.DeactiveItem(collidedItem)
-		if(!this.IsFrenzy()) this.combo++
+		if(collidedItem.isLuckyItem) this.player.ActiveFrenzy()
 		HudManager.UpdateScore(ScoreManager.currentScore)
 		HudManager.UpdateLife(ScoreManager.life)
-	}
-
-	if(this.combo == Defines.MAX_COMBO_COUNT && !this.IsFrenzy())
-	{
-		this.combo = 0
-		this.player.ActiveFrenzy()
 	}
 }
 
