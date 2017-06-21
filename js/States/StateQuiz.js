@@ -5,7 +5,6 @@ var StateQuiz = function()
 	this.stage = new PIXI.Container()
 	Application.Align(this.stage)
 
-    
 	// init background
 	var bg = new PIXI.Sprite(TextureManager.getTexture('MENU_BG'))
 	bg.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
@@ -15,8 +14,6 @@ var StateQuiz = function()
 	this.board.position.set(Application.getScreenWidth()*0.5,Application.getScreenHeight()*0.5)
 	this.board.anchor.set(0.5, 0.5)
     this.currentIndex = 0
-
-    this.count = 0
     
     this.currentQuiz = QuizManager.GetQuiz(this.currentIndex)
     if(this.currentQuiz)
@@ -36,28 +33,12 @@ var StateQuiz = function()
             // check correct answer
             if(this.currentQuiz.correct_answer == this.chosenAnswer)
             {
-                if(++this.count > 2)
-                {
-                    GameStates.stateInGame.Revive()
-                    this.count = 0
-                    return
-                }
-                this.currentIndex++
+                GameStates.stateInGame.Revive()
                 if(this.currentIndex >= QuizManager.GetQuizCount()) this.currentIndex = 0
-
-                this.Show(false)
             }
             else 
             {
-                this.count = 0
-                if(this.count >= 1)
-                {
-                    GameStates.stateInGame.Revive()
-                }
-                else
-                {
-                    StatesManager.ChangeState(GameStates.stateResult)
-                }
+                StatesManager.ChangeState(GameStates.stateResult)
             }
     }).bind(this))
     this.board.addChild(btnConfirm)

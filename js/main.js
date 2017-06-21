@@ -24,6 +24,7 @@ function run(deltaTime){
 		Application.instance.stage.position.set(randomX, randomY)
 		if(--Application.shakeTicker < 0)
 		{
+			Application.instance.stage.position.set(0, 0)
 			Application.isShaking = false
 		}
 	}

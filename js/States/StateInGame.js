@@ -128,7 +128,15 @@ StateInGame.prototype.FixedUpdate = function(dt)
 				}
 				this.isGameOver = true
 				this.player.ResetAll()
-				if(!quizPopup.Show())
+				if(this.quizCount < 3)
+				{
+					this.quizCount++
+					if(!quizPopup.Show())
+					{
+						StatesManager.ChangeState(GameStates.stateResult)
+					}
+				}
+				else
 				{
 					StatesManager.ChangeState(GameStates.stateResult)
 				}
