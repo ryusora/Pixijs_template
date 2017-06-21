@@ -34,7 +34,7 @@ StateResult.prototype.Init = function()
 	var hanhTrinh_title = new PIXI.Sprite(TextureManager.getTexture("rs_diem_hanh_trinh"))
 	hanhTrinh_title.position.set(Application.getScreenWidth()*0.5 - 65, 400)
 	hanhTrinh_title.anchor.set(0.5, 0.5)
-	var total_score = new PIXI.Text(FireBaseManager.getRecord()  + "", new PIXI.TextStyle({
+	var total_score = new PIXI.Text(FireBaseManager.getRecordTotal()  + "", new PIXI.TextStyle({
 		fontFamily: 'Arial',
         fontSize: 70,
         fontStyle: 'normal',

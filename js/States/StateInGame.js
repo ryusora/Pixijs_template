@@ -24,7 +24,6 @@ StateInGame.prototype.ResetAll = function()
 	this.fadeEffect.alpha = 0
 	this.invincible = 0
 	this.invincibleTicker = 0
-	this.alreadyInit = false
 }
 
 StateInGame.prototype.ResetCombo = function()
@@ -39,14 +38,6 @@ StateInGame.prototype.Init = function()
 	{
 		quizPopup = new StateQuiz()
 	}
-
-	// if(this.alreadyInit)
-	// {
-	// 	Application.addChild(this.stage)
-	// 	return
-	// }
-
-	// this.alreadyInit = true
 
 	this.stage = new PIXI.Container()
 	Application.addChild(this.stage)
@@ -89,6 +80,7 @@ StateInGame.prototype.Destroy = function()
 {
 	Application.removeChild(this.stage)
 	this.ResetAll()
+	dragonBones.PixiFactory._factory = null
 }
 
 StateInGame.prototype.FixedUpdate = function(dt)
@@ -129,8 +121,8 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			}
 
 			if(ScoreManager.life <= 0 && !this.invincible)
-			{
-				var latestScore = FireBaseManager.getRecord()
+			{ 
+				var latestScore = FireBaseManager.getRecord(GameStates.GetLevel())
 				if(latestScore < ScoreManager.currentScore)
 				{
 					FireBaseManager.SaveRecord(ScoreManager.currentScore, GameStates.GetLevel())
@@ -177,8 +169,8 @@ StateInGame.prototype.RestartGame = function()
 	// reset player position
 	// this.player.ResetAll()
 
-	// ItemsManager.ResetAll()
-	ItemsManager.initialize()
+	ItemsManager.ResetAll()
+	// ItemsManager.initialize()
 	ScoreManager.ResetAll()
 	HudManager.ResetAll()
 	HudManager.UpdateLife(ScoreManager.life)

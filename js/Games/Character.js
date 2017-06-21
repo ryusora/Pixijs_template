@@ -179,7 +179,7 @@ Character.prototype.MoveLeft = function()
 	}
 
 	this.SetState(STATE_MOVE_LEFT)
-	this.SetAnimation(ANIM_LEFT, false)
+	//this.SetAnimation(ANIM_LEFT, false)
 	// add force
 	var moveLeftForce = new Vector2()
 	moveLeftForce.clone(Defines.MOVE_FORCE)
@@ -199,7 +199,7 @@ Character.prototype.MoveRight = function()
 	}
 
 	this.SetState(STATE_MOVE_RIGHT)
-	this.SetAnimation(ANIM_RIGHT, false)
+	//this.SetAnimation(ANIM_RIGHT, false)
 	// add force
 	this.velocity.add(Defines.MOVE_FORCE)
 }

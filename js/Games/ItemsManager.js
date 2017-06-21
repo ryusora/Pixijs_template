@@ -237,17 +237,10 @@ ItemsManager.prototype.FixedUpdate = function(dt)
 
 ItemsManager.prototype.ResetAll = function()
 {
-	var deActivedItems = []
-	for(let idx in this.items_actived)
-	{
-		this.items_actived[idx].active = false
-		deActivedItems.push(this.items_actived[idx])
-	}
-
-	for(let i = 0; i < deActivedItems.length; i++)
-	{
-		this.DeactiveItem(deActivedItems[i])
-	}
+	this.initialize()
+	
+	dragonBones.PixiFactory.factory.removeDragonBonesData(TextureManager.getDragonbonesData(GameStates.GetLevel() + '_enemy_ske').name)
+	dragonBones.PixiFactory.factory.removeTextureAtlasData(TextureManager.getDragonbonesData(GameStates.GetLevel() + '_enemy_tex_data').name, TextureManager.getTexture(GameStates.GetLevel() + '_enemy_tex'))
 }
 
 ItemsManager.prototype.CheckCollision = function(box)
