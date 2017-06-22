@@ -32,6 +32,12 @@ var GameState = function(){
 			return this.stateChooseLevel.currentLevelName
 		return "HoHap"
 	}
+
+	this.ChangeLevelName = function(newLevel)
+	{
+		if(newLevel != null && typeof(newLevel) != 'undefined')
+			this.stateChooseLevel.currentLevelName = newLevel
+	}
 }
 
 module.exports = new GameState()

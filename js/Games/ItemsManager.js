@@ -171,15 +171,18 @@ ItemsManager.prototype.SpawnEffectAt = function(pos)
 	}
 }
 
-ItemsManager.prototype.Update = function(dt)
+ItemsManager.prototype.Update = function(dt, isChangingState)
 {
 	// check spawn item
-	this.timer += (dt * ( 1 + GameStates.stateInGame.GetPlayerOffsetSpeed()/Defines.GAME_SPEED))
-	if(this.timer >= Defines.SPAWN_ITEM_TIME)
+	if(!isChangingState)
 	{
-		this.timer = 0
-		var randomNumber = Math.floor(Math.random()*this.directionList.length)
-		this.SpawnItem(this.directionList[randomNumber])
+		this.timer += (dt * ( 1 + GameStates.stateInGame.GetPlayerOffsetSpeed()/Defines.GAME_SPEED))
+		if(this.timer >= Defines.SPAWN_ITEM_TIME)
+		{
+			this.timer = 0
+			var randomNumber = Math.floor(Math.random()*this.directionList.length)
+			this.SpawnItem(this.directionList[randomNumber])
+		}
 	}
 
 	this.UpdateItem(dt)

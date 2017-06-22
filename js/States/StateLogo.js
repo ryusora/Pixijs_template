@@ -61,7 +61,8 @@ StateLogo.prototype.Init = function(){
 
 		// HUD
 		'hud_bg'			:'Assets/HUD/hud_bar_bg.png',
-		'hud_live'			:'Assets/HUD/hud_bar_live.png',
+		'hud_live_male'		:'Assets/HUD/hud_bar_live.png',
+		'hud_live_female'	:'Assets/HUD/hud_bar_live_girl.png',
 		'hud_score'			:'Assets/HUD/hud_bar_score.png',
 		'hud_pause'			:'Assets/HUD/hud_btn_pause.png',
 		// effect

@@ -8,6 +8,9 @@ var Defines = function()
 
 	this.INITIAL_LIFE		= 3
 	this.RED_FADE_TICKER	= 1
+	this.WHITE_FADE_TICKER	= 0.5
+
+	this.CHANGE_LEVEL_TIMER = 15
 
 	this.DECORATION_TIMER	= 0.5
 	this.LOGO_TIME 			= 5

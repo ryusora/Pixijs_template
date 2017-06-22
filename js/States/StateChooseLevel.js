@@ -75,7 +75,7 @@ StateChooseLevel.prototype.Init = function()
 		btnPlay.anchor.set(0.5, 0.5)
 		btnPlay.interactive = true
 		btnPlay.on('pointerdown', ()=>{
-			if(this.currentLevelName != "DacBiet")
+			//if(this.currentLevelName != "DacBiet")
 			{
 				StatesManager.ChangeState(GameStates.stateLoading)
 			}

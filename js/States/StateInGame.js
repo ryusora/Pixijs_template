@@ -8,6 +8,17 @@ const StateQuiz				= require('./StateQuiz.js')
 var quizPopup = null
 var StateInGame = function()
 {
+	this.ListLevelsName = [
+		"HoHap",
+		"SinhSan",
+		"ThanKinh",
+		"RungToc",
+		"DauLung",
+		"TieuHoa"
+	]
+	this.levelIndex = 0
+	this.isChangingLevel = false
+	this.levelCounting = 0
 	this.ResetAll()
 }
 
@@ -22,6 +33,11 @@ StateInGame.prototype.ResetAll = function()
 	this.fadeEffect.beginFill(0xFF0000)
 	this.fadeEffect.drawRect(0,0,Application.getScreenWidth(), Application.getScreenHeight())
 	this.fadeEffect.alpha = 0
+
+	this.changeStateEffect = new PIXI.Graphics()
+	this.changeStateEffect.beginFill(0xFFFFFF)
+	this.changeStateEffect.drawRect(0,0,Application.getScreenWidth(), Application.getScreenHeight())
+	this.changeStateEffect.alpha = 0
 	this.invincible = 0
 	this.invincibleTicker = 0
 }
@@ -31,12 +47,42 @@ StateInGame.prototype.ResetCombo = function()
 	this.combo = 0
 }
 
+StateInGame.prototype.ChangeLevel = function()
+{
+	this.isChangingLevel = true
+	GameStates.ChangeLevelName(this.ListLevelsName[this.levelIndex])
+	if(++this.levelIndex >= this.ListLevelsName.length)
+	{
+		this.levelIndex = 0
+	}
+
+	this.levelCounting = 0
+
+	this.Destroy()
+	ItemsManager.ResetAll()
+	this.Init()
+
+	this.invincible = true
+	this.invincibleTicker = 3
+	
+	this.changeStateEffect.alpha = 1
+}
+
 StateInGame.prototype.Init = function()
 {
 	// init quiz
 	if(quizPopup == null)
 	{
 		quizPopup = new StateQuiz()
+	}
+
+	if(!this.isSpecialState)
+	{
+		this.isSpecialState = (GameStates.GetLevel() == 'DacBiet')
+		if(this.isSpecialState)
+		{
+			this.ChangeLevel()
+		}
 	}
 
 	this.stage = new PIXI.Container()
@@ -66,6 +112,7 @@ StateInGame.prototype.Init = function()
 	ItemsManager.InitPool()
 
 	this.stage.addChild(this.fadeEffect)
+	this.stage.addChild(this.changeStateEffect)
 	this.stage.addChild(HudManager.stage)
 
 	this.isGameOver = false
@@ -144,7 +191,10 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			}
 		}
 		ItemsManager.DeactiveItem(collidedItem)
-		if(collidedItem.isLuckyItem) this.player.ActiveFrenzy()
+		if(collidedItem.isLuckyItem){
+			this.player.ActiveFrenzy()
+			this.fadeEffect.alpha = 0.5
+		}
 		HudManager.UpdateScore(ScoreManager.currentScore)
 		HudManager.UpdateLife(ScoreManager.life)
 	}
@@ -178,6 +228,15 @@ StateInGame.prototype.RestartGame = function()
 
 	// this.isGameOver = false
 	// this.fadeEffect.alpha = 0
+
+	if(this.isSpecialState)
+	{
+		GameStates.ChangeLevelName('DacBiet')
+	}
+	this.isSpecialState = false
+	this.isChangingLevel = false
+	this.levelIndex = 0
+	this.levelCounting = 0
 }
 
 StateInGame.prototype.Revive = function()
@@ -193,6 +252,31 @@ StateInGame.prototype.Update = function(dt)
 {
 	if(this.isGameOver)	return
 
+	if(this.isSpecialState)
+	{
+		this.levelCounting += dt
+		if(this.levelCounting > Defines.CHANGE_LEVEL_TIMER)
+		{
+			console.log("Change Level")
+			this.ChangeLevel()
+			return
+		}
+	}
+
+	if(this.isChangingLevel)
+	{
+		if(this.changeStateEffect.alpha > 0)
+		{
+			this.changeStateEffect.alpha -= Defines.WHITE_FADE_TICKER * dt
+			if(this.changeStateEffect.alpha <= 0)
+			{
+				this.changeStateEffect.alpha = 0
+				this.isChangingLevel = false
+				console.log("done effect change state")
+			}
+		}
+	}
+
 	if(this.invincibleTicker > 0)
 	{
 		this.invincibleTicker -= 1 * dt
@@ -206,12 +290,17 @@ StateInGame.prototype.Update = function(dt)
 	if(this.fadeEffect.alpha > 0)
 	{
 		this.fadeEffect.alpha -= Defines.RED_FADE_TICKER * dt
+
+		if(this.fadeEffect.alpha <= 0 && this.IsFrenzy())
+		{
+			this.fadeEffect.alpha = 0.5
+		}
 	}
 
 	GroundsManager.Update(dt)
 	// DecorationsManager.Update(dt)
 	this.player.Update(dt)
-	ItemsManager.Update(dt)
+	ItemsManager.Update(dt, this.isChangingLevel)
 }
 
 module.exports = StateInGame
