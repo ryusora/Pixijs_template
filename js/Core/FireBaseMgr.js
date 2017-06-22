@@ -104,17 +104,14 @@ FireBaseMgr.prototype.SaveRecord = function(record, state)
 		this.currentUserData.totalScore += record
 		this.currentUserData[state].score = record
 
-		
-		this.currentUserPref.child(state).set(this.currentUserData)
-		this.currentUserPref.set({
-			"totalScore":this.currentUserData.totalScore
-		})
-
+		this.currentUserPref.set(this.currentUserData)
 		this.userPref.once("value", (snapshot) =>{
 			console.log("update list users : " + JSON.stringify(snapshot.val()) )
 			console.log(snapshot.val())
 			this.listUsers = snapshot.val()
 		})
+		if(this.listUsers != null)
+			this.listUsers[this.currentUser.uid] = {totalScore:this.currentUserData.totalScore}
 	}
 }
 

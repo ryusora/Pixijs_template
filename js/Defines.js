@@ -10,7 +10,7 @@ var Defines = function()
 	this.RED_FADE_TICKER	= 1
 	this.WHITE_FADE_TICKER	= 0.5
 
-	this.CHANGE_LEVEL_TIMER = 15
+	this.CHANGE_LEVEL_TIMER = 60
 
 	this.DECORATION_TIMER	= 0.5
 	this.LOGO_TIME 			= 5

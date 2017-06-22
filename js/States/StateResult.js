@@ -140,7 +140,7 @@ StateResult.prototype.InitLeaderboard = function()
 	if(users != null)
 	{
 		var length = users.length>this.MAX_USERS?this.MAX_USERS:users.length
-		quickSort(users, 0, length - 1)
+		quickSort(users, 0, users.length - 1)
 		console.log(users)
 		for(let i = 0; i < length; i++)
 		{

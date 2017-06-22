@@ -20,6 +20,7 @@ var StateInGame = function()
 	this.isChangingLevel = false
 	this.levelCounting = 0
 	this.ResetAll()
+	this.quizCount = 0
 }
 
 StateInGame.prototype.ResetAll = function()
