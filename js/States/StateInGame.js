@@ -185,7 +185,10 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			}
 		}
 		ItemsManager.DeactiveItem(collidedItem)
-		if(collidedItem.isLuckyItem){
+		if(!this.IsFrenzy()) this.combo++
+
+		if(collidedItem.isLuckyItem || this.combo >= Defines.MAX_COMBO_COUNT){
+			this.ResetCombo()
 			this.player.ActiveFrenzy()
 			this.fadeEffect.alpha = 0.5
 		}
