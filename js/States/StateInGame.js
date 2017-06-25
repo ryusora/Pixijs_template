@@ -20,7 +20,6 @@ var StateInGame = function()
 	this.isChangingLevel = false
 	this.levelCounting = 0
 	this.ResetAll()
-	this.quizCount = 0
 }
 
 StateInGame.prototype.ResetAll = function()
@@ -176,15 +175,9 @@ StateInGame.prototype.FixedUpdate = function(dt)
 				}
 				this.isGameOver = true
 				this.player.ResetAll()
-				if(this.quizCount < 3)
-				{
-					this.quizCount++
-					if(!quizPopup.Show())
-					{
-						StatesManager.ChangeState(GameStates.stateResult)
-					}
-				}
-				else
+				// count quiz
+				FireBaseManager.CountQuiz(GameStates.GetLevel())
+				if(!quizPopup.Show())
 				{
 					StatesManager.ChangeState(GameStates.stateResult)
 				}

@@ -64,8 +64,11 @@ StateResult.prototype.Init = function()
 		replayBtn.anchor.set(0, 0.5)
 		replayBtn.interactive = true
 		replayBtn.on('pointerdown', ()=>{
-			GameStates.stateInGame.RestartGame()
-			StatesManager.ChangeState(GameStates.stateInGame)
+			if(FireBaseManager.CanEnterState(GameStates.GetLevel()))
+			{
+				GameStates.stateInGame.RestartGame()
+				StatesManager.ChangeState(GameStates.stateInGame)
+			}
 		})
 
 		y+=130

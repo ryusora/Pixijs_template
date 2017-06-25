@@ -89,6 +89,48 @@ FireBaseMgr.prototype.isLogin = function()
 	return (this.currentUser != null)
 }
 
+FireBaseMgr.prototype.CanEnterState = function(state)
+{
+	if(this.currentUserData != null 
+	&& this.currentUserData[state] != null
+	&& this.currentUserData[state].lockTime != null)
+	{
+		var currentDateTime = (new Date()).getTime()
+		var diffTime = currentDateTime - this.currentUserData[state].lockTime
+		var result = (diffTime > 14400000 ) //  4 * 60 * 60 * 1000 // 4 hours
+		if(result)
+		{
+			// reset count
+			this.currentUserData[state].quizCount = 0
+		}
+		return result
+	}
+	return true
+}
+
+FireBaseMgr.prototype.CountQuiz = function(state = null)
+{
+	if(state != null && this.currentUserData != null)
+	{
+		if(this.currentUserData[state] != null)
+		{
+			if(this.currentUserData[state].quizCount != null)
+			{
+				this.currentUserData[state].quizCount++
+				if(this.currentUserData[state].quizCount >= 3)
+				{
+					this.currentUserData[state].lockTime = (new Date()).getTime()
+				}
+			}
+			else
+			{
+				this.currentUserData[state].quizCount = 1
+			}
+		}
+		this.currentUserPref.set(this.currentUserData)
+	}
+}
+
 FireBaseMgr.prototype.SaveRecord = function(record, state)
 {
 	if(this.currentUser)

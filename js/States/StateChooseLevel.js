@@ -75,9 +75,13 @@ StateChooseLevel.prototype.Init = function()
 		btnPlay.anchor.set(0.5, 0.5)
 		btnPlay.interactive = true
 		btnPlay.on('pointerdown', ()=>{
-			//if(this.currentLevelName != "DacBiet")
+			if(FireBaseManager.CanEnterState(this.currentLevelName))
 			{
 				StatesManager.ChangeState(GameStates.stateLoading)
+			}
+			else
+			{
+				this.levels[this.ListIndex[0]].SetActive(false)
 			}
 		})
 
