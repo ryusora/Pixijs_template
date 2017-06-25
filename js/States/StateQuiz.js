@@ -74,7 +74,7 @@ StateQuiz.prototype.ProcessQuiz = function()
             fontWeight: 'bold',
             fill: ['#000000'], // gradient
             wordWrap: true,
-            wordWrapWidth: 650,
+            wordWrapWidth: 610,
             align:'center'
         })
 
@@ -85,7 +85,7 @@ StateQuiz.prototype.ProcessQuiz = function()
             fontWeight: 'bold',
             fill: ['#000000'], // gradient
             wordWrap: true,
-            wordWrapWidth: 550
+            wordWrapWidth: 510
         })
         // init question
         if(this.question)

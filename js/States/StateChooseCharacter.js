@@ -7,54 +7,58 @@ var StateChooseCharacter = function()
 StateChooseCharacter.prototype.Init = function()
 {
 	// Init
-	this.stage = new PIXI.Container()
+	if(this.isLoadingDone == false)
+	{
+		this.stage = new PIXI.Container()
+		this.frontStage = new PIXI.Container()
+		this.backStage = new PIXI.Container()
+
+		// init background
+		var bg = new PIXI.Sprite(TextureManager.getTexture('MENU_BG'))
+		bg.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
+		bg.anchor.set(0.5, 0.5)
+
+		var header = new PIXI.Sprite(TextureManager.getTexture('HEADER_LOGO'))
+		header.position.set(Application.getScreenWidth()*0.5, 10)
+		header.anchor.set(0.5, 0)
+
+		var defaultStyle = new PIXI.TextStyle({
+			fontFamily: 'Arial',
+			fontSize: 50,
+			fontStyle: 'italic',
+			fontWeight: 'bold',
+			fill: ['#ffffff', '#ff0000'], // gradient
+			stroke: '#4a1850',
+			strokeThickness: 5,
+			dropShadow: true,
+			dropShadowColor: '#000000',
+			dropShadowBlur: 4,
+			dropShadowAngle: Math.PI / 6,
+			dropShadowDistance: 6,
+			wordWrap: true,
+			wordWrapWidth: 750
+		})
+		// var title = new PIXI.Sprite()//new PIXI.Text("Chọn Nhân Vật", defaultStyle)
+		// title.anchor.set(0.5, 0.5)
+		// title.position.set(Application.getScreenWidth()*0.5, 100)
+
+		var title = new PIXI.Sprite(TextureManager.getTexture('cc_title'))//new PIXI.Text("Chọn Màn Chơi", defaultStyle)
+		title.anchor.set(0.15, 0.5)
+		title.position.set(0, 300)
+
+		this.stage.addChild(bg)
+		this.stage.addChild(header)
+		this.stage.addChild(title)
+		this.stage.addChild(this.backStage)
+		this.stage.addChild(this.frontStage)
+		this.InitCharacters()
+		this.InitButton()
+
+		this.isLoadingDone = true
+	}
+	
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
-	this.frontStage = new PIXI.Container()
-	this.backStage = new PIXI.Container()
-
-	// init background
-	var bg = new PIXI.Sprite(TextureManager.getTexture('MENU_BG'))
-	bg.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
-	bg.anchor.set(0.5, 0.5)
-
-	var header = new PIXI.Sprite(TextureManager.getTexture('HEADER_LOGO'))
-	header.position.set(Application.getScreenWidth()*0.5, 10)
-	header.anchor.set(0.5, 0)
-
-	var defaultStyle = new PIXI.TextStyle({
-        fontFamily: 'Arial',
-        fontSize: 50,
-        fontStyle: 'italic',
-        fontWeight: 'bold',
-        fill: ['#ffffff', '#ff0000'], // gradient
-        stroke: '#4a1850',
-        strokeThickness: 5,
-        dropShadow: true,
-        dropShadowColor: '#000000',
-        dropShadowBlur: 4,
-        dropShadowAngle: Math.PI / 6,
-        dropShadowDistance: 6,
-        wordWrap: true,
-        wordWrapWidth: 750
-    })
-	// var title = new PIXI.Sprite()//new PIXI.Text("Chọn Nhân Vật", defaultStyle)
-	// title.anchor.set(0.5, 0.5)
-	// title.position.set(Application.getScreenWidth()*0.5, 100)
-
-	var title = new PIXI.Sprite(TextureManager.getTexture('cc_title'))//new PIXI.Text("Chọn Màn Chơi", defaultStyle)
-	title.anchor.set(0.15, 0.5)
-	title.position.set(0, 300)
-
-	this.stage.addChild(bg)
-	this.stage.addChild(header)
-	this.stage.addChild(title)
-	this.stage.addChild(this.backStage)
-	this.stage.addChild(this.frontStage)
-	this.InitCharacters()
-	this.InitButton()
-
-    this.isLoadingDone = true
 }
 
 StateChooseCharacter.prototype.InitCharacters = function()

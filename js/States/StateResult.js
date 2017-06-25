@@ -6,94 +6,106 @@ var StateResult = function()
 
 StateResult.prototype.Init = function()
 {
-	// Init
-	this.stage = new PIXI.Container()
-	Application.addChild(this.stage)
-	Application.Align(this.stage)
-	// init leaderboards
-	var bg = new PIXI.Sprite(TextureManager.getTexture('MENU_BG'))
-	bg.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
-	bg.anchor.set(0.5, 0.5)
+	if(this.isLoadingDone == false)
+	{
+		// Init
+		this.stage = new PIXI.Container()
+		// init leaderboards
+		var bg = new PIXI.Sprite(TextureManager.getTexture('MENU_BG'))
+		bg.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
+		bg.anchor.set(0.5, 0.5)
 
-	var board = new PIXI.Sprite(TextureManager.getTexture('rs_board'))
-	board.position.set(Application.getScreenWidth()*0.5, 10)
-	board.anchor.set(0.5, 0)
+		var board = new PIXI.Sprite(TextureManager.getTexture('rs_board'))
+		board.position.set(Application.getScreenWidth()*0.5, 10)
+		board.anchor.set(0.5, 0)
 
-	var character = new PIXI.Sprite(TextureManager.getTexture('cl_characters_' + GameStates.GetCharacterName()))
-	character.position.set(Application.getScreenWidth()*0.5 + 260, 210)
-	character.anchor.set(0.5, 0)
+		var character = new PIXI.Sprite(TextureManager.getTexture('cl_characters_' + GameStates.GetCharacterName()))
+		character.position.set(Application.getScreenWidth()*0.5 + 260, 210)
+		character.anchor.set(0.5, 0)
 
-	var title = new PIXI.Sprite(TextureManager.getTexture("rs_title"))
-	title.position.set(Application.getScreenWidth()*0.5, 130)
-	title.anchor.set(0.5, 0)
+		var title = new PIXI.Sprite(TextureManager.getTexture("rs_title"))
+		title.position.set(Application.getScreenWidth()*0.5, 130)
+		title.anchor.set(0.5, 0)
 
-	var score_border = new PIXI.Sprite(TextureManager.getTexture("rs_score_border"))
-	score_border.position.set(Application.getScreenWidth()*0.5 - 65, 280)
-	score_border.anchor.set(0.5, 0.5)
+		var score_border = new PIXI.Sprite(TextureManager.getTexture("rs_score_border"))
+		score_border.position.set(Application.getScreenWidth()*0.5 - 65, 280)
+		score_border.anchor.set(0.5, 0.5)
 
-	var hanhTrinh_title = new PIXI.Sprite(TextureManager.getTexture("rs_diem_hanh_trinh"))
-	hanhTrinh_title.position.set(Application.getScreenWidth()*0.5 - 65, 400)
-	hanhTrinh_title.anchor.set(0.5, 0.5)
-	var total_score = new PIXI.Text(FireBaseManager.getRecordTotal()  + "", new PIXI.TextStyle({
-		fontFamily: 'Arial',
-        fontSize: 70,
-        fontStyle: 'normal',
-        fontWeight: 'bold',
-        fill: ['#51b2d2'], // red
-        wordWrap: true,
-        wordWrapWidth: 750
-	}))
-	total_score.position.set(Application.getScreenWidth()*0.5 - 65, 450)
-	total_score.anchor.set(0.5, 0.5)
-	var score = new PIXI.Text(ScoreManager.currentScore  + "", new PIXI.TextStyle({
-		fontFamily: 'Arial',
-        fontSize: 85,
-        fontStyle: 'normal',
-        fontWeight: 'bold',
-        fill: ['#ee175a'], // red
-        wordWrap: true,
-        wordWrapWidth: 750
-	}))
-	//score.position.set(0, 0)
-	score.anchor.set(0.5, 0.5)
-	score_border.addChild(score)
-	var x = Application.getScreenWidth()*0.5 - 280
-	var y = 330 + 230
-	var replayBtn = new PIXI.Sprite(TextureManager.getTexture("rs_replay_btn"))
-	replayBtn.position.set(x, y)
-	replayBtn.anchor.set(0, 0.5)
-	replayBtn.interactive = true
-	replayBtn.on('pointerdown', ()=>{
-		GameStates.stateInGame.RestartGame()
-		StatesManager.ChangeState(GameStates.stateInGame)
-	})
+		var hanhTrinh_title = new PIXI.Sprite(TextureManager.getTexture("rs_diem_hanh_trinh"))
+		hanhTrinh_title.position.set(Application.getScreenWidth()*0.5 - 65, 400)
+		hanhTrinh_title.anchor.set(0.5, 0.5)
+		this.total_score = new PIXI.Text(FireBaseManager.getRecordTotal()  + "", new PIXI.TextStyle({
+			fontFamily: 'Arial',
+			fontSize: 70,
+			fontStyle: 'normal',
+			fontWeight: 'bold',
+			fill: ['#51b2d2'], // red
+			wordWrap: true,
+			wordWrapWidth: 750
+		}))
+		this.total_score.position.set(Application.getScreenWidth()*0.5 - 65, 450)
+		this.total_score.anchor.set(0.5, 0.5)
+		this.score = new PIXI.Text(ScoreManager.currentScore  + "", new PIXI.TextStyle({
+			fontFamily: 'Arial',
+			fontSize: 85,
+			fontStyle: 'normal',
+			fontWeight: 'bold',
+			fill: ['#ee175a'], // red
+			wordWrap: true,
+			wordWrapWidth: 750
+		}))
+		//score.position.set(0, 0)
+		this.score.anchor.set(0.5, 0.5)
+		score_border.addChild(this.score)
+		var x = Application.getScreenWidth()*0.5 - 280
+		var y = 330 + 230
+		var replayBtn = new PIXI.Sprite(TextureManager.getTexture("rs_replay_btn"))
+		replayBtn.position.set(x, y)
+		replayBtn.anchor.set(0, 0.5)
+		replayBtn.interactive = true
+		replayBtn.on('pointerdown', ()=>{
+			GameStates.stateInGame.RestartGame()
+			StatesManager.ChangeState(GameStates.stateInGame)
+		})
 
-	y+=130
+		y+=130
 
-	var chooseLevelBtn = new PIXI.Sprite(TextureManager.getTexture("rs_chooseLevel"))
-	chooseLevelBtn.position.set(x, y)
-	chooseLevelBtn.anchor.set(0, 0.5)
-	chooseLevelBtn.interactive = true
-	chooseLevelBtn.on('pointerdown', ()=>{
-		GameStates.stateInGame.RestartGame()
-		StatesManager.ChangeState(GameStates.stateChooseLevel)
-	})
+		var chooseLevelBtn = new PIXI.Sprite(TextureManager.getTexture("rs_chooseLevel"))
+		chooseLevelBtn.position.set(x, y)
+		chooseLevelBtn.anchor.set(0, 0.5)
+		chooseLevelBtn.interactive = true
+		chooseLevelBtn.on('pointerdown', ()=>{
+			GameStates.stateInGame.RestartGame()
+			StatesManager.ChangeState(GameStates.stateChooseLevel)
+		})
+
+		this.stage.addChild(bg)
+		this.stage.addChild(board)
+		this.stage.addChild(character)
+		this.stage.addChild(title)
+		this.stage.addChild(score_border)
+		this.stage.addChild(hanhTrinh_title)
+		this.stage.addChild(this.total_score)
+		this.stage.addChild(replayBtn)
+		this.stage.addChild(chooseLevelBtn)
+
+		this.isLoadingDone = true
+	}
+	else
+	{
+		this.score.text = ScoreManager.currentScore
+		this.total_score.text = FireBaseManager.getRecordTotal()
+	}
 
 	this.leaderboardStage = new PIXI.Container()
 	this.leaderboardStage.position.set(0, Application.getScreenHeight()*0.5 + 230)
 	// this.leaderboardStage.anchor.set(0, 0)
 
-	this.stage.addChild(bg)
-	this.stage.addChild(board)
-	this.stage.addChild(character)
-	this.stage.addChild(title)
-	this.stage.addChild(score_border)
-	this.stage.addChild(hanhTrinh_title)
-	this.stage.addChild(total_score)
-	this.stage.addChild(replayBtn)
-	this.stage.addChild(chooseLevelBtn)
 	this.stage.addChild(this.leaderboardStage)
 	this.InitLeaderboard()
+
+	Application.addChild(this.stage)
+	Application.Align(this.stage)
 }
 
 StateResult.prototype.InitLeaderboard = function()
@@ -172,7 +184,9 @@ StateResult.prototype.IsLoadDone = function()
 
 StateResult.prototype.Destroy = function()
 {
+	this.stage.removeChild(this.leaderboardStage)
 	Application.removeChild(this.stage)
+	this.leaderboardStage = null
 }
 
 StateResult.prototype.Update = function(dt)
