@@ -15,7 +15,7 @@ var StateQuiz = function()
 	this.board.anchor.set(0.5, 0.5)
     this.currentIndex = 0
     
-    this.currentQuiz = QuizManager.GetQuiz(this.currentIndex)
+    this.currentQuiz = QuizManager.GetRandomQuiz()//QuizManager.GetQuiz(this.currentIndex)
     if(this.currentQuiz)
 	    this.ProcessQuiz()
 
@@ -52,7 +52,7 @@ StateQuiz.prototype.Show = function(resetCount = true)
 {
     if(resetCount == true) this.count = 0
 
-    this.currentQuiz = QuizManager.GetQuiz(this.currentIndex)
+    this.currentQuiz = QuizManager.GetRandomQuiz()//QuizManager.GetQuiz(this.currentIndex)
     if(this.currentQuiz)
     {
         this.ProcessQuiz()
