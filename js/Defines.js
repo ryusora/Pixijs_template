@@ -89,7 +89,8 @@ var Defines = function()
 	// Score
 	this.SCORE_TIMER		= 0.7
 	this.SCORE_SPEED		= 500
-	this.ITEM_SCORE			= 10
+	this.ITEM_SCORE			= 5
+	this.ITEM_LUCKY_SCORE	= 10
 
 	// Grounds
 	this.GROUND_SIZE_Z				= 1

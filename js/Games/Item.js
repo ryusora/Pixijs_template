@@ -29,6 +29,8 @@ Item.prototype.SetupDragonBones = function(item_name)
 	this.isLuckyItem = (item_name == "lucky_item")
 	if(!this.isLuckyItem)
 		this.score = (item_name.startsWith("item"))?Defines.ITEM_SCORE:-1
+	else
+		this.score = Defines.ITEM_LUCKY_SCORE
 	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay(item_name)
 	this.armatureDisplay.animation.play("idle")
 
