@@ -141,6 +141,7 @@ Character.prototype.UpdatePosition = function()
 Character.prototype.ResetAll = function()
 {
 	this.SetPos(Defines.PLAYER_START_POS_X, Defines.PLAYER_START_POS_Y, Defines.PLAYER_START_POS_Z )
+	this.UpdatePosition()
 	Camera.CameraUpdatePlayerPos()
 	this.frenzyCamOffsetX = 0
 	this.frenzyCamOffsetY = 0
@@ -150,6 +151,9 @@ Character.prototype.ResetAll = function()
 
 	this.frenzyState = FRENZY_STATE_NONE
 	InputManager.Reset()
+
+	// reset velocity
+	this.velocity = new Vector2()
 }
 
 Character.prototype.SetState = function(state)
