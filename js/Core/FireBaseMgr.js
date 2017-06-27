@@ -102,6 +102,7 @@ FireBaseMgr.prototype.CanEnterState = function(state)
 		{
 			// reset count
 			this.currentUserData[state].quizCount = 0
+			this.currentUserData[state].lockTime = null
 		}
 		return result
 	}

@@ -143,6 +143,7 @@ Character.prototype.ResetAll = function()
 	this.SetPos(Defines.PLAYER_START_POS_X, Defines.PLAYER_START_POS_Y, Defines.PLAYER_START_POS_Z )
 	this.UpdatePosition()
 	Camera.CameraUpdatePlayerPos()
+	this.offsetSpeed = 0
 	this.frenzyCamOffsetX = 0
 	this.frenzyCamOffsetY = 0
 	this.frenzyCamOffsetZ = 0

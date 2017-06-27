@@ -168,19 +168,28 @@ StateInGame.prototype.FixedUpdate = function(dt)
 
 			if(ScoreManager.life <= 0 && !this.invincible)
 			{ 
-				var latestScore = FireBaseManager.getRecord(GameStates.GetLevel())
+				var currentLevel = GameStates.GetLevel()
+				var latestScore = FireBaseManager.getRecord(currentLevel)
 				if(latestScore < ScoreManager.currentScore)
 				{
-					FireBaseManager.SaveRecord(ScoreManager.currentScore, GameStates.GetLevel())
+					FireBaseManager.SaveRecord(ScoreManager.currentScore, currentLevel)
 				}
 				this.isGameOver = true
 				this.player.ResetAll()
 				// count quiz
-				FireBaseManager.CountQuiz(GameStates.GetLevel())
-				if(!quizPopup.Show())
+				if(FireBaseManager.CanEnterState(currentLevel))
+				{
+					FireBaseManager.CountQuiz(currentLevel)
+					if(!quizPopup.Show())
+					{
+						StatesManager.ChangeState(GameStates.stateResult)
+					}
+				}
+				else
 				{
 					StatesManager.ChangeState(GameStates.stateResult)
 				}
+				ItemsManager.DeactiveAllItems()
 				return
 			}
 		}

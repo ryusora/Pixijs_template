@@ -237,6 +237,20 @@ ItemsManager.prototype.UpdateItem = function(dt)
 	}
 }
 
+ItemsManager.prototype.DeactiveAllItems = function()
+{
+	var deActivedItems = []
+	for(let idx in this.items_actived)
+	{
+		deActivedItems.push(this.items_actived[idx])
+	}
+
+	for(let i = 0; i < deActivedItems.length; i++)
+	{
+		this.DeactiveItem(deActivedItems[i])
+	}
+}
+
 ItemsManager.prototype.FixedUpdate = function(dt)
 {
 	for(let item in this.items_actived)
