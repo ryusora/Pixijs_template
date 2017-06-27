@@ -16,6 +16,52 @@ var StateInGame = function()
 		"DauLung",
 		"TieuHoa"
 	]
+	
+	this.cameraInitPos = {
+		"HoHap":{
+			x:0,
+			y:-328,
+			z:-25,
+			item_offset_z:321,
+			camPosY:449.55
+		},
+		"SinhSan":{
+			x:0,
+			y:-400,
+			z:-25,
+			item_offset_z:321,
+			camPosY:316.55
+		},
+		"ThanKinh":{
+			x:0,
+			y:-393,
+			z:-25,
+			item_offset_z:321,
+			camPosY:322.55
+		},
+		"RungToc":{
+			x:0,
+			y:-499,
+			z:-25,
+			item_offset_z:321,
+			camPosY:112.55
+		},
+		"DauLung":{
+			x:0,
+			y:-449,
+			z:-25,
+			item_offset_z:321,
+			camPosY:205.55
+		},
+		"TieuHoa":{
+			x:0,
+			y:-416,
+			z:-25,
+			item_offset_z:321,
+			camPosY:263.55
+		}
+	}
+
 	this.levelIndex = 0
 	this.isChangingLevel = false
 	this.levelCounting = 0
@@ -45,6 +91,13 @@ StateInGame.prototype.ResetAll = function()
 StateInGame.prototype.ResetCombo = function()
 {
 	this.combo = 0
+}
+
+StateInGame.prototype.InitCamera = function()
+{
+	Camera.InitOffset(this.cameraInitPos[GameStates.GetLevel()])
+	Defines.CAMERA_ON_SCREEN_POS_Y = this.cameraInitPos[GameStates.GetLevel()].camPosY
+	Defines.ITEM_OFFSET_Z = this.cameraInitPos[GameStates.GetLevel()].item_offset_z
 }
 
 StateInGame.prototype.ChangeLevel = function()
@@ -84,6 +137,7 @@ StateInGame.prototype.Init = function()
 			this.ChangeLevel()
 		}
 	}
+	this.InitCamera()
 
 	this.stage = new PIXI.Container()
 	Application.addChild(this.stage)
@@ -91,7 +145,6 @@ StateInGame.prototype.Init = function()
 	Application.SetBackGroundColor(0xe4c29c)
 
 	Defines.UpdateParams()
-	Camera.Init()
 
 	GroundsManager.Initialize()
 	HudManager.Initialize()
