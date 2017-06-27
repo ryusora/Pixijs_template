@@ -7,7 +7,7 @@ var QuizManager = function()
 
 QuizManager.prototype.GetRandomQuiz = function()
 {
-	if(FireBaseManager.quizList == null || typeof(FireBaseManager.quizList == 'undefined')) return null
+	if(FireBaseManager.quizList == null || typeof(FireBaseManager.quizList) == 'undefined') return null
 
 	var quizLength = Object.keys(FireBaseManager.quizList).length
 	var randomIndex = Math.floor((Math.random() * quizLength))
