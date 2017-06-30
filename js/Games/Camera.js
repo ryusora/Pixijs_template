@@ -9,13 +9,22 @@ function Camera()
     var m_state;
     
     var m_x, m_y, m_z;
-    
-    this.Init = function()
+
+    var offsetX = 0, offsetY = 0, offsetZ = 0;
+    this.InitOffset = function(initPos)
+    {
+        offsetX = initPos.x
+        offsetY = initPos.y
+        offsetZ = initPos.z
+        this.Init(initPos)
+    }
+
+    this.Init = function(initPos)
     {
         SetPos(
-            Defines.PLAYER_START_POS_X + Defines.CAMERA_DELTA_POS_WITH_PLAYER_X, 
-            Defines.PLAYER_START_POS_Y + Defines.CAMERA_DELTA_POS_WITH_PLAYER_Y, 
-            Defines.PLAYER_START_POS_Z + Defines.CAMERA_DELTA_POS_WITH_PLAYER_Z
+            Defines.PLAYER_START_POS_X + initPos.x, 
+            Defines.PLAYER_START_POS_Y + initPos.y, 
+            Defines.PLAYER_START_POS_Z + initPos.z
             );
         
         //
@@ -81,9 +90,9 @@ function Camera()
     this.CameraUpdatePlayerPos = function(x, y, z)
     {   
         SetPos(
-            m_x, 
-            Defines.PLAYER_START_POS_Y + Defines.CAMERA_DELTA_POS_WITH_PLAYER_Y + y, 
-            Defines.CAMERA_DELTA_POS_WITH_PLAYER_Z + z
+            m_x + offsetX, 
+            Defines.PLAYER_START_POS_Y + y + offsetY, 
+            z + offsetZ
             );
     }
     
@@ -99,6 +108,79 @@ function Camera()
         m_y = y;
         m_z = z;
     }
+
+    // document.addEventListener('keydown', e=>{
+	// 	// console.log(e.keyCode)
+	// 	switch(e.keyCode)
+	// 	{
+	// 		case 37: // left
+	// 		{
+	// 			offsetX--
+	// 		}
+	// 		break
+
+	// 		case 38: // up
+	// 		{
+	// 			offsetY++
+	// 		}
+	// 		break
+
+	// 		case 39: // right
+	// 		{
+	// 			offsetX++
+	// 		}
+	// 		break
+
+    //         case 40: // down
+	// 		{
+	// 			offsetY--
+	// 		}
+	// 		break
+
+	// 		case 32: // space
+	// 		{
+	// 			// this.ActiveFrenzy()
+    //             console.log({x:offsetX, y:offsetY, z:offsetZ, itemOffsetZ:Defines.ITEM_OFFSET_Z, camPosY:Defines.CAMERA_ON_SCREEN_POS_Y})
+	// 		}
+    //         break
+
+    //         case 90: // z
+    //         {
+    //             offsetZ++
+    //         }
+    //         break
+
+    //         case 88: // x
+    //         {
+    //             offsetZ--
+    //         }
+	// 		break
+
+    //         case 65: // a
+    //         {
+    //             Defines.ITEM_OFFSET_Z++
+    //         }
+    //         break
+
+    //         case 83: // s
+    //         {
+    //             Defines.ITEM_OFFSET_Z--
+    //         }
+    //         break
+
+    //         case 104: // up 2
+    //         {
+    //             Defines.CAMERA_ON_SCREEN_POS_Y++
+    //         }
+    //         break
+
+    //         case 98: // down 2
+    //         {
+    //             Defines.CAMERA_ON_SCREEN_POS_Y--
+    //         }
+    //         break
+	// 	}
+	// })
 }
 
 module.exports = new Camera();

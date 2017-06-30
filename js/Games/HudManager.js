@@ -19,7 +19,7 @@ HudManager.prototype.Initialize = function()
     bg_sprite.position.set(half_width, 0)
     bg_sprite.anchor.set(0.5,0)
     // load Life icon
-    var live_sprite = new PIXI.Sprite(TextureManager.getTexture("hud_live"))
+    var live_sprite = new PIXI.Sprite(TextureManager.getTexture("hud_live_" + GameStates.GetCharacterName()))
     live_sprite.position.set(Defines.HUD_LIVE_OFFSET_X, Defines.HUD_ITEM_Y)
     live_sprite.anchor.set(0,0.5)
     // load life text

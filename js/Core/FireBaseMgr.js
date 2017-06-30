@@ -4,7 +4,16 @@ function FireBaseMgr()
 	this.database = null
 	this.currentUser = null
 	this.quizList = null
-	this.isInitialized = false
+	this.initializeStep = 0
+	this.userPref = null
+	this.listUsers = null
+	this.currentUserPref = null
+	this.currentUserData = null
+}
+
+FireBaseMgr.prototype.IsInitialized = function()
+{
+	return (this.initializeStep > 1)
 }
 
 FireBaseMgr.prototype.initialize = function()
@@ -28,20 +37,35 @@ FireBaseMgr.prototype.initialize = function()
 	this.defaultApp = firebase.initializeApp(config)
 	this.database = firebase.database()
 	// sign-in anonymously
-	firebase.auth().signInAnonymously().catch(function(error) {
-		// Handle Errors here.
-		console.log('login failed with reason ' + error.message)
-	});
+	// firebase.auth().signInAnonymously().catch(function(error) {
+	// 	// Handle Errors here.
+	// 	console.log('login failed with reason ' + error.message)
+	// });
 	firebase.auth().onAuthStateChanged(user=>{
 		if(user)
 		{
 			this.currentUser = user
 			console.log("log in success : " + user.uid )
+			// get userPref
+			this.userPref = this.database.ref("users")
+			this.userPref.once("value", (snapshot) =>{
+				console.log("load users : " + JSON.stringify(snapshot.val()) )
+				this.listUsers = snapshot.val()
+				this.initializeStep++
+			})
+
+			this.currentUserPref = this.database.ref('/users/' + this.currentUser.uid)
+			this.currentUserPref.once('value', (snapshot) => {
+				console.log('user : ' + this.currentUser.uid + ' - value change ')
+				console.log(snapshot.val())
+
+				this.currentUserData = snapshot.val()
+			})
+
 			// get QUIZs database
 			this.database.ref("quizs").once("value", (snapshot) =>{
-				console.log("load : " + JSON.stringify(snapshot.val()) )
 				this.quizList = snapshot.val()
-				this.isInitialized = true
+				this.initializeStep++
 			}, (reason)=>
 			{
 				// failed
@@ -50,7 +74,12 @@ FireBaseMgr.prototype.initialize = function()
 		}
 		else
 		{
-			console.log("User is signed out")
+			console.log("Try to sign in again");
+			// sign-in anonymously
+			firebase.auth().signInAnonymously().catch(function(error) {
+				// Handle Errors here.
+				console.log('login failed with reason ' + error.message)
+			});
 		}
 	})
 }
@@ -60,73 +89,96 @@ FireBaseMgr.prototype.isLogin = function()
 	return (this.currentUser != null)
 }
 
-FireBaseMgr.prototype.login = function(isGoogle = true)
+FireBaseMgr.prototype.CanEnterState = function(state)
 {
-	// login request
-	var provider = (isGoogle?(new firebase.auth.GoogleAuthProvider()):(new firebase.auth.FacebookAuthProvider()));
+	if(this.currentUserData != null 
+	&& this.currentUserData[state] != null
+	&& this.currentUserData[state].lockTime != null)
+	{
+		var currentDateTime = (new Date()).getTime()
+		var diffTime = currentDateTime - this.currentUserData[state].lockTime
+		var result = (diffTime > 14400000 ) //  4 * 60 * 60 * 1000 // 4 hours
+		if(result)
+		{
+			// reset count
+			this.currentUserData[state].quizCount = 0
+			this.currentUserData[state].lockTime = null
+		}
+		return result
+	}
+	return true
+}
 
-	firebase.auth().signInWithPopup(provider).then((result) => {
-		this.currentUser = result.user
-		console.log('sign in successful with user : ' + this.currentUser.displayName)
-		this.saveRecord(1)
-		console.log(this.getRecord())
-	}).catch(function(error) {
-		// Handle Errors here.
-		console.error(error.message)
-		// sign in with anonymous if error
-		firebase.auth().signinAnonymously().catch(error=>{
-			console.error(error.message)
-		})
-
-		firebase.auth().onAuthStateChanged(user=>{
-			if(user)
+FireBaseMgr.prototype.CountQuiz = function(state = null)
+{
+	if(state != null && this.currentUserData != null)
+	{
+		if(this.currentUserData[state] != null)
+		{
+			if(this.currentUserData[state].quizCount != null)
 			{
-				this.currentUser = user
+				this.currentUserData[state].quizCount++
+				if(this.currentUserData[state].quizCount >= 3)
+				{
+					this.currentUserData[state].lockTime = (new Date()).getTime()
+				}
 			}
 			else
 			{
-				console.log("User is signed out")
+				this.currentUserData[state].quizCount = 1
 			}
-		})
-	});
-}
-
-FireBaseMgr.prototype.saveRecord = function(record)
-{
-	if(this.currentUser)
-	{
-		this.database.ref('users/' + this.currentUser.uid).set({
-			highestScore:record
-		})
-	}
-}
-
-FireBaseMgr.prototype.getRecord = function()
-{
-	if(this.currentUser)
-	{
-		var score = 0
-		var job = []
-		job.push( new Promise( (resolve, reject) =>{
-			this.database.ref('users/' + this.currentUser.uid).once('value').then(snapshot=>{
-				score = snapshot.val().highestScore
-				resolve(true)
-			})
-		}))
-		var next = false
-		Promise.all(job).then(_=>{
-			next = true
-		}).catch(e=>{
-			console.log(e)
-		})
-		while(!next)
-		{
-			// do something
-			console.log('count')
 		}
-		return score
+		this.currentUserPref.set(this.currentUserData)
 	}
-	return null
+}
+
+FireBaseMgr.prototype.SaveRecord = function(record, state)
+{
+	if(this.currentUser)
+	{
+		// update score
+		if(this.currentUserData == null
+		|| typeof(this.currentUserData.totalScore) == 'undefined' 
+		|| this.currentUserData.totalScore == null)
+			this.currentUserData = {totalScore:0}
+		if(this.currentUserData[state] == null
+		|| typeof(this.currentUserData[state]) == 'undefined')
+			this.currentUserData[state] = {score:0}
+		this.currentUserData.totalScore += record
+		this.currentUserData[state].score = record
+
+		this.currentUserPref.set(this.currentUserData)
+		this.userPref.once("value", (snapshot) =>{
+			console.log("update list users : " + JSON.stringify(snapshot.val()) )
+			console.log(snapshot.val())
+			this.listUsers = snapshot.val()
+		})
+		if(this.listUsers != null)
+			this.listUsers[this.currentUser.uid] = {totalScore:this.currentUserData.totalScore}
+	}
+}
+
+FireBaseMgr.prototype.getRecord = function(state)
+{
+	if(this.currentUserData != null
+	&& this.currentUserData[state] != null
+	&& this.currentUserData[state].score != null
+	)
+	{
+		return this.currentUserData[state].score
+	}
+	return 0
+}
+
+FireBaseMgr.prototype.getRecordTotal = function()
+{
+	if(this.currentUserData != null
+	&& this.currentUserData.totalScore != null
+	)
+	{
+		return this.currentUserData.totalScore
+	}
+	return 0
 }
 
 module.exports = new FireBaseMgr()

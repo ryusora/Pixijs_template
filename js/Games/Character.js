@@ -47,7 +47,7 @@ var Character = function(){
 	this.frenzyState = FRENZY_STATE_NONE
 
 	document.addEventListener('keydown', e=>{
-		console.log(e.keyCode)
+		//console.log(e.keyCode)
 		switch(e.keyCode)
 		{
 			case 37: // left
@@ -79,8 +79,8 @@ var Character = function(){
 
 Character.prototype.SetupDragonBones = function()
 {
-	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData('mainChar_ske'));
-	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData('mainChar_tex_data'), TextureManager.getTexture('mainChar_tex'));
+	dragonBones.PixiFactory.factory.parseDragonBonesData(TextureManager.getDragonbonesData(GameStates.GetCharacterName() + '_mainChar_ske'));
+	dragonBones.PixiFactory.factory.parseTextureAtlasData(TextureManager.getDragonbonesData(GameStates.GetCharacterName() + '_mainChar_tex_data'), TextureManager.getTexture(GameStates.GetCharacterName() + '_mainChar_tex'));
 
 	this.armatureDisplay = dragonBones.PixiFactory.factory.buildArmatureDisplay("mainCharacter");
 	this.armatureDisplay.animation.play(ANIM_RUN);
@@ -141,7 +141,9 @@ Character.prototype.UpdatePosition = function()
 Character.prototype.ResetAll = function()
 {
 	this.SetPos(Defines.PLAYER_START_POS_X, Defines.PLAYER_START_POS_Y, Defines.PLAYER_START_POS_Z )
+	this.UpdatePosition()
 	Camera.CameraUpdatePlayerPos()
+	this.offsetSpeed = 0
 	this.frenzyCamOffsetX = 0
 	this.frenzyCamOffsetY = 0
 	this.frenzyCamOffsetZ = 0
@@ -149,6 +151,10 @@ Character.prototype.ResetAll = function()
 	this.currentState = STATE_IDLE
 
 	this.frenzyState = FRENZY_STATE_NONE
+	InputManager.Reset()
+
+	// reset velocity
+	this.velocity = new Vector2()
 }
 
 Character.prototype.SetState = function(state)
@@ -162,7 +168,7 @@ Character.prototype.SetState = function(state)
 Character.prototype.SetAnimation = function(anim_name, loop = true)
 {
 	var playTime = loop?-1:1
-	console.log("play anim : " + anim_name + " with play time : " + playTime)
+	//console.log("play anim : " + anim_name + " with play time : " + playTime)
 	this.armatureDisplay.animation.play(anim_name, playTime);
 }
 
@@ -178,7 +184,7 @@ Character.prototype.MoveLeft = function()
 	}
 
 	this.SetState(STATE_MOVE_LEFT)
-	this.SetAnimation(ANIM_LEFT, false)
+	//this.SetAnimation(ANIM_LEFT, false)
 	// add force
 	var moveLeftForce = new Vector2()
 	moveLeftForce.clone(Defines.MOVE_FORCE)
@@ -198,7 +204,7 @@ Character.prototype.MoveRight = function()
 	}
 
 	this.SetState(STATE_MOVE_RIGHT)
-	this.SetAnimation(ANIM_RIGHT, false)
+	//this.SetAnimation(ANIM_RIGHT, false)
 	// add force
 	this.velocity.add(Defines.MOVE_FORCE)
 }
@@ -297,8 +303,8 @@ Character.prototype.UpdateFrenzy = function()
 		this.frenzyCamOffsetX 	= Math.min(this.frenzyCamOffsetX, Defines.FRENZY_CAM_OFFSET_X)
 		this.frenzyCamOffsetY 	= Math.max(this.frenzyCamOffsetY, Defines.FRENZY_CAM_OFFSET_Y)
 		this.frenzyCamOffsetZ 	= Math.max(this.frenzyCamOffsetZ, Defines.FRENZY_CAM_OFFSET_Z)
-		console.log(this.frenzyCamOffsetY)
-		if(this.offsetSpeed == Defines.FRENZY_FADE_SPEED)
+		//console.log(this.frenzyCamOffsetY)
+		if(this.offsetSpeed == Defines.MAX_FRENZY_OFFSET_SPEED)
 		{
 			this.frenzyState = FRENZY_STATE_IDLE
 		}
@@ -309,8 +315,8 @@ Character.prototype.UpdateFrenzy = function()
 		this.frenzyCamOffsetX 	= Math.max(this.frenzyCamOffsetX, 0)
 		this.frenzyCamOffsetY 	= Math.min(this.frenzyCamOffsetY, 0)
 		this.frenzyCamOffsetZ 	= Math.min(this.frenzyCamOffsetZ, 0)
-		console.log(this.frenzyCamOffsetY)
-		if(this.frenzyCamOffsetY == 0)
+		//console.log(this.frenzyCamOffsetY)
+		if(this.offsetSpeed == 0)
 		{
 			this.frenzyState = FRENZY_STATE_NONE
 		}
@@ -344,6 +350,7 @@ Character.prototype.UpdateFrenzyMode = function(dt)
 
 Character.prototype.ActiveFrenzy = function()
 {
+	console.log("Active Frenzy")
 	this.frenzyState = FRENZY_STATE_FORWARD
 	this.frenzyTimer = Defines.FRENZY_TIME
 }
@@ -363,7 +370,7 @@ Character.prototype.Update = function(dt)
 Character.prototype.UpdateControl = function()
 {
 	if(InputManager.IsTouchPress()) {
-		console.log("{" + InputManager.deltaX +","+ InputManager.deltaY+"}")
+		//console.log("{" + InputManager.deltaX +","+ InputManager.deltaY+"}")
 		if(Math.abs(InputManager.deltaY) > Defines.SWIPE_OFFSET) {
 			if(InputManager.deltaY < 0)
 			{

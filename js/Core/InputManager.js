@@ -130,7 +130,7 @@ InputManager.prototype.IsTouchMove = function()
 
 InputManager.prototype.IsTouchPress = function()
 {
-    console.log("is touch pressed : " + ((this.state & TOUCH_PRESSED) != 0?true:false))
+    //console.log("is touch pressed : " + ((this.state & TOUCH_PRESSED) != 0?true:false))
 	return ((this.state & TOUCH_PRESSED) != 0?true:false);
 };
 

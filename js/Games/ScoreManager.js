@@ -41,8 +41,13 @@ ScoreManager.prototype.ResetAll = function()
 ScoreManager.prototype.GetItem = function(score, position)
 {
     var scoreItem = this.scores_deactived.pop()
-	var bonus = GameStates.stateInGame.IsFrenzy()?2:1
-    this.currentScore += score*bonus
+	var isLuckyItem = score == Defines.ITEM_LUCKY_SCORE
+	if(isLuckyItem)
+	{
+		var bonus = GameStates.stateInGame.IsFrenzy()?2:1
+		score *= bonus
+	}
+	this.currentScore += score
 	// console.log("Add Score : " + this.currentScore + " with bonus : " + bonus)
 	if(scoreItem)
 	{
@@ -50,9 +55,9 @@ ScoreManager.prototype.GetItem = function(score, position)
 		this.scores_actived.push(scoreItem)
 		this.stage.addChild(scoreItem.sprite)
 		scoreItem.SetActive(true)
-        scoreItem.SetScore(score*bonus)
+        scoreItem.SetScore(score)
         scoreItem.SetPosition(position)
-		if(GameStates.stateInGame.IsFrenzy())
+		if(GameStates.stateInGame.IsFrenzy() && isLuckyItem)
 		{
 			scoreItem.ActiveBonusStyle()
 		}

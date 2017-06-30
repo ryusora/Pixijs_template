@@ -6,6 +6,11 @@ function TextureManager()
 	this.resources = this.loader.resources
 }
 
+TextureManager.prototype.ResetLoader = function()
+{
+	this.loader.reset()
+}
+
 TextureManager.prototype.load = function(listTextures, callback)
 {
 	for(let i in listTextures)

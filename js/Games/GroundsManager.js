@@ -12,7 +12,7 @@ var GroundsManager = function()
 GroundsManager.prototype.Initialize = function()
 {
 	this.stage = new PIXI.Container()
-	var background = new PIXI.Sprite(TextureManager.getTexture("background"))
+	var background = new PIXI.Sprite(TextureManager.getTexture(GameStates.GetLevel() + "_background"))
 	// background.position.set(Application.getScreenWidth()*0.5, 0)
 	background.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
 	background.anchor.set(0.5, 0.5)

@@ -2,6 +2,7 @@ String.prototype.startsWith||(String.prototype.startsWith=function(a,b){return t
 
 require('pixi.js')
 window.firebase = require('firebase')
+window.QuizManager = require('./Quiz/QuizManager.js')
 
 // dragonBones defines
 window.dragonBones			= window.dragonBones || {};
@@ -23,6 +24,7 @@ function run(deltaTime){
 		Application.instance.stage.position.set(randomX, randomY)
 		if(--Application.shakeTicker < 0)
 		{
+			Application.instance.stage.position.set(0, 0)
 			Application.isShaking = false
 		}
 	}

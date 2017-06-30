@@ -14,7 +14,7 @@ StateMainMenu.prototype.Init = function(){
 	btnPlay.anchor.set(0.5, 0.5)
 	btnPlay.interactive = true
 	btnPlay.on('pointerdown', ()=>{
-		StatesManager.ChangeState(GameStates.stateLoading)
+		StatesManager.ChangeState(GameStates.stateChooseCharacter)
 	})
 	this.stage.addChild(bg)
 	this.stage.addChild(btnPlay)
