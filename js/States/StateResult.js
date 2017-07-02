@@ -84,7 +84,7 @@ StateResult.prototype.Init = function()
 		this.hanhTrinhTitle.anchor.set(0.5, 0.5)
 		this.hanhTrinhTitle.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5 - 200)
 
-		var x = Application.getScreenWidth()*0.5 - 30
+		var x = Application.getScreenWidth()*0.5 - 120
 		var y = 700
 		var replayBtn = new PIXI.Sprite(TextureManager.getTexture("rs_replay_btn"))
 		replayBtn.position.set(x, y)
@@ -98,7 +98,7 @@ StateResult.prototype.Init = function()
 			}
 		})
 
-		x = Application.getScreenWidth()*0.5 - 15
+		x = Application.getScreenWidth()*0.5 - 100
 
 		var chooseLevelBtn = new PIXI.Sprite(TextureManager.getTexture("rs_chooseLevel"))
 		chooseLevelBtn.position.set(x , y)

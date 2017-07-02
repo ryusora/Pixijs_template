@@ -108,6 +108,7 @@ StateLoading.prototype.Update = function(dt)
 		// do something when textures are loaded
 		if(GameStates.GetLevel() != 'DacBiet')
 		{
+			//StatesManager.ChangeState(GameStates.stateResult)
 			StatesManager.ChangeState(GameStates.stateInformation)
 		}
 		else

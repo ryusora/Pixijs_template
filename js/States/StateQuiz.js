@@ -15,7 +15,7 @@ var StateQuiz = function()
 	bg.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
 	bg.anchor.set(0.5, 0.5)
 
-	this.board = new PIXI.Sprite(TextureManager.getTexture('rs_board'))
+	this.board = new PIXI.Sprite(TextureManager.getTexture('q_bg'))
 	this.board.position.set(Application.getScreenWidth()*0.5,Application.getScreenHeight()*0.5)
 	this.board.anchor.set(0.5, 0.5)
     
@@ -29,7 +29,7 @@ var StateQuiz = function()
     this.checkmark.anchor.set(0.5, 0.5)
 
     var btnConfirm = new PIXI.Sprite(TextureManager.getTexture('BTN_OK'))
-    btnConfirm.position.set(0, 500)
+    btnConfirm.position.set(0, 350)
     btnConfirm.anchor.set(0.5, 0.5)
     btnConfirm.interactive = true
     btnConfirm.on('pointerdown', (()=>{

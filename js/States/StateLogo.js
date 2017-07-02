@@ -47,12 +47,12 @@ StateLogo.prototype.Init = function(){
 		'DacBiet_highlight'		:'Assets/Menu/ChooseLevels/dac_biet_hilight.png',
 
 		// menu info
-		'INFO_HoHap'				:'Assets/Menu/INFO_HoHap.png',
-		'INFO_ThanKinh'				:'Assets/Menu/INFO_ThanKinh.png',
-		'INFO_DauLung'				:'Assets/Menu/INFO_DauLung.png',
-		'INFO_RungToc'				:'Assets/Menu/INFO_RungToc.png',
-		'INFO_SinhSan'				:'Assets/Menu/INFO_SinhSan.png',
-		'INFO_TieuHoa'				:'Assets/Menu/INFO_TieuHoa.png',
+		'INFO_HoHap'				:'Assets/Menu/INFO_HoHap.jpg',
+		'INFO_ThanKinh'				:'Assets/Menu/INFO_ThanKinh.jpg',
+		'INFO_DauLung'				:'Assets/Menu/INFO_DauLung.jpg',
+		'INFO_RungToc'				:'Assets/Menu/INFO_RungToc.jpg',
+		'INFO_SinhSan'				:'Assets/Menu/INFO_SinhSan.jpg',
+		'INFO_TieuHoa'				:'Assets/Menu/INFO_TieuHoa.jpg',
 
 		// menu result
 		'rs_bg'				:'Assets/Menu/Leaderboard/Background.png',
@@ -84,6 +84,7 @@ StateLogo.prototype.Init = function(){
 		// QUIZ
 		'square'		:'Assets/Menu/QUIZ/square.png',
 		'checkmark'		:'Assets/Menu/QUIZ/mark.png',
+		'q_bg'			:'Assets/Menu/QUIZ/quiz_pop_up.png'
 	}, ()=>{
 		this.logoSprite = new PIXI.Sprite(TextureManager.getTexture('LOGO'))
 		this.logoSprite.anchor.set(0.5, 0.5)
