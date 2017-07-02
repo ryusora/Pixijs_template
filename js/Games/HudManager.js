@@ -30,9 +30,11 @@ HudManager.prototype.Initialize = function()
     var half_width = Application.getScreenWidth()*0.5
     var hudStyle = new PIXI.TextStyle({
         fontFamily: 'Arial',
-        fontSize: 30,
+        fontSize: 35,
         fontWeight: 'bold',
-        fill: ['#ffffff'], // white
+        fill: ['#ff0000'], // white
+        stroke: '#ffffff',
+        strokeThickness: 5,
     })
 
     var scoreStyle = new PIXI.TextStyle({
