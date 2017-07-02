@@ -10,6 +10,16 @@ var quizPopup = null
 var completePopup = null
 var StateInGame = function()
 {
+	this.currentSpeedUpIdx = 0
+	this.speedUpTicker = 0
+	this.listSpeedUpTime = [
+		30,
+		90,
+		180,
+		300,
+		300
+	]
+
 	this.ListLevelsName = [
 		"HoHap",
 		"SinhSan",
@@ -83,6 +93,7 @@ var StateInGame = function()
 
 StateInGame.prototype.ResetAll = function()
 {
+	this.currentSpeedUpIdx = 0
 	this.isLoadingDone = false
 	this.player = null
 	this.stage = null
@@ -156,6 +167,8 @@ StateInGame.prototype.Init = function()
 		{
 			this.ChangeLevel()
 		}
+		// Init old score
+		ScoreManager.currentScore = FireBaseManager.getRecord(this.currentLevelName)
 	}
 	this.InitCamera()
 
@@ -169,6 +182,7 @@ StateInGame.prototype.Init = function()
 	GroundsManager.Initialize()
 	HudManager.Initialize()
 	HudManager.UpdateLife(ScoreManager.life)
+	HudManager.UpdateScore(ScoreManager.currentScore)
 	// DecorationsManager.Initialize()
 
 	this.stage.addChild(GroundsManager.stage)
@@ -245,11 +259,7 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			if(ScoreManager.life <= 0 && !this.invincible)
 			{ 
 				var currentLevel = this.isSpecialState?"DacBiet":this.currentLevelName
-				var latestScore = FireBaseManager.getRecord(currentLevel)
-				if(latestScore < ScoreManager.currentScore)
-				{
-					FireBaseManager.SaveRecord(ScoreManager.currentScore, currentLevel)
-				}
+				FireBaseManager.SaveRecord(ScoreManager.currentScore, currentLevel)
 				this.isGameOver = true
 				this.player.ResetAll()
 				// count quiz
@@ -281,11 +291,12 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			})
 			return
 		}
-		if(collidedItem.isLuckyItem || this.combo >= Defines.MAX_COMBO_COUNT){
-			this.ResetCombo()
-			this.player.ActiveFrenzy()
-			this.fadeEffect.alpha = 0.5
-		}
+
+		// if(collidedItem.isLuckyItem || this.combo >= Defines.MAX_COMBO_COUNT){
+		// 	this.ResetCombo()
+		// 	this.player.ActiveFrenzy()
+		// 	this.fadeEffect.alpha = 0.5
+		// }
 		HudManager.UpdateScore(ScoreManager.currentScore)
 		HudManager.UpdateLife(ScoreManager.life)
 
@@ -366,6 +377,25 @@ StateInGame.prototype.Update = function(dt)
 			console.log("Change Level")
 			this.ChangeLevel()
 			return
+		}
+	}
+
+	if(!this.IsFrenzy())
+	{
+		this.speedUpTicker += dt
+		if(this.speedUpTicker >= this.listSpeedUpTime[this.currentSpeedUpIdx])
+		{
+			this.speedUpTicker = 0
+			let length = this.listSpeedUpTime.length
+			if(++this.currentSpeedUpIdx > length - 1)
+			{
+				this.currentSpeedUpIdx = 0
+			}
+			else if (this.currentSpeedUpIdx < length - 1)
+			{
+				this.player.ActiveFrenzy()
+				this.fadeEffect.alpha = 0.5
+			}
 		}
 	}
 
