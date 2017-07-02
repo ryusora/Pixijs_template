@@ -14,6 +14,25 @@ HudManager.prototype.Initialize = function()
         fontWeight: 'bold',
         fill: ['#ffffff'], // white
     })
+
+    var scoreStyle = new PIXI.TextStyle({
+        fontFamily: 'Arial',
+        fontSize: 65,
+        fontWeight: 'bold',
+        fill: ['#ff0099', '#ff0000'], // red
+        stroke: '#ffffff',
+        strokeThickness: 5,
+    })
+
+    var scoreTitleStyle = new PIXI.TextStyle({
+        fontFamily: 'Arial',
+        fontSize: 45,
+        fontWeight: 'bold',
+        fill: ['#ff0099'], // red
+        stroke: '#ffffff',
+        strokeThickness: 5,
+        lineJoin:'round'
+    })
     // load hud bg
     var bg_sprite = new PIXI.Sprite(TextureManager.getTexture("hud_bg"))
     bg_sprite.position.set(half_width, 0)
@@ -27,19 +46,23 @@ HudManager.prototype.Initialize = function()
     this.liveStr.position.set(Defines.LIVE_TEXT_OFFSET_X, 0)
     this.liveStr.anchor.set(0.5, 0.5)
     // load score icon
-    var score_sprite = new PIXI.Sprite(TextureManager.getTexture("hud_score"))
-    score_sprite.position.set(half_width + Defines.HUD_SCORE_OFFSET_X, Defines.HUD_ITEM_Y)
-    score_sprite.anchor.set(0.5,0.5)
+    // var score_sprite = new PIXI.Sprite(TextureManager.getTexture("hud_score"))
+    // score_sprite.position.set(half_width + Defines.HUD_SCORE_OFFSET_X, Defines.HUD_ITEM_Y)
+    // score_sprite.anchor.set(0.5,0.5)
     // load score text
-    this.scoreStr = new PIXI.Text("0", hudStyle)
+    this.scoreStr = new PIXI.Text("0", scoreStyle)
     this.scoreStr.anchor.set(0.5, 0.5)
-    this.scoreStr.position.set(Defines.SCORE_TEXT_OFFSET_X, 0)
+    this.scoreStr.position.set(half_width + Defines.HUD_SCORE_OFFSET_X, Defines.HUD_ITEM_Y + 35)
 
-    live_sprite.addChild(this.liveStr)
-    score_sprite.addChild(this.scoreStr)
+    var scoreTitle = new PIXI.Text("ĐIỂM", scoreTitleStyle)
+    scoreTitle.anchor.set(0.5, 0.5)
+    scoreTitle.position.set(half_width + Defines.HUD_SCORE_OFFSET_X, Defines.HUD_ITEM_Y - 30)
+
     this.stage.addChild(bg_sprite)
     this.stage.addChild(live_sprite)
-    this.stage.addChild(score_sprite)
+    live_sprite.addChild(this.liveStr)
+    this.stage.addChild(scoreTitle)
+    this.stage.addChild(this.scoreStr)
 }
 
 HudManager.prototype.ResetAll = function()
