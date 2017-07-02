@@ -109,6 +109,27 @@ FireBaseMgr.prototype.CanEnterState = function(state)
 	return true
 }
 
+FireBaseMgr.prototype.SetComplete = function(levelName)
+{
+	if(this.currentUserData != null
+	&& this.currentUserData[levelName] != null)
+	{
+		this.currentUserData[levelName].isCompleted = true
+		this.currentUserPref.set(this.currentUserData)
+	}
+}
+
+FireBaseMgr.prototype.IsLevelCompleted = function(levelName)
+{
+	if(this.currentUserData != null
+	&& this.currentUserData[levelName] != null)
+	{
+		if(typeof(this.currentUserData[levelName].isCompleted) != 'undefined')
+			return this.currentUserData[levelName].isCompleted
+	}
+	return false
+}
+
 FireBaseMgr.prototype.CountQuiz = function(state = null)
 {
 	if(state != null && this.currentUserData != null)

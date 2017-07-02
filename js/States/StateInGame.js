@@ -5,7 +5,9 @@ window.GroundsManager		= require('../Games/GroundsManager.js')
 // window.DecorationsManager 	= require('../Games/DecorationsManager.js')
 window.HudManager 			= require('../Games/HudManager.js')
 const StateQuiz				= require('./StateQuiz.js')
+const CompletePopup			= require('../Games/CompletePopup.js')
 var quizPopup = null
+var completePopup = null
 var StateInGame = function()
 {
 	this.ListLevelsName = [
@@ -16,6 +18,15 @@ var StateInGame = function()
 		"DauLung",
 		"TieuHoa"
 	]
+
+	this.ListUnlockScore = {
+		"HoHap"		:10000,
+		"SinhSan"	:3000,
+		"ThanKinh"	:3000,
+		"RungToc"	:3000,
+		"DauLung"	:3000,
+		"TieuHoa"	:6000
+	}
 	
 	this.cameraInitPos = {
 		"HoHap":{
@@ -66,6 +77,7 @@ var StateInGame = function()
 	this.isChangingLevel = false
 	this.levelCounting = 0
 	this.ResetAll()
+	this.currentLevelName = null
 }
 
 StateInGame.prototype.ResetAll = function()
@@ -95,9 +107,9 @@ StateInGame.prototype.ResetCombo = function()
 
 StateInGame.prototype.InitCamera = function()
 {
-	Camera.InitOffset(this.cameraInitPos[GameStates.GetLevel()])
-	Defines.CAMERA_ON_SCREEN_POS_Y = this.cameraInitPos[GameStates.GetLevel()].camPosY
-	Defines.ITEM_OFFSET_Z = this.cameraInitPos[GameStates.GetLevel()].item_offset_z
+	Camera.InitOffset(this.cameraInitPos[this.currentLevelName])
+	Defines.CAMERA_ON_SCREEN_POS_Y = this.cameraInitPos[this.currentLevelName].camPosY
+	Defines.ITEM_OFFSET_Z = this.cameraInitPos[this.currentLevelName].item_offset_z
 }
 
 StateInGame.prototype.ChangeLevel = function()
@@ -129,9 +141,16 @@ StateInGame.prototype.Init = function()
 		quizPopup = new StateQuiz()
 	}
 
+	if(completePopup == null)
+	{
+		completePopup = new CompletePopup()
+	}
+
+	this.currentLevelName = GameStates.GetLevel()
+
 	if(!this.isSpecialState)
 	{
-		this.isSpecialState = (GameStates.GetLevel() == 'DacBiet')
+		this.isSpecialState = (this.currentLevelName == 'DacBiet')
 		if(this.isSpecialState)
 		{
 			this.ChangeLevel()
@@ -185,7 +204,7 @@ StateInGame.prototype.Destroy = function()
 
 StateInGame.prototype.FixedUpdate = function(dt)
 {
-	if(this.isGameOver || HudManager.IsPaused)
+	if(this.isGameOver || HudManager.IsPaused || (completePopup != null && completePopup.IsOnScreen))
 	{
 		return
 	}
@@ -221,7 +240,7 @@ StateInGame.prototype.FixedUpdate = function(dt)
 
 			if(ScoreManager.life <= 0 && !this.invincible)
 			{ 
-				var currentLevel = GameStates.GetLevel()
+				var currentLevel = this.isSpecialState?"DacBiet":this.currentLevelName
 				var latestScore = FireBaseManager.getRecord(currentLevel)
 				if(latestScore < ScoreManager.currentScore)
 				{
@@ -256,6 +275,15 @@ StateInGame.prototype.FixedUpdate = function(dt)
 		}
 		HudManager.UpdateScore(ScoreManager.currentScore)
 		HudManager.UpdateLife(ScoreManager.life)
+
+		if(!this.isSpecialState && !FireBaseManager.IsLevelCompleted(this.currentLevelName) && ScoreManager.currentScore >= this.ListUnlockScore[this.currentLevelName])
+		{
+			// Complete level
+			FireBaseManager.SetComplete(this.currentLevelName)
+
+			// show popup completed
+			completePopup.Show(this.currentLevelName)
+		}
 	}
 }
 
@@ -309,7 +337,7 @@ StateInGame.prototype.Revive = function()
 
 StateInGame.prototype.Update = function(dt)
 {
-	if(this.isGameOver || HudManager.IsPaused)	return
+	if(this.isGameOver || HudManager.IsPaused || (completePopup != null && completePopup.IsOnScreen))	return
 
 	if(this.isSpecialState)
 	{

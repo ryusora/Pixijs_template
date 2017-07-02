@@ -9,12 +9,13 @@ var StateLogo = function(){
 
 StateLogo.prototype.Init = function(){
 	TextureManager.load({
-		'LOGO'		:'Assets/abbott-logo.jpg',
-		'LOADING'	:'Assets/loading-icon.png',
-		'MENU_BG'	:'Assets/Menu/bg.png',
-		'BTN_START'	:'Assets/btn_play.png',
-		'HEADER_LOGO':'Assets/Menu/title.png',
-		'BTN_OK'	:'Assets/Menu/ok_icon.png',
+		'LOGO'			:'Assets/abbott-logo.jpg',
+		'LOADING'		:'Assets/loading-icon.png',
+		'MENU_BG'		:'Assets/Menu/bg.png',
+		'BTN_START'		:'Assets/btn_play.png',
+		'HEADER_LOGO'	:'Assets/Menu/title.png',
+		'BTN_OK'		:'Assets/Menu/ok_icon.png',
+		'Complete_popup':'Assets/Menu/Complete_popup.png',
 		// Menu Choose Characters
 		'cc_title'			:'Assets/Menu/ChooseCharacters/select_icon.png',
 		'cc_male_icon'		:'Assets/Menu/ChooseCharacters/male_icon.png',

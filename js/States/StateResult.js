@@ -7,7 +7,7 @@ var StateResult = function()
 	this.myRank = -1
 	this.levelsName = {
 		"HoHap"		:"HÔ HẤP",
-		"SinhSan"	:"SỨC KHỎE SINH SẢN",
+		"SinhSan"	:"SINH SẢN",
 		"ThanKinh"	:"CHÓNG MẶT",
 		"RungToc"	:"RỤNG TÓC",
 		"DacBiet"	:"ĐẶC BIỆT",
