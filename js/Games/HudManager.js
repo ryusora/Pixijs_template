@@ -1,12 +1,32 @@
+const Utility = require("../Core/Utility.js")
+
 var HudManager = function()
 {
     this.stage = new PIXI.Container()
     this.liveStr = null
     this.scoreStr = null
+    this.isInitialized = false
+    this.pause = null
+    this.IsPaused = false
+
+    this.fadeEffect = new PIXI.Graphics()
+    this.fadeEffect.beginFill(0x000000)
+	this.fadeEffect.drawRect(0,0,Application.getScreenWidth(), Application.getScreenHeight())
+	this.fadeEffect.alpha = 0
+}
+
+HudManager.prototype.OnPause = function()
+{
+    this.IsPaused = !this.IsPaused
+    this.fadeEffect.alpha = this.IsPaused?0.5:0
+    if(this.pause)
+        this.pause.text = ((this.IsPaused)?"CHƠI TIẾP":"TẠM DỪNG")
 }
 
 HudManager.prototype.Initialize = function()
 {
+    if(this.isInitialized) return
+
     var half_width = Application.getScreenWidth()*0.5
     var hudStyle = new PIXI.TextStyle({
         fontFamily: 'Arial',
@@ -58,11 +78,30 @@ HudManager.prototype.Initialize = function()
     scoreTitle.anchor.set(0.5, 0.5)
     scoreTitle.position.set(half_width + Defines.HUD_SCORE_OFFSET_X, Defines.HUD_ITEM_Y - 30)
 
+    var pauseStyle = new PIXI.TextStyle({
+        fontFamily: 'Arial',
+        fontSize: 30,
+        fontWeight: 'bold',
+        fill: ['#ff0000'], // red
+        stroke: '#ffffff',
+        strokeThickness: 10,
+        lineJoin:'round'
+    })
+    this.pause = new PIXI.Text("TẠM DỪNG", pauseStyle)
+    this.pause.position.set(Application.getScreenWidth()*0.5 + 250, Defines.HUD_ITEM_Y)
+    this.pause.anchor.set(0.5, 0.5)
+    this.pause.interactive = true
+    this.pause.on('pointerdown', this.OnPause.bind(this))
+
     this.stage.addChild(bg_sprite)
     this.stage.addChild(live_sprite)
     live_sprite.addChild(this.liveStr)
     this.stage.addChild(scoreTitle)
     this.stage.addChild(this.scoreStr)
+    this.stage.addChild(this.fadeEffect)
+    this.stage.addChild(this.pause)
+
+    this.isInitialized = true
 }
 
 HudManager.prototype.ResetAll = function()
@@ -73,7 +112,7 @@ HudManager.prototype.ResetAll = function()
 
 HudManager.prototype.UpdateScore = function(score)
 {
-    this.scoreStr.text = score + ""
+    this.scoreStr.text = Utility.GetStringFromNumber(score)
 }
 
 HudManager.prototype.UpdateLife = function(life)

@@ -108,6 +108,7 @@ StateLoading.prototype.Update = function(dt)
 		// do something when textures are loaded
 		StatesManager.ChangeState(GameStates.stateTutorial)
 		// StatesManager.ChangeState(GameStates.stateQuiz)
+		//StatesManager.ChangeState(GameStates.stateResult)
 	}
 	else
 	{

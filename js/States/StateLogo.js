@@ -46,6 +46,7 @@ StateLogo.prototype.Init = function(){
 		'DacBiet_highlight'		:'Assets/Menu/ChooseLevels/dac_biet_hilight.png',
 
 		// menu result
+		'rs_bg'				:'Assets/Menu/Leaderboard/Background.png',
 		'rs_board'			:'Assets/Menu/Leaderboard/Board.png',
 		'rs_replay_btn'		:'Assets/Menu/Leaderboard/ChoiLai.png',
 		'rs_chooseLevel'	:'Assets/Menu/Leaderboard/ChonManHinh.png',

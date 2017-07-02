@@ -185,7 +185,7 @@ StateInGame.prototype.Destroy = function()
 
 StateInGame.prototype.FixedUpdate = function(dt)
 {
-	if(this.isGameOver)
+	if(this.isGameOver || HudManager.IsPaused)
 	{
 		return
 	}
@@ -309,7 +309,7 @@ StateInGame.prototype.Revive = function()
 
 StateInGame.prototype.Update = function(dt)
 {
-	if(this.isGameOver)	return
+	if(this.isGameOver || HudManager.IsPaused)	return
 
 	if(this.isSpecialState)
 	{
