@@ -46,6 +46,14 @@ StateLogo.prototype.Init = function(){
 		'TieuHoa_highlight'		:'Assets/Menu/ChooseLevels/tieu_hoa_hilight.png',
 		'DacBiet_highlight'		:'Assets/Menu/ChooseLevels/dac_biet_hilight.png',
 
+		// menu info
+		'INFO_HoHap'				:'Assets/Menu/INFO_HoHap.png',
+		'INFO_ThanKinh'				:'Assets/Menu/INFO_ThanKinh.png',
+		'INFO_DauLung'				:'Assets/Menu/INFO_DauLung.png',
+		'INFO_RungToc'				:'Assets/Menu/INFO_RungToc.png',
+		'INFO_SinhSan'				:'Assets/Menu/INFO_SinhSan.png',
+		'INFO_TieuHoa'				:'Assets/Menu/INFO_TieuHoa.png',
+
 		// menu result
 		'rs_bg'				:'Assets/Menu/Leaderboard/Background.png',
 		'rs_board'			:'Assets/Menu/Leaderboard/Board.png',

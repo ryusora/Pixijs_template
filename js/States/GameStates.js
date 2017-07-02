@@ -7,6 +7,7 @@ const StateChooseCharacter = require('./StateChooseCharacter.js')
 const StateChooseLevel = require('./StateChooseLevel.js')
 const StateResult = require('./StateResult.js')
 const StateTutorial = require('./StateTutorial.js')
+const StateInformation = require('./StateInformation.js')
 
 var GameState = function(){
 	this.stateLogo = new StateLogo()
@@ -18,6 +19,7 @@ var GameState = function(){
 	this.stateChooseLevel = new StateChooseLevel()
 	this.stateResult = new StateResult()
 	this.stateTutorial = new StateTutorial()
+	this.stateInformation = new StateInformation()
 
 	this.GetCharacterName = function()
 	{

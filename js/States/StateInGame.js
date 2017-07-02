@@ -72,6 +72,7 @@ var StateInGame = function()
 			camPosY:263.55
 		}
 	}
+	this.shouldSpawnQuestion = false // in 2 minutes each
 
 	this.levelIndex = 0
 	this.isChangingLevel = false
@@ -204,7 +205,10 @@ StateInGame.prototype.Destroy = function()
 
 StateInGame.prototype.FixedUpdate = function(dt)
 {
-	if(this.isGameOver || HudManager.IsPaused || (completePopup != null && completePopup.IsOnScreen))
+	if(this.isGameOver 
+	|| HudManager.IsPaused 
+	|| (completePopup != null && completePopup.IsOnScreen)
+	|| (quizPopup != null && quizPopup.IsOnScreen))
 	{
 		return
 	}
@@ -252,10 +256,11 @@ StateInGame.prototype.FixedUpdate = function(dt)
 				if(FireBaseManager.CanEnterState(currentLevel))
 				{
 					FireBaseManager.CountQuiz(currentLevel)
-					if(!quizPopup.Show())
-					{
+					quizPopup.Show(()=>{
+						this.Revive()
+					}, ()=>{
 						StatesManager.ChangeState(GameStates.stateResult)
-					}
+					})
 				}
 				else
 				{
@@ -268,6 +273,12 @@ StateInGame.prototype.FixedUpdate = function(dt)
 		ItemsManager.DeactiveItem(collidedItem)
 		if(!this.IsFrenzy()) this.combo++
 
+		if(collidedItem.isQuestionItem)
+		{
+			quizPopup.Show(()=>{
+				
+			})
+		}
 		if(collidedItem.isLuckyItem || this.combo >= Defines.MAX_COMBO_COUNT){
 			this.ResetCombo()
 			this.player.ActiveFrenzy()
@@ -337,7 +348,13 @@ StateInGame.prototype.Revive = function()
 
 StateInGame.prototype.Update = function(dt)
 {
-	if(this.isGameOver || HudManager.IsPaused || (completePopup != null && completePopup.IsOnScreen))	return
+	if(this.isGameOver 
+	|| HudManager.IsPaused 
+	|| (completePopup != null && completePopup.IsOnScreen)
+	|| (quizPopup != null && quizPopup.IsOnScreen))	
+	{
+		return
+	}
 
 	if(this.isSpecialState)
 	{
