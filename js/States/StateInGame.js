@@ -276,8 +276,10 @@ StateInGame.prototype.FixedUpdate = function(dt)
 		if(collidedItem.isQuestionItem)
 		{
 			quizPopup.Show(()=>{
-				
+				ItemsManager.SpawnScoreAt(this.player.position, 10)
+				HudManager.UpdateScore(ScoreManager.currentScore)
 			})
+			return
 		}
 		if(collidedItem.isLuckyItem || this.combo >= Defines.MAX_COMBO_COUNT){
 			this.ResetCombo()
