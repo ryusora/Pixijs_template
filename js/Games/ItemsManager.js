@@ -313,7 +313,7 @@ ItemsManager.prototype.CheckCollision = function(box)
 	{
 		if(this.items_actived[idx].CheckCollision(box))
 		{
-			//if(!this.items_actived[idx].isLuckyItem)
+			if(!this.items_actived[idx].isQuestionItem)
 			{
 				if(this.items_actived[idx].score < 0)
 				{
