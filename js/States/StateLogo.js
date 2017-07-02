@@ -55,7 +55,7 @@ StateLogo.prototype.Init = function(){
 		'INFO_TieuHoa'				:'Assets/Menu/INFO_TieuHoa.jpg',
 
 		// menu result
-		'rs_bg'				:'Assets/Menu/Leaderboard/Background.png',
+		'rs_bg'				:'Assets/Menu/Leaderboard/background.png',
 		'rs_board'			:'Assets/Menu/Leaderboard/Board.png',
 		'rs_replay_btn'		:'Assets/Menu/Leaderboard/ChoiLai.png',
 		'rs_chooseLevel'	:'Assets/Menu/Leaderboard/ChonManHinh.png',
