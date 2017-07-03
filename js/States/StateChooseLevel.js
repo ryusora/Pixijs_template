@@ -12,6 +12,7 @@ var StateChooseLevel = function()
 	this.midStage = new PIXI.Container()
 	this.frontStage = new PIXI.Container()
 	this.stage = null
+	this.specialLevelUnlock = false
 	this.ListLevelsName = [
 		"HoHap",
 		"SinhSan",
@@ -75,13 +76,28 @@ StateChooseLevel.prototype.Init = function()
 		btnPlay.anchor.set(0.5, 0.5)
 		btnPlay.interactive = true
 		btnPlay.on('pointerdown', ()=>{
-			if(FireBaseManager.CanEnterState(this.currentLevelName))
+			if(this.currentLevelName == 'DacBiet')
 			{
-				StatesManager.ChangeState(GameStates.stateLoading)
+				if(this.specialLevelUnlock)
+				{
+					StatesManager.ChangeState(GameStates.stateLoading)
+				}
+				else
+				{
+					// show pop up
+					this.levels[this.ListIndex[0]].SetActive(false)
+				}
 			}
 			else
 			{
-				this.levels[this.ListIndex[0]].SetActive(false)
+				if(FireBaseManager.CanEnterState(this.currentLevelName))
+				{
+					StatesManager.ChangeState(GameStates.stateLoading)
+				}
+				else
+				{
+					this.levels[this.ListIndex[0]].SetActive(false)
+				}
 			}
 		})
 
@@ -102,10 +118,27 @@ StateChooseLevel.prototype.Init = function()
 		this.stage.addChild(btnPlay)
 		this.stage.addChild(btnBack)
 	}
+
+	this.CheckUnlockSpecialLevel()
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
 
 	this.initLevels()
+}
+
+StateChooseLevel.prototype.CheckUnlockSpecialLevel = function()
+{
+	var length = this.ListLevelsName.length
+	var count = 0
+	for(let i = 0; i < length; i++)
+	{
+		if(FireBaseManager.IsLevelCompleted(this.ListLevelsName[i]))
+		{
+			count++
+		}
+	}
+
+	this.specialLevelUnlock = (count >= (length - 1))
 }
 
 StateChooseLevel.prototype.initLevels = function()
@@ -179,8 +212,16 @@ StateChooseLevel.prototype.OnTouchPress = function(idx)
 		this.backStage.addChild(this.levels[this.ListIndex[3]].sprite)
 		this.backStage.addChild(this.levels[this.ListIndex[4]].sprite)
 
+
 		this.levels[this.ListIndex[0]].SetScale(1)
-		this.levels[this.ListIndex[0]].SetActive(true)
+		if(this.levels[this.ListIndex[0]].levelName == 'DacBiet')
+		{
+			this.levels[this.ListIndex[0]].SetActive(this.specialLevelUnlock)
+		}
+		else
+		{
+			this.levels[this.ListIndex[0]].SetActive(true)
+		}
 
 		// Update position
 		this.isAnimating = true

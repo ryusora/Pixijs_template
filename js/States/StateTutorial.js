@@ -6,19 +6,24 @@ var StateTutorial = function()
 StateTutorial.prototype.Init = function()
 {
 	// Init
-	this.stage = new PIXI.Container()
+	if(!this.isLoadingDone)
+	{
+		this.stage = new PIXI.Container()
+		
+		// init tutorial
+		var screen = new PIXI.Sprite(TextureManager.getTexture('TUTORIAL'))
+		screen.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
+		screen.anchor.set(0.5, 0.5)
+		screen.interactive = true
+		screen.on('pointerdown', ()=>{
+			StatesManager.ChangeState(GameStates.stateChooseLevel)
+		})
+
+		this.stage.addChild(screen)
+		this.isLoadingDone = true
+	}
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
-	// init tutorial
-    var screen = new PIXI.Sprite(TextureManager.getTexture('TUTORIAL'))
-	screen.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
-	screen.anchor.set(0.5, 0.5)
-	screen.interactive = true
-	screen.on('pointerdown', ()=>{
-		StatesManager.ChangeState(GameStates.stateInGame)
-	})
-
-    this.stage.addChild(screen)
 }
 
 StateTutorial.prototype.IsLoadDone = function()

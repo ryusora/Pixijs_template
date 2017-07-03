@@ -1,67 +1,94 @@
+const Utility = require('../Core/Utility.js')
+
 var StateResult = function()
 {
 	this.isLoadingDone = false
-	this.MAX_USERS = 5
+	this.MAX_USERS = 10
+	this.myRank = -1
+	this.levelsName = {
+		"HoHap"		:"HÔ HẤP",
+		"SinhSan"	:"SINH SẢN",
+		"ThanKinh"	:"CHÓNG MẶT",
+		"RungToc"	:"RỤNG TÓC",
+		"DacBiet"	:"ĐẶC BIỆT",
+		"DauLung"	:"ĐAU LƯNG",
+		"TieuHoa"	:"TIÊU HÓA"
+	}
+	this.hanhTrinhTitle = null
 }
 
 StateResult.prototype.Init = function()
 {
+	this.leaderboardStage = new PIXI.Container()
+	this.leaderboardStage.position.set(0, Application.getScreenHeight()*0.5 + 230)
+	this.InitLeaderboard()
+
 	if(this.isLoadingDone == false)
 	{
 		// Init
 		this.stage = new PIXI.Container()
 		// init leaderboards
-		var bg = new PIXI.Sprite(TextureManager.getTexture('MENU_BG'))
+		var bg = new PIXI.Sprite(TextureManager.getTexture('rs_bg'))
 		bg.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
 		bg.anchor.set(0.5, 0.5)
 
-		var board = new PIXI.Sprite(TextureManager.getTexture('rs_board'))
-		board.position.set(Application.getScreenWidth()*0.5, 10)
-		board.anchor.set(0.5, 0)
-
-		var character = new PIXI.Sprite(TextureManager.getTexture('cl_characters_' + GameStates.GetCharacterName()))
-		character.position.set(Application.getScreenWidth()*0.5 + 260, 210)
-		character.anchor.set(0.5, 0)
-
-		var title = new PIXI.Sprite(TextureManager.getTexture("rs_title"))
-		title.position.set(Application.getScreenWidth()*0.5, 130)
-		title.anchor.set(0.5, 0)
-
-		var score_border = new PIXI.Sprite(TextureManager.getTexture("rs_score_border"))
-		score_border.position.set(Application.getScreenWidth()*0.5 - 65, 280)
-		score_border.anchor.set(0.5, 0.5)
-
-		var hanhTrinh_title = new PIXI.Sprite(TextureManager.getTexture("rs_diem_hanh_trinh"))
-		hanhTrinh_title.position.set(Application.getScreenWidth()*0.5 - 65, 400)
-		hanhTrinh_title.anchor.set(0.5, 0.5)
-		this.total_score = new PIXI.Text(FireBaseManager.getRecordTotal()  + "", new PIXI.TextStyle({
+		this.total_score = new PIXI.Text(Utility.GetStringFromNumber(FireBaseManager.getRecordTotal()), new PIXI.TextStyle({
 			fontFamily: 'Arial',
 			fontSize: 70,
 			fontStyle: 'normal',
 			fontWeight: 'bold',
-			fill: ['#51b2d2'], // red
+			fill: ['#ffffff'], // red : #51b2d2
 			wordWrap: true,
 			wordWrapWidth: 750
 		}))
-		this.total_score.position.set(Application.getScreenWidth()*0.5 - 65, 450)
+		this.total_score.position.set(Application.getScreenWidth()*0.5 - 190, 250)
 		this.total_score.anchor.set(0.5, 0.5)
-		this.score = new PIXI.Text(ScoreManager.currentScore  + "", new PIXI.TextStyle({
+
+		this.rank = new PIXI.Text(Utility.GetStringFromNumber(this.myRank), new PIXI.TextStyle({
+			fontFamily: 'Arial',
+			fontSize: 70,
+			fontStyle: 'normal',
+			fontWeight: 'bold',
+			fill: ['#ffffff'], // red : #ee175a
+			wordWrap: true,
+			wordWrapWidth: 750
+		}))
+
+		
+		this.rank.position.set(Application.getScreenWidth()*0.5 + 190, 250)
+		this.rank.anchor.set(0.5, 0.5)
+
+		this.score = new PIXI.Text(Utility.GetStringFromNumber(ScoreManager.currentScore), new PIXI.TextStyle({
 			fontFamily: 'Arial',
 			fontSize: 85,
 			fontStyle: 'normal',
 			fontWeight: 'bold',
-			fill: ['#ee175a'], // red
+			fill: ['#4a2268'], // red : #ee175a
 			wordWrap: true,
 			wordWrapWidth: 750
 		}))
-		//score.position.set(0, 0)
+		
 		this.score.anchor.set(0.5, 0.5)
-		score_border.addChild(this.score)
-		var x = Application.getScreenWidth()*0.5 - 280
-		var y = 330 + 230
+		this.score.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5 - 100)
+
+		this.hanhTrinhTitle = new PIXI.Text("HÀNH TRÌNH " + this.levelsName[GameStates.GetLevel()], new PIXI.TextStyle({
+			fontFamily: 'Arial',
+			fontSize: 45,
+			fontStyle: 'normal',
+			fontWeight: 'bold',
+			fill: ['#4a2268'], // red : #ee175a
+			wordWrap: true,
+			wordWrapWidth: 750
+		}))
+		
+		this.hanhTrinhTitle.anchor.set(0.5, 0.5)
+		this.hanhTrinhTitle.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5 - 200)
+
+		var x = Application.getScreenWidth()*0.5 - 120
+		var y = 700
 		var replayBtn = new PIXI.Sprite(TextureManager.getTexture("rs_replay_btn"))
 		replayBtn.position.set(x, y)
-		replayBtn.anchor.set(0, 0.5)
+		replayBtn.anchor.set(1, 0.5)
 		replayBtn.interactive = true
 		replayBtn.on('pointerdown', ()=>{
 			if(FireBaseManager.CanEnterState(GameStates.GetLevel()))
@@ -71,10 +98,10 @@ StateResult.prototype.Init = function()
 			}
 		})
 
-		y+=130
+		x = Application.getScreenWidth()*0.5 - 100
 
 		var chooseLevelBtn = new PIXI.Sprite(TextureManager.getTexture("rs_chooseLevel"))
-		chooseLevelBtn.position.set(x, y)
+		chooseLevelBtn.position.set(x , y)
 		chooseLevelBtn.anchor.set(0, 0.5)
 		chooseLevelBtn.interactive = true
 		chooseLevelBtn.on('pointerdown', ()=>{
@@ -83,12 +110,10 @@ StateResult.prototype.Init = function()
 		})
 
 		this.stage.addChild(bg)
-		this.stage.addChild(board)
-		this.stage.addChild(character)
-		this.stage.addChild(title)
-		this.stage.addChild(score_border)
-		this.stage.addChild(hanhTrinh_title)
+		this.stage.addChild(this.hanhTrinhTitle)
+		this.stage.addChild(this.score)
 		this.stage.addChild(this.total_score)
+		this.stage.addChild(this.rank)
 		this.stage.addChild(replayBtn)
 		this.stage.addChild(chooseLevelBtn)
 
@@ -96,16 +121,14 @@ StateResult.prototype.Init = function()
 	}
 	else
 	{
-		this.score.text = ScoreManager.currentScore
-		this.total_score.text = FireBaseManager.getRecordTotal()
+		this.score.text = Utility.GetStringFromNumber(ScoreManager.currentScore)
+		this.total_score.text = Utility.GetStringFromNumber(FireBaseManager.getRecordTotal())
+		this.hanhTrinhTitle.text = "HÀNH TRÌNH " + this.levelsName[GameStates.GetLevel()]
+		this.rank.text = Utility.GetStringFromNumber(this.myRank)
 	}
 
-	this.leaderboardStage = new PIXI.Container()
-	this.leaderboardStage.position.set(0, Application.getScreenHeight()*0.5 + 230)
-	// this.leaderboardStage.anchor.set(0, 0)
 
 	this.stage.addChild(this.leaderboardStage)
-	this.InitLeaderboard()
 
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
@@ -116,34 +139,30 @@ StateResult.prototype.InitLeaderboard = function()
 	// init leader board
 	var normalStyle = new PIXI.TextStyle({
 		fontFamily: 'Arial',
-        fontSize: 30,
+        fontSize: 28,
         fontStyle: 'normal',
         fontWeight: 'bold',
-        fill: ['#ee175a'],
+        fill: ['#004c6c'],
         wordWrap: true,
         wordWrapWidth: 750
 	})
 
 	var myStyle = new PIXI.TextStyle({
 		fontFamily: 'Arial',
-        fontSize: 30,
+        fontSize: 28,
         fontStyle: 'normal',
         fontWeight: 'bold',
-        fill: ['#5a17ee'],
+        fill: ['#ffffff'],
         wordWrap: true,
         wordWrapWidth: 750
 	})
-	var topten = new PIXI.Text("TOP "+ this.MAX_USERS +" NGƯỜI CAO ĐIỂM NHẤT", normalStyle)
-	topten.position.set(Application.getScreenWidth()*0.5, 0)
-	topten.anchor.set(0.5, 0.5)
 
-	this.leaderboardStage.addChild(topten)
 	var half_width = Application.getScreenWidth()*0.5
 	var stt_x,name_x,score_x
-	stt_x = half_width - 200
+	stt_x = half_width - 300
 	name_x = half_width - 150
-	score_x = half_width + 100
-	var y = 60
+	score_x = half_width + 200
+	var y = 30
 	var users = null
 	try{
 		users = Object.keys(FireBaseManager.listUsers)
@@ -156,7 +175,7 @@ StateResult.prototype.InitLeaderboard = function()
 	{
 		var length = users.length>this.MAX_USERS?this.MAX_USERS:users.length
 		quickSort(users, 0, users.length - 1)
-		console.log(users)
+		this.myRank = this.FindMyRank(users) // find my rank after sort
 		for(let i = 0; i < length; i++)
 		{
 			var style = (users[i] != FireBaseManager.currentUser.uid)?normalStyle:myStyle
@@ -168,17 +187,30 @@ StateResult.prototype.InitLeaderboard = function()
 			name.position.set(name_x, y)
 			name.anchor.set(0, 0.5)
 
-			var score = new PIXI.Text(FireBaseManager.listUsers[users[i]].totalScore + "", style)
+			var score = new PIXI.Text(Utility.GetStringFromNumber(FireBaseManager.listUsers[users[i]].totalScore), style)
 			score.position.set(score_x, y)
-			score.anchor.set(0, 0.5)
+			score.anchor.set(0.5, 0.5)
 
 			this.leaderboardStage.addChild(stt)
 			this.leaderboardStage.addChild(name)
 			this.leaderboardStage.addChild(score)
 
-			y+= 50
+			y+= 40
 		}
 	}
+}
+
+StateResult.prototype.FindMyRank = function(users)
+{
+	var length = users.length
+	for(let i = 0; i < length; ++i)
+	{
+		if(users[i] == FireBaseManager.currentUser.uid)
+		{
+			return (i + 1)
+		}
+	}
+	return -1;
 }
 StateResult.prototype.IsLoadDone = function()
 {

@@ -1,11 +1,13 @@
 const Item = require("./Item.js")
 const Effect = require("./Effect.js")
 
-const TYPE_ITEM_MAX		= 10
+const TYPE_ITEM_MAX		= 11
 const TYPE_ENEMY_MAX	= 8
 
 const ITEM_IDX 	= 0
 const ENEMY_IDX = 1
+
+const TIME_FOR_QUESTION = 120
 
 var ItemsManager = function()
 {
@@ -14,6 +16,8 @@ var ItemsManager = function()
 
 ItemsManager.prototype.initialize = function()
 {
+	this.questionTimer = 0
+	this.shouldSpawnQuestion = false
 	this.items_deactived = []
 	this.items_actived = []
 	this.effects_actived = []
@@ -38,13 +42,17 @@ ItemsManager.prototype.InitPool = function()
 		for(let j = 0; j < Defines.ITEMS_POOL; j++)
 		{
 			var item = new Item()
-			if(i < TYPE_ITEM_MAX - 1)
+			if(i < TYPE_ITEM_MAX - 2)
 			{
 				item.SetupDragonBones("item_" + (i+1))
 			}
-			else
+			else if(i == TYPE_ITEM_MAX - 2)
 			{
 				item.SetupDragonBones("lucky_item")
+			}
+			else
+			{
+				item.SetupDragonBones("question_item")
 			}
 			item.type = ITEM_IDX
 			item.index = i
@@ -83,9 +91,25 @@ ItemsManager.prototype.InitPool = function()
 	ScoreManager.InitPool()
 }
 
+ItemsManager.prototype.GetQuestionItem = function()
+{
+	var item = this.items_deactived[ITEM_IDX][TYPE_ITEM_MAX - 1].pop()
+	if(item)
+	{
+		this.items_actived.push(item)
+		this.frontStage.addChildAt(item.armatureDisplay, 0)
+		item.SetActive(true)
+	}
+	else
+	{
+		console.log("item null : " + type + "/" +random)
+	}
+	return item;
+}
+
 ItemsManager.prototype.GetItem = function(type)
 {
-	var random = Math.floor(Math.random()*((type == ENEMY_IDX)?TYPE_ENEMY_MAX:TYPE_ITEM_MAX))
+	var random = Math.floor(Math.random()*((type == ENEMY_IDX)?TYPE_ENEMY_MAX:TYPE_ITEM_MAX - 1))
 	var item = this.items_deactived[type][random].pop()
 	if(item)
 	{
@@ -155,9 +179,10 @@ const MAX_PERCENT = 1000
 ItemsManager.prototype.SpawnItem = function(direction)
 {
 	var type = (Math.floor(Math.random() * MAX_PERCENT)>400)?ENEMY_IDX:ITEM_IDX
-	var item = this.GetItem(type)
+	var item = this.shouldSpawnQuestion?this.GetQuestionItem():this.GetItem(type)
 	if(item)
 	{
+		if(this.shouldSpawnQuestion) this.shouldSpawnQuestion = false
 		item.SetPos({x:direction,y:0,z:Defines.ITEM_OFFSET_Z + Camera.GetCameraPosZ()})
 	}
 }
@@ -171,8 +196,22 @@ ItemsManager.prototype.SpawnEffectAt = function(pos)
 	}
 }
 
+ItemsManager.prototype.SpawnScoreAt = function(pos, score)
+{
+	ScoreManager.GetItem(score, pos)
+}
+
 ItemsManager.prototype.Update = function(dt, isChangingState)
 {
+	if(!this.shouldSpawnQuestion && this.questionTimer < TIME_FOR_QUESTION)
+	{
+		this.questionTimer += dt
+		if(this.questionTimer >= TIME_FOR_QUESTION)
+		{
+			this.shouldSpawnQuestion = true
+			this.questionTimer = 0
+		}
+	}
 	// check spawn item
 	if(!isChangingState)
 	{
@@ -184,6 +223,7 @@ ItemsManager.prototype.Update = function(dt, isChangingState)
 			this.SpawnItem(this.directionList[randomNumber])
 		}
 	}
+
 
 	this.UpdateItem(dt)
 	this.UpdateEffect(dt)
@@ -273,7 +313,7 @@ ItemsManager.prototype.CheckCollision = function(box)
 	{
 		if(this.items_actived[idx].CheckCollision(box))
 		{
-			//if(!this.items_actived[idx].isLuckyItem)
+			if(!this.items_actived[idx].isQuestionItem)
 			{
 				if(this.items_actived[idx].score < 0)
 				{

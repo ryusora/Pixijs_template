@@ -5,17 +5,21 @@ var StateQuiz = function()
 	this.stage = new PIXI.Container()
 	Application.Align(this.stage)
 
+    this.correctAction = null
+    this.failAction = null
+
+    this.IsOnScreen = false
+
 	// init background
 	var bg = new PIXI.Sprite(TextureManager.getTexture('MENU_BG'))
 	bg.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
 	bg.anchor.set(0.5, 0.5)
 
-	this.board = new PIXI.Sprite(TextureManager.getTexture('rs_board'))
+	this.board = new PIXI.Sprite(TextureManager.getTexture('q_bg'))
 	this.board.position.set(Application.getScreenWidth()*0.5,Application.getScreenHeight()*0.5)
 	this.board.anchor.set(0.5, 0.5)
-    this.currentIndex = 0
     
-    this.currentQuiz = QuizManager.GetRandomQuiz()//QuizManager.GetQuiz(this.currentIndex)
+    this.currentQuiz = QuizManager.GetRandomQuiz()
     if(this.currentQuiz)
 	    this.ProcessQuiz()
 
@@ -25,20 +29,24 @@ var StateQuiz = function()
     this.checkmark.anchor.set(0.5, 0.5)
 
     var btnConfirm = new PIXI.Sprite(TextureManager.getTexture('BTN_OK'))
-    btnConfirm.position.set(0, 500)
+    btnConfirm.position.set(0, 350)
     btnConfirm.anchor.set(0.5, 0.5)
     btnConfirm.interactive = true
     btnConfirm.on('pointerdown', (()=>{
+            this.IsOnScreen = false
             Application.removeChild(this.stage)
             // check correct answer
             if(this.currentQuiz.correct_answer == this.chosenAnswer)
             {
-                GameStates.stateInGame.Revive()
-                if(this.currentIndex >= QuizManager.GetQuizCount()) this.currentIndex = 0
+                if(this.correctAction != null)
+                    this.correctAction()
+                //GameStates.stateInGame.Revive()
             }
             else 
             {
-                StatesManager.ChangeState(GameStates.stateResult)
+                if(this.failAction != null)
+                    this.failAction()
+                //StatesManager.ChangeState(GameStates.stateResult)
             }
     }).bind(this))
     this.board.addChild(btnConfirm)
@@ -48,19 +56,23 @@ var StateQuiz = function()
 	this.stage.addChild(this.board)
 }
 
-StateQuiz.prototype.Show = function(resetCount = true)
+StateQuiz.prototype.Show = function(correctAction = null, failAction = null)
 {
-    if(resetCount == true) this.count = 0
-
-    this.currentQuiz = QuizManager.GetRandomQuiz()//QuizManager.GetQuiz(this.currentIndex)
+    this.currentQuiz = QuizManager.GetRandomQuiz()
     if(this.currentQuiz)
     {
+        this.correctAction = correctAction
+        this.failAction = failAction
         this.ProcessQuiz()
 	    Application.addChild(this.stage)
-        return true
+        this.IsOnScreen = true
     }
-        
-    return false
+    else
+    {
+        this.IsOnScreen = false
+        if(failAction != null)
+            failAction()
+    }
 }
 
 StateQuiz.prototype.ProcessQuiz = function()

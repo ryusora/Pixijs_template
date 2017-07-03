@@ -97,7 +97,7 @@ StateChooseCharacter.prototype.InitButton = function()
             // update sprite
             this.characterName = "male"
         }
-		StatesManager.ChangeState(GameStates.stateChooseLevel)
+		StatesManager.ChangeState(GameStates.stateTutorial)
 	})
 
     this.stage.addChild(btnMale)
@@ -112,7 +112,7 @@ StateChooseCharacter.prototype.InitButton = function()
             // update sprite
             this.characterName = "female"
         }
-		StatesManager.ChangeState(GameStates.stateChooseLevel)
+		StatesManager.ChangeState(GameStates.stateTutorial)
 	})
 
 	var btnPlay = new PIXI.Sprite(TextureManager.getTexture('cc_ready_btn'))
@@ -120,7 +120,7 @@ StateChooseCharacter.prototype.InitButton = function()
 	btnPlay.anchor.set(0.5, 0.5)
 	btnPlay.interactive = true
 	btnPlay.on('pointerdown', ()=>{
-		StatesManager.ChangeState(GameStates.stateChooseLevel)
+		StatesManager.ChangeState(GameStates.stateTutorial)
 	})
 
 	var btnSound = new PIXI.Sprite(TextureManager.getTexture('cc_sound_on_btn'))

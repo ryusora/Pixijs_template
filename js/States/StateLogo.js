@@ -9,12 +9,13 @@ var StateLogo = function(){
 
 StateLogo.prototype.Init = function(){
 	TextureManager.load({
-		'LOGO'		:'Assets/abbott-logo.jpg',
-		'LOADING'	:'Assets/loading-icon.png',
-		'MENU_BG'	:'Assets/Menu/bg.png',
-		'BTN_START'	:'Assets/btn_play.png',
-		'HEADER_LOGO':'Assets/Menu/title.png',
-		'BTN_OK'	:'Assets/Menu/ok_icon.png',
+		'LOGO'			:'Assets/abbott-logo.jpg',
+		'LOADING'		:'Assets/loading-icon.png',
+		'MENU_BG'		:'Assets/Menu/bg.png',
+		'BTN_START'		:'Assets/btn_play.png',
+		'HEADER_LOGO'	:'Assets/Menu/title.png',
+		'BTN_OK'		:'Assets/Menu/ok_icon.png',
+		'Complete_popup':'Assets/Menu/Complete_popup.png',
 		// Menu Choose Characters
 		'cc_title'			:'Assets/Menu/ChooseCharacters/select_icon.png',
 		'cc_male_icon'		:'Assets/Menu/ChooseCharacters/male_icon.png',
@@ -45,7 +46,16 @@ StateLogo.prototype.Init = function(){
 		'TieuHoa_highlight'		:'Assets/Menu/ChooseLevels/tieu_hoa_hilight.png',
 		'DacBiet_highlight'		:'Assets/Menu/ChooseLevels/dac_biet_hilight.png',
 
+		// menu info
+		'INFO_HoHap'				:'Assets/Menu/INFO_HoHap.jpg',
+		'INFO_ThanKinh'				:'Assets/Menu/INFO_ThanKinh.jpg',
+		'INFO_DauLung'				:'Assets/Menu/INFO_DauLung.jpg',
+		'INFO_RungToc'				:'Assets/Menu/INFO_RungToc.jpg',
+		'INFO_SinhSan'				:'Assets/Menu/INFO_SinhSan.jpg',
+		'INFO_TieuHoa'				:'Assets/Menu/INFO_TieuHoa.jpg',
+
 		// menu result
+		'rs_bg'				:'Assets/Menu/Leaderboard/background.png',
 		'rs_board'			:'Assets/Menu/Leaderboard/Board.png',
 		'rs_replay_btn'		:'Assets/Menu/Leaderboard/ChoiLai.png',
 		'rs_chooseLevel'	:'Assets/Menu/Leaderboard/ChonManHinh.png',
@@ -74,6 +84,7 @@ StateLogo.prototype.Init = function(){
 		// QUIZ
 		'square'		:'Assets/Menu/QUIZ/square.png',
 		'checkmark'		:'Assets/Menu/QUIZ/mark.png',
+		'q_bg'			:'Assets/Menu/QUIZ/quiz_pop_up.png'
 	}, ()=>{
 		this.logoSprite = new PIXI.Sprite(TextureManager.getTexture('LOGO'))
 		this.logoSprite.anchor.set(0.5, 0.5)
