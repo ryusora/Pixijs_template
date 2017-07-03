@@ -50,7 +50,7 @@ var Defines = function()
 	this.QUIZ_OFFSET_Y_SPACING	= 90
 
 	// ALIGNMENT
-	this.PLAY_BTN_OFFSET_Y	= 100
+	this.PLAY_BTN_OFFSET_Y	= 80
 
 	// HUD
 	this.HUD_ITEM_Y				= 78

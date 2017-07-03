@@ -31,6 +31,7 @@ StateLogo.prototype.Init = function(){
 		'cl_ready_btn'			:'Assets/Menu/ChooseLevels/ready_icon.png',
 		'cl_back_btn'			:'Assets/Menu/ChooseLevels/back_icon.png',
 		'cl_circle'				:'Assets/Menu/ChooseLevels/circle.png',
+		'cl_sunEffect'			:'Assets/Menu/ChooseLevels/sunburst.png',
 		'HoHap'					:'Assets/Menu/ChooseLevels/ho_hap.png',
 		'ThanKinh'				:'Assets/Menu/ChooseLevels/chong_mat.png',
 		'DauLung'				:'Assets/Menu/ChooseLevels/dau_lung.png',

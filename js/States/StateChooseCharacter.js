@@ -46,11 +46,27 @@ StateChooseCharacter.prototype.Init = function()
 		title.anchor.set(0.15, 0.5)
 		title.position.set(0, 300)
 
+		var chooseChar = new PIXI.Text("Nhấp vào nhân vật bạn muốn chọn.",
+					new PIXI.TextStyle({
+						fontFamily: 'Arial',
+						fontSize: 25,
+						fontStyle: 'normal',
+						fontWeight: 'bold',
+						lineHeight: 50,
+						fill: ['#4a2268'],
+						wordWrap: true,
+						wordWrapWidth: 500,
+						align: 'center'
+					}))
+		chooseChar.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight() - 235)
+		chooseChar.anchor.set(0.5, 0.5)
+
 		this.stage.addChild(bg)
 		this.stage.addChild(header)
 		this.stage.addChild(title)
 		this.stage.addChild(this.backStage)
 		this.stage.addChild(this.frontStage)
+		this.stage.addChild(chooseChar)
 		this.InitCharacters()
 		this.InitButton()
 
