@@ -265,10 +265,10 @@ StateInGame.prototype.FixedUpdate = function(dt)
 				// count quiz
 				if(FireBaseManager.CanEnterState(currentLevel))
 				{
-					FireBaseManager.CountQuiz(currentLevel)
 					quizPopup.Show(()=>{
 						this.Revive()
 					}, ()=>{
+						FireBaseManager.CountQuiz(currentLevel)
 						StatesManager.ChangeState(GameStates.stateResult)
 					})
 				}
@@ -372,6 +372,18 @@ StateInGame.prototype.Update = function(dt)
 	if(this.isSpecialState)
 	{
 		this.levelCounting += dt
+		if(this.levelCounting > Defines.CHANGE_LEVEL_TIMER - 3) // flicking for 3 seconds
+		{
+			if(!this.isChangingLevel)
+			{
+				this.changeStateEffect.alpha -= Defines.RED_FADE_TICKER * dt
+				if(this.changeStateEffect.alpha <= 0)
+				{
+					this.changeStateEffect.alpha = 0.5
+				}
+			}
+		}
+
 		if(this.levelCounting > Defines.CHANGE_LEVEL_TIMER)
 		{
 			console.log("Change Level")

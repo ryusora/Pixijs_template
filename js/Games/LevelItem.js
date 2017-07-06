@@ -28,6 +28,7 @@ var LevelItem = function(levelName, pos, isCompleted = false)
     this.effect.alpha = 0
     this.stage.addChild(this.effect)
     this.stage.addChild(this.sprite)
+    this.isCompleted = isCompleted
 }
 
 LevelItem.prototype.SetScale = function(scale)
@@ -52,6 +53,7 @@ LevelItem.prototype.SetActive = function(actived, isCompleted = false)
     var textureName = this.levelName + ((actived)?"_highlight":"")
     this.sprite.texture = TextureManager.getTexture(textureName)
     this.isActived = actived
+    this.isCompleted = isCompleted
     this.effect.alpha = isCompleted?1:0
 }
 

@@ -48,6 +48,7 @@ var StateQuiz = function()
                     this.failAction()
                 //StatesManager.ChangeState(GameStates.stateResult)
             }
+            this.chosenAnswer = -1
     }).bind(this))
     this.board.addChild(btnConfirm)
     // fade effect

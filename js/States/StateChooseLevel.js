@@ -14,6 +14,8 @@ var StateChooseLevel = function()
 	this.frontStage = new PIXI.Container()
 	this.stage = null
 	this.specialLevelUnlock = false
+	this.isCheatOn = false
+	this.cheatButton = null
 	this.ListLevelsName = [
 		"HoHap",
 		"SinhSan",
@@ -79,7 +81,7 @@ StateChooseLevel.prototype.Init = function()
 		btnPlay.on('pointerdown', ()=>{
 			if(this.currentLevelName == 'DacBiet')
 			{
-				if(this.specialLevelUnlock)
+				if(this.specialLevelUnlock || this.isCheatOn)
 				{
 					StatesManager.ChangeState(GameStates.stateLoading)
 				}
@@ -169,6 +171,25 @@ StateChooseLevel.prototype.Init = function()
 		this.stage.addChild(chooseLevel)
 		this.stage.addChild(btnPlay)
 		this.stage.addChild(btnBack)
+	}
+
+	if(FireBaseManager.cheatEnabled)
+	{
+		this.cheatButton = new PIXI.Sprite(TextureManager.getTexture('cc_sound_on_btn'))
+		this.cheatButton.position.set(Defines.CL_BACK_BTN_OFFSET_X, Application.getScreenHeight() - Defines.PLAY_BTN_OFFSET_Y*2 - 50)
+		this.cheatButton.anchor.set(0.5, 0.5)
+		this.cheatButton.interactive = true
+		this.isCheatOn = true
+		this.cheatButton.on('pointerdown', ((btnSound)=>{
+			this.isCheatOn = !this.isCheatOn
+			console.log("Is cheat on ? " + this.isCheatOn)
+			this.cheatButton.texture = TextureManager.getTexture(this.isCheatOn?'cc_sound_on_btn':'cc_sound_off_btn')
+		}).bind(this))
+		this.stage.addChild(this.cheatButton)
+	}
+	else if(this.cheatButton != null)
+	{
+		this.stage.removeChild(this.cheatButton)
 	}
 
 	this.CheckUnlockSpecialLevel()
@@ -268,8 +289,8 @@ StateChooseLevel.prototype.OnTouchPress = function(idx)
 		this.levels[this.ListIndex[0]].SetScale(1)
 		if(this.levels[this.ListIndex[0]].levelName == 'DacBiet')
 		{
-			this.levels[this.ListIndex[0]].SetActive(this.specialLevelUnlock)
-			if(!this.specialLevelUnlock)
+			this.levels[this.ListIndex[0]].SetActive(this.specialLevelUnlock || this.isCheatOn, this.specialLevelUnlock || this.isCheatOn)
+			if(!this.specialLevelUnlock && !this.isCheatOn)
 			{
 				this.stage.addChild(this.ErrorPopup)
 			}

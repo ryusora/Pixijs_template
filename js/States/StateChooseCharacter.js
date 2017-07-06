@@ -143,9 +143,12 @@ StateChooseCharacter.prototype.InitButton = function()
 	btnSound.position.set(Defines.CL_BACK_BTN_OFFSET_X, Application.getScreenHeight() - Defines.PLAY_BTN_OFFSET_Y)
 	btnSound.anchor.set(0.5, 0.5)
 	btnSound.interactive = true
-	btnSound.on('pointerdown', ()=>{
+	this.isSoundOn = true
+	btnSound.on('pointerdown', ((btnSound)=>{
 		//StatesManager.ChangeState(GameStates.stateChooseCharacter)
-	})
+		this.isSoundOn = !this.isSoundOn
+		btnSound.texture = TextureManager.getTexture(this.isSoundOn?'cc_sound_on_btn':'cc_sound_off_btn')
+	}).bind(this, btnSound))
 
 	var btnHint = new PIXI.Sprite(TextureManager.getTexture('cc_hint_btn'))
 	btnHint.position.set(Defines.CL_BACK_BTN_OFFSET_X, Application.getScreenHeight() - Defines.PLAY_BTN_OFFSET_Y)

@@ -22,6 +22,7 @@ StateLogo.prototype.Init = function(){
 		'cc_female_icon'	:'Assets/Menu/ChooseCharacters/female_icon.png',
 		'cc_ready_btn'		:'Assets/Menu/ChooseCharacters/start_icon.png',
 		'cc_sound_on_btn'	:'Assets/Menu/ChooseCharacters/sound_icon.png',
+		'cc_sound_off_btn'	:'Assets/Menu/ChooseCharacters/sounbd_off.png',
 		'cc_hint_btn'		:'Assets/Menu/ChooseCharacters/hint_icon.png',
 		
 		// menu choose level

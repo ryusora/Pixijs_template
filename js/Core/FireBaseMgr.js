@@ -9,6 +9,7 @@ function FireBaseMgr()
 	this.listUsers = null
 	this.currentUserPref = null
 	this.currentUserData = null
+	this.cheatEnabled = false
 }
 
 FireBaseMgr.prototype.IsInitialized = function()
@@ -45,26 +46,31 @@ FireBaseMgr.prototype.initialize = function()
 		if(user)
 		{
 			this.currentUser = user
-			console.log("log in success : " + user.uid )
 			// get userPref
 			this.userPref = this.database.ref("users")
 			this.userPref.once("value", (snapshot) =>{
-				console.log("load users : " + JSON.stringify(snapshot.val()) )
 				this.listUsers = snapshot.val()
 				this.initializeStep++
 			})
 
 			this.currentUserPref = this.database.ref('/users/' + this.currentUser.uid)
 			this.currentUserPref.once('value', (snapshot) => {
-				console.log('user : ' + this.currentUser.uid + ' - value change ')
-				console.log(snapshot.val())
-
 				this.currentUserData = snapshot.val()
+				this.initializeStep++
 			})
 
 			// get QUIZs database
 			this.database.ref("quizs").once("value", (snapshot) =>{
 				this.quizList = snapshot.val()
+				this.initializeStep++
+			}, (reason)=>
+			{
+				// failed
+				console.log(reason)
+			})
+
+			this.database.ref("cheatEnabled").once("value", (snapshot) =>{
+				this.cheatEnabled = snapshot.val() || false
 				this.initializeStep++
 			}, (reason)=>
 			{
@@ -139,18 +145,37 @@ FireBaseMgr.prototype.CountQuiz = function(state = null)
 			if(this.currentUserData[state].quizCount != null)
 			{
 				this.currentUserData[state].quizCount++
-				if(this.currentUserData[state].quizCount >= 3)
-				{
-					this.currentUserData[state].lockTime = (new Date()).getTime()
-				}
+				// if(this.currentUserData[state].quizCount >= 1)
+				// {
+				// 	this.currentUserData[state].lockTime = (new Date()).getTime()
+				// }
 			}
 			else
 			{
 				this.currentUserData[state].quizCount = 1
 			}
+			
+			// temporary move here
+			if(this.currentUserData[state].quizCount >= 1)
+			{
+				this.currentUserData[state].lockTime = (new Date()).getTime()
+			}
+			// temporary move here end
 		}
 		this.currentUserPref.set(this.currentUserData)
 	}
+}
+
+FireBaseMgr.prototype.GetQuizCount = function()
+{
+	if(state != null && this.currentUserData != null)
+	{
+		if(this.currentUserData[state] != null)
+		{
+			return this.currentUserData[state].quizCount
+		}
+	}
+	return null
 }
 
 FireBaseMgr.prototype.SaveRecord = function(record, state)
