@@ -165,7 +165,7 @@ FireBaseMgr.prototype.SaveRecord = function(record, state)
 		if(this.currentUserData[state] == null
 		|| typeof(this.currentUserData[state]) == 'undefined')
 			this.currentUserData[state] = {score:0}
-		this.currentUserData.totalScore += record
+		this.currentUserData.totalScore += (record - this.currentUserData[state].score)
 		this.currentUserData[state].score = record
 
 		this.currentUserPref.set(this.currentUserData)

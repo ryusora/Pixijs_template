@@ -1,26 +1,39 @@
 const Vector2 = require("./Vector2.js")
 
-var LevelItem = function(levelName, pos)
+var ticker = 0
+var sub = 1
+
+var LevelItem = function(levelName, pos, isCompleted = false)
 {
     this.nextPos = null
     this.nextScale = pos.scale
     this.currentScale = pos.scale
     this.scaleOffset = 0
     this.directionVector = null
+    this.isActived = false
+
+    this.stage = new PIXI.Container()
+    this.stage.position.set(pos.x, pos.y)
 
     this.sprite = new PIXI.Sprite(TextureManager.getTexture(levelName))
     this.levelName = levelName
-    this.sprite.position.set(pos.x, pos.y)
     this.sprite.anchor.set(0.5, 0.5)
     this.sprite.scale.set(pos.scale, pos.scale)
+
     this.position = {x:pos.x, y:pos.y}
 
     this.isDoneX = this.isDoneY = false
+    this.effect = new PIXI.Sprite(TextureManager.getTexture('cl_sunEffect'))
+    this.effect.anchor.set(0.5, 0.5)
+    this.effect.alpha = 0
+    this.stage.addChild(this.effect)
+    this.stage.addChild(this.sprite)
 }
 
 LevelItem.prototype.SetScale = function(scale)
 {
     this.sprite.scale.set(scale, scale)
+    this.effect.scale.set(scale, scale)
 }
 
 LevelItem.prototype.MoveTo = function(pos)
@@ -34,10 +47,12 @@ LevelItem.prototype.MoveTo = function(pos)
     this.isDoneX = this.isDoneY = false
 }
 
-LevelItem.prototype.SetActive = function(actived)
+LevelItem.prototype.SetActive = function(actived, isCompleted = false)
 {
     var textureName = this.levelName + ((actived)?"_highlight":"")
     this.sprite.texture = TextureManager.getTexture(textureName)
+    this.isActived = actived
+    this.effect.alpha = isCompleted?1:0
 }
 
 LevelItem.prototype.IsDoneMoving = function()
@@ -80,7 +95,21 @@ LevelItem.prototype.Update = function(dt)
             this.directionVector = null
         }
 
-        this.sprite.position.set(this.position.x, this.position.y)
+        this.stage.position.set(this.position.x, this.position.y)
+    }
+    else if(this.isActived)
+    {
+        // update chosen level
+        if(ticker > 0.5 || ticker < 0)
+        {
+            sub*=-1
+        }
+        ticker+=0.02*sub
+        this.SetScale(1 + ticker)
+        if(this.isCompleted)
+        {
+            this.effect.rotation += 1 * dt
+        }
     }
 }
 

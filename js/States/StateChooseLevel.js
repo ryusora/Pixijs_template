@@ -1,5 +1,6 @@
 const LevelItem = require("../Games/LevelItem.js")
 
+var upOffset = -50
 var StateChooseLevel = function()
 {
 	this.isLoadingDone = false
@@ -24,13 +25,13 @@ var StateChooseLevel = function()
 	]
 
 	this.ListPosition = [
-		{x:Application.getScreenWidth()*0.5 + 120, y:Application.getScreenHeight()*0.5 + 120, scale:1},
-		{x:Application.getScreenWidth()*0.5 - 150, y:Application.getScreenHeight()*0.5 + 220, scale:0.8},
-		{x:Application.getScreenWidth()*0.5 - 330, y:Application.getScreenHeight()*0.5 + 130, scale:0.7},
-		{x:Application.getScreenWidth()*0.5 - 150, y:Application.getScreenHeight()*0.5 - 100, scale:0.6},
-		{x:Application.getScreenWidth()*0.5 + 150, y:Application.getScreenHeight()*0.5 - 230, scale:0.6},
-		{x:Application.getScreenWidth()*0.5 + 280, y:Application.getScreenHeight()*0.5 - 200, scale:0.7},
-		{x:Application.getScreenWidth()*0.5 + 280, y:Application.getScreenHeight()*0.5 - 30, scale:0.8},
+		{x:Application.getScreenWidth()*0.5 + 120, y:Application.getScreenHeight()*0.5 + 120 + upOffset, scale:1},
+		{x:Application.getScreenWidth()*0.5 - 150, y:Application.getScreenHeight()*0.5 + 220 + upOffset, scale:0.8},
+		{x:Application.getScreenWidth()*0.5 - 330, y:Application.getScreenHeight()*0.5 + 130 + upOffset, scale:0.7},
+		{x:Application.getScreenWidth()*0.5 - 150, y:Application.getScreenHeight()*0.5 - 100 + upOffset, scale:0.6},
+		{x:Application.getScreenWidth()*0.5 + 150, y:Application.getScreenHeight()*0.5 - 230 + upOffset, scale:0.6},
+		{x:Application.getScreenWidth()*0.5 + 280, y:Application.getScreenHeight()*0.5 - 200 + upOffset, scale:0.7},
+		{x:Application.getScreenWidth()*0.5 + 280, y:Application.getScreenHeight()*0.5 - 30 + upOffset, scale:0.8},
 	]
 
 	this.ListIndex = []
@@ -109,12 +110,63 @@ StateChooseLevel.prototype.Init = function()
 			StatesManager.ChangeState(GameStates.stateChooseCharacter)
 		})
 
+		this.ErrorPopup = new PIXI.Container()
+		var rectW = 600
+		var rectH = 150
+		var rectangle = new PIXI.Graphics()
+		rectangle.beginFill(0xffffff)
+		rectangle.drawRect(0,0,rectW, rectH)
+
+		this.ErrorPopup.addChild(rectangle)
+		this.ErrorPopup.position.set(Application.getScreenWidth()*0.5 - rectW*0.5, Application.getScreenHeight()*0.5 - rectH*0.5 + 365 + upOffset)
+
+		this.unlockText = new PIXI.Text("Bạn cần vượt qua 6 hành trình sẵn có để mở hành trình ĐẶC BIỆT này",
+					new PIXI.TextStyle({
+						fontFamily: 'Arial',
+						fontSize: 25,
+						fontStyle: 'normal',
+						fontWeight: 'bold',
+						lineHeight: 50,
+						fill: ['#4a2268'],
+						wordWrap: true,
+						wordWrapWidth: 500,
+						align: 'center'
+					}))
+		this.unlockText.position.set(rectW*0.5 - 25, rectH*0.5)
+		this.unlockText.anchor.set(0.5, 0.5)
+		this.ErrorPopup.addChild(this.unlockText)
+
+		var OKBtn = new PIXI.Sprite(TextureManager.getTexture('BTN_OK'))
+		OKBtn.position.set(rectW, rectH*0.5)
+		OKBtn.anchor.set(0.5, 0.5)
+		OKBtn.interactive = true
+		OKBtn.on('pointerdown', ()=>{
+			this.stage && this.stage.removeChild(this.ErrorPopup)
+		})
+		this.ErrorPopup.addChild(OKBtn)
+
+		var chooseLevel = new PIXI.Text("Hãy chọn một hành trình bất kỳ",
+					new PIXI.TextStyle({
+						fontFamily: 'Arial',
+						fontSize: 25,
+						fontStyle: 'normal',
+						fontWeight: 'bold',
+						lineHeight: 50,
+						fill: ['#4a2268'],
+						wordWrap: true,
+						wordWrapWidth: 500,
+						align: 'center'
+					}))
+		chooseLevel.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight() - 185 + upOffset)
+		chooseLevel.anchor.set(0.5, 0.5)
+
 		this.stage.addChild(bg)
 		this.stage.addChild(header)
 		this.stage.addChild(title)
 		this.stage.addChild(this.backStage)
 		this.stage.addChild(this.midStage)
 		this.stage.addChild(this.frontStage)
+		this.stage.addChild(chooseLevel)
 		this.stage.addChild(btnPlay)
 		this.stage.addChild(btnBack)
 	}
@@ -146,7 +198,7 @@ StateChooseLevel.prototype.initLevels = function()
 	if(this.character == null)
 	{
 		this.character = new PIXI.Sprite(TextureManager.getTexture('cl_characters_' + GameStates.GetCharacterName()))
-		this.character.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5 + Defines.CL_CHARACTER_OFFSET_Y)
+		this.character.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5 + Defines.CL_CHARACTER_OFFSET_Y + upOffset)
 		this.character.anchor.set(0.5, 0.5)
 	}
 	else
@@ -157,7 +209,7 @@ StateChooseLevel.prototype.initLevels = function()
 	if(this.circle == null)
 	{
 		this.circle = new PIXI.Sprite(TextureManager.getTexture('cl_circle'))
-		this.circle.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5 + Defines.CL_CIRCLE_OFFSET_Y)
+		this.circle.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5 + Defines.CL_CIRCLE_OFFSET_Y + upOffset)
 		this.circle.anchor.set(0.5, 0.5)
 	}
 	if(this.levels.length <= 0)
@@ -166,21 +218,21 @@ StateChooseLevel.prototype.initLevels = function()
 		
 		for(let i = 0; i < this.MAX_LEVELS; i++)
 		{
-			var level = new LevelItem(this.ListLevelsName[i], this.ListPosition[i])
-			level.SetActive((i==0))
+			var level = new LevelItem(this.ListLevelsName[i], this.ListPosition[i], FireBaseManager.IsLevelCompleted(this.ListLevelsName[i]))
+			level.SetActive((i==0), (i==0)?FireBaseManager.IsLevelCompleted(this.ListLevelsName[i]):false)
 			this.levels.push(level)
-			level.sprite.interactive = true
-			level.sprite.on('pointerdown', ((index)=>{
+			level.stage.interactive = true
+			level.stage.on('pointerdown', ((index)=>{
 				this.OnTouchPress(index)
 			}).bind(this, i))
 
 			if(i >= 3 && i <= 4)
 			{
-				this.backStage.addChild(level.sprite)
+				this.backStage.addChild(level.stage)
 			}
 			else
 			{
-				this.frontStage.addChild(level.sprite)
+				this.frontStage.addChild(level.stage)
 			}
 
 			this.ListIndex.push(i)
@@ -200,8 +252,8 @@ StateChooseLevel.prototype.OnTouchPress = function(idx)
 		this.levels[this.ListIndex[0]].SetScale(1)
 		this.levels[this.ListIndex[0]].SetActive(false)
 
-		this.frontStage.addChild(this.levels[this.ListIndex[3]].sprite)
-		this.frontStage.addChild(this.levels[this.ListIndex[4]].sprite)
+		this.frontStage.addChild(this.levels[this.ListIndex[3]].stage)
+		this.frontStage.addChild(this.levels[this.ListIndex[4]].stage)
 
 		// update list index
 		for(var i = 0; i < this.MAX_LEVELS; i++)
@@ -209,18 +261,23 @@ StateChooseLevel.prototype.OnTouchPress = function(idx)
 			this.ListIndex[i] = (idx + i)%this.MAX_LEVELS
 		}
 		
-		this.backStage.addChild(this.levels[this.ListIndex[3]].sprite)
-		this.backStage.addChild(this.levels[this.ListIndex[4]].sprite)
+		this.backStage.addChild(this.levels[this.ListIndex[3]].stage)
+		this.backStage.addChild(this.levels[this.ListIndex[4]].stage)
 
 
 		this.levels[this.ListIndex[0]].SetScale(1)
 		if(this.levels[this.ListIndex[0]].levelName == 'DacBiet')
 		{
 			this.levels[this.ListIndex[0]].SetActive(this.specialLevelUnlock)
+			if(!this.specialLevelUnlock)
+			{
+				this.stage.addChild(this.ErrorPopup)
+			}
 		}
 		else
 		{
-			this.levels[this.ListIndex[0]].SetActive(true)
+			this.stage.removeChild(this.ErrorPopup)
+			this.levels[this.ListIndex[0]].SetActive(true, FireBaseManager.IsLevelCompleted(this.levels[this.ListIndex[0]].levelName))
 		}
 
 		// Update position
@@ -241,8 +298,6 @@ StateChooseLevel.prototype.Destroy = function()
 {
 	Application.removeChild(this.stage)
 }
-var ticker = 0
-var sub = 1
 StateChooseLevel.prototype.Update = function(dt)
 {
 	if(this.isAnimating)
@@ -261,13 +316,7 @@ StateChooseLevel.prototype.Update = function(dt)
 	{
 		if(this.levels[this.ListIndex[0]] != null)
 		{
-			// update chosen level
-			if(ticker > 0.5 || ticker < 0)
-			{
-				sub*=-1
-			}
-			ticker+=0.02*sub
-			this.levels[this.ListIndex[0]].sprite.scale.set(1 + ticker, 1 + ticker)
+			this.levels[this.ListIndex[0]].Update(dt)
 		}
 	}
 }
