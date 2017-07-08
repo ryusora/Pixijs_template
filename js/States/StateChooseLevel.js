@@ -175,11 +175,11 @@ StateChooseLevel.prototype.Init = function()
 
 	if(FireBaseManager.cheatEnabled)
 	{
-		this.cheatButton = new PIXI.Sprite(TextureManager.getTexture('cc_sound_on_btn'))
+		this.cheatButton = new PIXI.Sprite(TextureManager.getTexture('cc_sound_off_btn'))
 		this.cheatButton.position.set(Defines.CL_BACK_BTN_OFFSET_X, Application.getScreenHeight() - Defines.PLAY_BTN_OFFSET_Y*2 - 50)
 		this.cheatButton.anchor.set(0.5, 0.5)
 		this.cheatButton.interactive = true
-		this.isCheatOn = true
+		this.isCheatOn = false
 		this.cheatButton.on('pointerdown', ((btnSound)=>{
 			this.isCheatOn = !this.isCheatOn
 			console.log("Is cheat on ? " + this.isCheatOn)

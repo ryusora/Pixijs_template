@@ -33,6 +33,8 @@ var StateQuiz = function()
     btnConfirm.anchor.set(0.5, 0.5)
     btnConfirm.interactive = true
     btnConfirm.on('pointerdown', (()=>{
+            if(this.chosenAnswer < 0) return
+            
             this.IsOnScreen = false
             Application.removeChild(this.stage)
             // check correct answer

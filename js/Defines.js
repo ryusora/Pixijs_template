@@ -3,8 +3,9 @@ const Vector2 = require('./Games/Vector2.js')
 var Defines = function()
 {
 	// defines game
-	this.GAME_SPEED			= 80
-	this.SPEED_RATE			= 1.5
+	this.GAME_SPEED				= 80
+	this.SPECIAL_EXTRA_SPEED 	= 40
+	this.SPEED_RATE				= 1.5
 
 	this.INITIAL_LIFE		= 3
 	this.RED_FADE_TICKER	= 1
