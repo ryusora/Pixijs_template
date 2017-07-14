@@ -361,8 +361,10 @@ Character.prototype.Update = function(dt)
 	this.UpdateControl()
 	this.UpdateFrenzyMode(dt)
 	this.speed += Defines.SPEED_RATE
-	if(this.speed > (Defines.GAME_SPEED + this.offsetSpeed))
-		this.speed = (Defines.GAME_SPEED + this.offsetSpeed)
+	var maxSpeed = (Defines.GAME_SPEED + this.offsetSpeed)
+	maxSpeed += GameStates.stateInGame.isSpecialState?Defines.SPECIAL_EXTRA_SPEED:0
+	if(this.speed > maxSpeed)
+		this.speed = maxSpeed
 	this.position.z += this.speed * dt
 	Camera.CameraUpdatePlayerPos(this.frenzyCamOffsetX, this.frenzyCamOffsetY, this.position.z + this.frenzyCamOffsetZ)
 }

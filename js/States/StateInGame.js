@@ -21,12 +21,12 @@ var StateInGame = function()
 	]
 
 	this.ListLevelsName = [
-		"HoHap",
-		"SinhSan",
-		"ThanKinh",
 		"RungToc",
+		"ThanKinh",
+		"HoHap",
 		"DauLung",
-		"TieuHoa"
+		"TieuHoa",
+		"SinhSan"
 	]
 
 	this.ListUnlockScore = {
@@ -89,6 +89,8 @@ var StateInGame = function()
 	this.levelCounting = 0
 	this.ResetAll()
 	this.currentLevelName = null
+
+	this.quizCount = 0
 }
 
 StateInGame.prototype.ResetAll = function()
@@ -263,17 +265,25 @@ StateInGame.prototype.FixedUpdate = function(dt)
 				this.isGameOver = true
 				this.player.ResetAll()
 				// count quiz
-				if(FireBaseManager.CanEnterState(currentLevel))
+				if(++this.quizCount <= 3)//(FireBaseManager.CanEnterState(currentLevel))
 				{
-					FireBaseManager.CountQuiz(currentLevel)
 					quizPopup.Show(()=>{
 						this.Revive()
 					}, ()=>{
+						if(this.isSpecialState)
+						{
+							GameStates.ChangeLevelName('DacBiet')
+						}
+						FireBaseManager.CountQuiz(currentLevel)
 						StatesManager.ChangeState(GameStates.stateResult)
 					})
 				}
 				else
 				{
+					if(this.isSpecialState)
+					{
+						GameStates.ChangeLevelName('DacBiet')
+					}
 					StatesManager.ChangeState(GameStates.stateResult)
 				}
 				ItemsManager.DeactiveAllItems()
@@ -330,7 +340,7 @@ StateInGame.prototype.RestartGame = function()
 {
 	// reset player position
 	// this.player.ResetAll()
-
+	GameStates.ChangeLevelName(this.currentLevelName)
 	ItemsManager.ResetAll()
 	// ItemsManager.initialize()
 	ScoreManager.ResetAll()
@@ -348,6 +358,8 @@ StateInGame.prototype.RestartGame = function()
 	this.isChangingLevel = false
 	this.levelIndex = 0
 	this.levelCounting = 0
+	this.speedUpTicker = 0
+	this.invincibleTicker = 0
 }
 
 StateInGame.prototype.Revive = function()
@@ -372,6 +384,18 @@ StateInGame.prototype.Update = function(dt)
 	if(this.isSpecialState)
 	{
 		this.levelCounting += dt
+		if(this.levelCounting > Defines.CHANGE_LEVEL_TIMER - 3) // flicking for 3 seconds
+		{
+			if(!this.isChangingLevel)
+			{
+				this.changeStateEffect.alpha -= Defines.RED_FADE_TICKER * dt
+				if(this.changeStateEffect.alpha <= 0)
+				{
+					this.changeStateEffect.alpha = 0.5
+				}
+			}
+		}
+
 		if(this.levelCounting > Defines.CHANGE_LEVEL_TIMER)
 		{
 			console.log("Change Level")

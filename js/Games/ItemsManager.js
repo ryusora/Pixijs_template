@@ -182,7 +182,11 @@ ItemsManager.prototype.SpawnItem = function(direction)
 	var item = this.shouldSpawnQuestion?this.GetQuestionItem():this.GetItem(type)
 	if(item)
 	{
-		if(this.shouldSpawnQuestion) this.shouldSpawnQuestion = false
+		if(this.shouldSpawnQuestion)
+		{
+			direction = this.directionList[Defines.CENTER_DIRECTION]
+			this.shouldSpawnQuestion = false
+		}
 		item.SetPos({x:direction,y:0,z:Defines.ITEM_OFFSET_Z + Camera.GetCameraPosZ()})
 	}
 }

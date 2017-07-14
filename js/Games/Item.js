@@ -83,6 +83,8 @@ Item.prototype.CheckCollision = function(box)
 {
 	if(box.z - (box.depth*0.5) < this.position.z && this.position.z < box.z + (box.depth*0.5))
 	{
+		if(this.isQuestionItem) return true
+		
 		if(box.x - (box.width*0.5) < this.position.x && this.position.x < box.x + (box.width*0.5))
 		{
 			if(Math.abs(box.y) >= this.position.y && this.position.y + (this.original.height/2) > Math.abs(box.y))

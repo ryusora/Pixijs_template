@@ -86,6 +86,7 @@ StateResult.prototype.Init = function()
 
 		var x = Application.getScreenWidth()*0.5 - 120
 		var y = 700
+		/*
 		var replayBtn = new PIXI.Sprite(TextureManager.getTexture("rs_replay_btn"))
 		replayBtn.position.set(x, y)
 		replayBtn.anchor.set(1, 0.5)
@@ -96,13 +97,14 @@ StateResult.prototype.Init = function()
 				GameStates.stateInGame.RestartGame()
 				StatesManager.ChangeState(GameStates.stateInGame)
 			}
-		})
+		})*/
 
-		x = Application.getScreenWidth()*0.5 - 100
+		//x = Application.getScreenWidth()*0.5 - 100
+		x = Application.getScreenWidth()*0.5
 
 		var chooseLevelBtn = new PIXI.Sprite(TextureManager.getTexture("rs_chooseLevel"))
 		chooseLevelBtn.position.set(x , y)
-		chooseLevelBtn.anchor.set(0, 0.5)
+		chooseLevelBtn.anchor.set(0.5, 0.5)
 		chooseLevelBtn.interactive = true
 		chooseLevelBtn.on('pointerdown', ()=>{
 			GameStates.stateInGame.RestartGame()
@@ -114,7 +116,7 @@ StateResult.prototype.Init = function()
 		this.stage.addChild(this.score)
 		this.stage.addChild(this.total_score)
 		this.stage.addChild(this.rank)
-		this.stage.addChild(replayBtn)
+		//this.stage.addChild(replayBtn)
 		this.stage.addChild(chooseLevelBtn)
 
 		this.isLoadingDone = true

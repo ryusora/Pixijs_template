@@ -47,6 +47,11 @@ ScoreManager.prototype.GetItem = function(score, position)
 		var bonus = GameStates.stateInGame.IsFrenzy()?2:1
 		score *= bonus
 	}
+
+	if(GameStates.stateInGame.isSpecialState)
+	{
+		score *= 2
+	}
 	this.currentScore += score
 	// console.log("Add Score : " + this.currentScore + " with bonus : " + bonus)
 	if(scoreItem)
