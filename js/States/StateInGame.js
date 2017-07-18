@@ -360,6 +360,7 @@ StateInGame.prototype.RestartGame = function()
 	this.levelCounting = 0
 	this.speedUpTicker = 0
 	this.invincibleTicker = 0
+	this.quizCount = 0
 }
 
 StateInGame.prototype.Revive = function()

@@ -145,7 +145,6 @@ StateChooseCharacter.prototype.InitButton = function()
 	btnSound.interactive = true
 	this.isSoundOn = true
 	btnSound.on('pointerdown', ((btnSound)=>{
-		//StatesManager.ChangeState(GameStates.stateChooseCharacter)
 		this.isSoundOn = !this.isSoundOn
 		btnSound.texture = TextureManager.getTexture(this.isSoundOn?'cc_sound_on_btn':'cc_sound_off_btn')
 	}).bind(this, btnSound))
