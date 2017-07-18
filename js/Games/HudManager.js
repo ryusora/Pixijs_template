@@ -25,7 +25,11 @@ HudManager.prototype.OnPause = function()
 
 HudManager.prototype.Initialize = function()
 {
-    if(this.isInitialized) return
+    if(this.isInitialized)
+    {
+        this.live_sprite.texture = TextureManager.getTexture("hud_live_" + GameStates.GetCharacterName())
+        return
+    }
 
     var half_width = Application.getScreenWidth()*0.5
     var hudStyle = new PIXI.TextStyle({
@@ -60,9 +64,9 @@ HudManager.prototype.Initialize = function()
     bg_sprite.position.set(half_width, 0)
     bg_sprite.anchor.set(0.5,0)
     // load Life icon
-    var live_sprite = new PIXI.Sprite(TextureManager.getTexture("hud_live_" + GameStates.GetCharacterName()))
-    live_sprite.position.set(Defines.HUD_LIVE_OFFSET_X, Defines.HUD_ITEM_Y)
-    live_sprite.anchor.set(0,0.5)
+    this.live_sprite = new PIXI.Sprite(TextureManager.getTexture("hud_live_" + GameStates.GetCharacterName()))
+    this.live_sprite.position.set(Defines.HUD_LIVE_OFFSET_X, Defines.HUD_ITEM_Y)
+    this.live_sprite.anchor.set(0,0.5)
     // load life text
     this.liveStr = new PIXI.Text("0", hudStyle)
     this.liveStr.position.set(Defines.LIVE_TEXT_OFFSET_X, 0)
@@ -96,8 +100,8 @@ HudManager.prototype.Initialize = function()
     this.pause.on('pointerdown', this.OnPause.bind(this))
 
     this.stage.addChild(bg_sprite)
-    this.stage.addChild(live_sprite)
-    live_sprite.addChild(this.liveStr)
+    this.stage.addChild(this.live_sprite)
+    this.live_sprite.addChild(this.liveStr)
     this.stage.addChild(scoreTitle)
     this.stage.addChild(this.scoreStr)
     this.stage.addChild(this.fadeEffect)
