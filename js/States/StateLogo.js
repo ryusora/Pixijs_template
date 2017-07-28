@@ -17,9 +17,12 @@ StateLogo.prototype.Init = function(){
 		'BTN_OK'		:'Assets/Menu/ok_icon.png',
 		'Complete_popup':'Assets/Menu/Complete_popup.png',
 		// Menu Choose Characters
-		'cc_title'			:'Assets/Menu/ChooseCharacters/select_icon.png',
-		'cc_male_icon'		:'Assets/Menu/ChooseCharacters/male_icon.png',
-		'cc_female_icon'	:'Assets/Menu/ChooseCharacters/female_icon.png',
+		'cc_title'					:'Assets/Menu/ChooseCharacters/select_icon.png',
+		'cc_male_icon'				:'Assets/Menu/ChooseCharacters/male_icon.png',
+		'cc_male_icon_deactive'		:'Assets/Menu/ChooseCharacters/male_icon.png',
+		'cc_female_icon'			:'Assets/Menu/ChooseCharacters/female_icon.png',
+		'cc_female_icon_deactive'	:'Assets/Menu/ChooseCharacters/female_icon.png',
+
 		'cc_ready_btn'		:'Assets/Menu/ChooseCharacters/start_icon.png',
 		'cc_sound_on_btn'	:'Assets/Menu/ChooseCharacters/sound_icon.png',
 		'cc_sound_off_btn'	:'Assets/Menu/ChooseCharacters/sounbd_off.png',
