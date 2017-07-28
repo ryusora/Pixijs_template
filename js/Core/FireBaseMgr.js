@@ -60,7 +60,7 @@ FireBaseMgr.prototype.initialize = function()
 			})
 
 			// get QUIZs database
-			this.database.ref("quizs").once("value", (snapshot) =>{
+			this.database.ref("quiz_new").once("value", (snapshot) =>{
 				this.quizList = snapshot.val()
 				this.initializeStep++
 			}, (reason)=>

@@ -1,4 +1,4 @@
-var StateQuiz = function()
+var StateQuiz = function(forceLevel = null)
 {
     this.board = null
     // Init
@@ -19,7 +19,7 @@ var StateQuiz = function()
 	this.board.position.set(Application.getScreenWidth()*0.5,Application.getScreenHeight()*0.5)
 	this.board.anchor.set(0.5, 0.5)
     
-    this.currentQuiz = QuizManager.GetRandomQuiz()
+    this.currentQuiz = QuizManager.GetRandomQuiz((forceLevel != null)?forceLevel:GameStates.GetLevel())
     if(this.currentQuiz)
 	    this.ProcessQuiz()
 
@@ -59,9 +59,9 @@ var StateQuiz = function()
 	this.stage.addChild(this.board)
 }
 
-StateQuiz.prototype.Show = function(correctAction = null, failAction = null)
+StateQuiz.prototype.Show = function(correctAction = null, failAction = null, forceLevel = null)
 {
-    this.currentQuiz = QuizManager.GetRandomQuiz()
+    this.currentQuiz = QuizManager.GetRandomQuiz((forceLevel != null)?forceLevel:GameStates.GetLevel())
     if(this.currentQuiz)
     {
         this.correctAction = correctAction
