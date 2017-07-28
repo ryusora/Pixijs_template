@@ -1,8 +1,2 @@
-- Control animation in Pixijs
-	+ Check sprite animation
-	+ Check which tool should be use for animation
-- Add simple Gameplay
-	+ Add Chickens to drop eggs
-	+ Add controlable Bag to catch the falling egg
-	+ Add score : plus when catch the egg, minus when the egg falled on the ground
-- Implement firebase to record the high score and name
+- Update Leaderboard Screen
+- Update How-to-play image
