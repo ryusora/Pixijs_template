@@ -25,7 +25,7 @@ HudManager.prototype.OnPause = function()
 
 HudManager.prototype.Initialize = function()
 {
-    if(this.isInitialized) 
+    if(this.isInitialized)
     {
         this.live_sprite.texture = TextureManager.getTexture("hud_live_" + GameStates.GetCharacterName())
         return

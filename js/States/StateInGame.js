@@ -205,6 +205,7 @@ StateInGame.prototype.Init = function()
 	this.stage.addChild(HudManager.stage)
 
 	this.isGameOver = false
+	this.quizCount = 0
 }
 
 StateInGame.prototype.IsLoadDone = function()
@@ -276,7 +277,9 @@ StateInGame.prototype.FixedUpdate = function(dt)
 						}
 						FireBaseManager.CountQuiz(currentLevel)
 						StatesManager.ChangeState(GameStates.stateResult)
-					})
+					},
+						this.isSpecialState?this.currentLevelName:null
+					)
 				}
 				else
 				{
@@ -298,7 +301,7 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			quizPopup.Show(()=>{
 				ItemsManager.SpawnScoreAt(this.player.position, 10)
 				HudManager.UpdateScore(ScoreManager.currentScore)
-			})
+			}, null, this.isSpecialState?this.currentLevelName:null)
 			return
 		}
 
@@ -360,7 +363,6 @@ StateInGame.prototype.RestartGame = function()
 	this.levelCounting = 0
 	this.speedUpTicker = 0
 	this.invincibleTicker = 0
-	this.quizCount = 0
 }
 
 StateInGame.prototype.Revive = function()

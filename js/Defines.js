@@ -48,7 +48,10 @@ var Defines = function()
 	this.QUIZ_OFFSET_Y			= -300
 	this.QUIZ_ANSWERS_OFFSET_Y	= -150
 	this.QUIZ_ANSWERS_OFFSET_X	= -200
-	this.QUIZ_OFFSET_Y_SPACING	= 90
+	this.QUIZ_OFFSET_Y_SPACING	= 35
+
+	this.QUIZ_WIDTH = 680
+	this.QUIZ_HEIGHT = 717
 
 	// ALIGNMENT
 	this.PLAY_BTN_OFFSET_Y	= 80

@@ -103,32 +103,34 @@ StateChooseCharacter.prototype.InitCharacters = function()
 StateChooseCharacter.prototype.InitButton = function()
 {
     // init male button
-    var btnMale = new PIXI.Sprite(TextureManager.getTexture('cc_male_icon'))
-	btnMale.position.set(Defines.CC_MALE_BTN_OFFSET_X, Defines.CHOOSE_BTN_OFFSET_Y)
-	btnMale.anchor.set(0.5, 0.5)
-	btnMale.interactive = true
-	btnMale.on('pointerdown', ()=>{
+    this.btnMale = new PIXI.Sprite(TextureManager.getTexture('cc_male_icon'))
+	this.btnMale.position.set(Defines.CC_MALE_BTN_OFFSET_X, Defines.CHOOSE_BTN_OFFSET_Y)
+	this.btnMale.anchor.set(0.5, 0.5)
+	this.btnMale.interactive = true
+	this.btnMale.on('pointerdown', ()=>{
 		if(this.characterName != "male")
         {
             // update sprite
             this.characterName = "male"
+            this.btnMale.texture = TextureManager.getTexture('cc_male_icon')
+            this.btnFemale.texture = TextureManager.getTexture('cc_female_icon_deactive')
         }
-		StatesManager.ChangeState(GameStates.stateTutorial)
 	})
 
-    this.stage.addChild(btnMale)
+    this.stage.addChild(this.btnMale)
 
-    var btnFemale = new PIXI.Sprite(TextureManager.getTexture('cc_female_icon'))
-	btnFemale.position.set(Defines.CC_FEMALE_BTN_OFFSET_X, Defines.CHOOSE_BTN_OFFSET_Y)
-	btnFemale.anchor.set(0.5, 0.5)
-	btnFemale.interactive = true
-	btnFemale.on('pointerdown', ()=>{
+    this.btnFemale = new PIXI.Sprite(TextureManager.getTexture('cc_female_icon_deactive'))
+	this.btnFemale.position.set(Defines.CC_FEMALE_BTN_OFFSET_X, Defines.CHOOSE_BTN_OFFSET_Y)
+	this.btnFemale.anchor.set(0.5, 0.5)
+	this.btnFemale.interactive = true
+	this.btnFemale.on('pointerdown', ()=>{
 		if(this.characterName != "female")
         {
             // update sprite
             this.characterName = "female"
+            this.btnMale.texture = TextureManager.getTexture('cc_male_icon_deactive')
+            this.btnFemale.texture = TextureManager.getTexture('cc_female_icon')
         }
-		StatesManager.ChangeState(GameStates.stateTutorial)
 	})
 
 	var btnPlay = new PIXI.Sprite(TextureManager.getTexture('cc_ready_btn'))
@@ -145,6 +147,7 @@ StateChooseCharacter.prototype.InitButton = function()
 	btnSound.interactive = true
 	this.isSoundOn = true
 	btnSound.on('pointerdown', ((btnSound)=>{
+		//StatesManager.ChangeState(GameStates.stateChooseCharacter)
 		this.isSoundOn = !this.isSoundOn
 		btnSound.texture = TextureManager.getTexture(this.isSoundOn?'cc_sound_on_btn':'cc_sound_off_btn')
 	}).bind(this, btnSound))
@@ -159,7 +162,7 @@ StateChooseCharacter.prototype.InitButton = function()
 
 	this.stage.addChild(btnPlay)
 	this.stage.addChild(btnSound)
-	this.stage.addChild(btnFemale)
+	this.stage.addChild(this.btnFemale)
 }
 
 StateChooseCharacter.prototype.IsLoadDone = function()
