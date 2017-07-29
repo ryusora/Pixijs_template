@@ -22,8 +22,6 @@ StateTutorial.prototype.Init = function()
 			StatesManager.ChangeState(GameStates.stateChooseLevel)
 		})
 
-		window.btn_ok_debug = btnOK
-
 		this.stage.addChild(screen)
 		this.stage.addChild(btnOK)
 		this.isLoadingDone = true

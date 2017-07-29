@@ -170,7 +170,7 @@ StateInGame.prototype.Init = function()
 			this.ChangeLevel()
 		}
 		// Init old score
-		ScoreManager.currentScore = FireBaseManager.getRecord(this.currentLevelName)
+		ScoreManager.currentScore = FireBaseManager.getRecord(this.isSpecialState?"DacBiet":this.currentLevelName)
 	}
 	this.InitCamera()
 

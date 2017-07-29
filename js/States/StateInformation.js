@@ -21,7 +21,6 @@ StateInformation.prototype.Init = function()
 			StatesManager.ChangeState(GameStates.stateInGame)
 		})
 
-        window.btn_OK_Debug = btnOK
         this.isLoadingDone = true
         this.stage.addChild(this.screen)
         this.stage.addChild(btnOK)
