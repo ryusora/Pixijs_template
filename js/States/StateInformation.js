@@ -13,12 +13,18 @@ StateInformation.prototype.Init = function()
         this.screen = new PIXI.Sprite(TextureManager.getTexture('INFO_' + GameStates.GetLevel()))
         this.screen.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
         this.screen.anchor.set(0.5, 0.5)
-        this.screen.interactive = true
-        this.screen.on('pointerdown', ()=>{
-            StatesManager.ChangeState(GameStates.stateInGame)
-        })
+        var btnOK = new PIXI.Sprite(TextureManager.getTexture('BTN_OK'))
+		btnOK.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5 + 600)
+		btnOK.anchor.set(0.5, 0.5)
+		btnOK.interactive = true
+		btnOK.on('pointerdown', ()=>{
+			StatesManager.ChangeState(GameStates.stateInGame)
+		})
+
+        window.btn_OK_Debug = btnOK
         this.isLoadingDone = true
         this.stage.addChild(this.screen)
+        this.stage.addChild(btnOK)
     }
     else
     {

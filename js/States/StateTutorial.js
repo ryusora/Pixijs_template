@@ -14,12 +14,18 @@ StateTutorial.prototype.Init = function()
 		var screen = new PIXI.Sprite(TextureManager.getTexture('TUTORIAL'))
 		screen.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5)
 		screen.anchor.set(0.5, 0.5)
-		screen.interactive = true
-		screen.on('pointerdown', ()=>{
+		var btnOK = new PIXI.Sprite(TextureManager.getTexture('BTN_OK'))
+		btnOK.position.set(Application.getScreenWidth()*0.5, Application.getScreenHeight()*0.5 + 500)
+		btnOK.anchor.set(0.5, 0.5)
+		btnOK.interactive = true
+		btnOK.on('pointerdown', ()=>{
 			StatesManager.ChangeState(GameStates.stateChooseLevel)
 		})
 
+		window.btn_ok_debug = btnOK
+
 		this.stage.addChild(screen)
+		this.stage.addChild(btnOK)
 		this.isLoadingDone = true
 	}
 	Application.addChild(this.stage)
