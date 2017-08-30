@@ -15,6 +15,8 @@ StateLeaderboard.prototype.Init = function(){
 	})
 	this.stage.addChild(bg)
 	this.stage.addChild(btnPlay)
+
+	Application.InitCloseButton(TextureManager.getTexture('Exit_btn'), 10, 10)
 }
 
 StateLeaderboard.prototype.IsLoadDone = function()

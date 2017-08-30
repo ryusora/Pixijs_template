@@ -154,6 +154,7 @@ StateInGame.prototype.Init = function()
 	{
 		quizPopup = new StateQuiz()
 	}
+	quizPopup.ResetQuiz()
 
 	if(completePopup == null)
 	{

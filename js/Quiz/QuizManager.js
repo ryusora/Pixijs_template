@@ -1,8 +1,15 @@
 const Quiz = require('./Quiz.js')
-
+const MAX_QUIZ_PER_LEVEL = 3
 var QuizManager = function()
 {
-	
+	this.randomQuiz = []
+	this.currentIndex = 0
+}
+
+QuizManager.prototype.ResetQuiz = function()
+{
+	this.randomQuiz = []
+	this.currentIndex = 0
 }
 
 QuizManager.prototype.GetRandomQuiz = function(curLevel)
@@ -12,9 +19,17 @@ QuizManager.prototype.GetRandomQuiz = function(curLevel)
 	if(quizList[curLevel] == null || typeof(quizList[curLevel]) == 'undefined') return null
 
 	var quizLength = Object.keys(quizList[curLevel]).length
-	var randomIndex = Math.floor((Math.random() * quizLength))
+	while(this.randomQuiz.length < MAX_QUIZ_PER_LEVEL)
+	{
+		var randomIndex = Math.floor((Math.random() * quizLength))
+		if(this.randomQuiz.filter(idx => idx == randomIndex).length <= 0)
+			this.randomQuiz.push(randomIndex)
+	}
 
-	return (quizList[curLevel])["question_" + randomIndex]
+	if(this.currentIndex >= this.randomQuiz.length)
+		this.currentIndex = 0
+
+	return (quizList[curLevel])["question_" + this.randomQuiz[this.currentIndex++]]
 }
 
 QuizManager.prototype.GetQuizCount = function(curLevel)

@@ -14,6 +14,19 @@ var Application = function(){
 	this.screenOffset = {x:0, y:0}
 	this.scale = 1
 	this.scale_x = 1
+	this.closeBtn = null
+}
+
+Application.prototype.InitCloseButton = function(texture, x, y)
+{
+	this.closeBtn = this.closeBtn || new PIXI.Sprite(texture)
+	this.closeBtn.anchor.set(0, 0)
+	this.closeBtn.position.set(x, y)
+	this.addChild(this.closeBtn)
+	this.closeBtn.interactive = true
+	this.closeBtn.on('pointerdown', ()=>{
+		window.history.back()
+	})
 }
 
 Application.prototype.Shake = function()

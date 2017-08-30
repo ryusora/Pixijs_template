@@ -58,6 +58,11 @@ var StateQuiz = function(forceLevel = null)
 	this.stage.addChild(this.board)
 }
 
+StateQuiz.prototype.ResetQuiz = function()
+{
+    QuizManager.ResetQuiz()
+}
+
 StateQuiz.prototype.Show = function(correctAction = null, failAction = null, forceLevel = null)
 {
     this.currentQuiz = QuizManager.GetRandomQuiz((forceLevel != null)?forceLevel:GameStates.GetLevel())
@@ -158,7 +163,7 @@ StateQuiz.prototype.ProcessQuiz = function()
         }
         this.whiteBoard = new PIXI.Graphics()
         this.whiteBoard.beginFill(0xFFFFFF)
-        var quizHeight = totalHeight + 100
+        var quizHeight = totalHeight + 150
         this.whiteBoard.drawRect(-Defines.QUIZ_WIDTH/2, -quizHeight/2, Defines.QUIZ_WIDTH, quizHeight)
 
         var offsetHeight = totalHeight //(quizHeight > Defines.QUIZ_HEIGHT)?(quizHeight - Defines.QUIZ_HEIGHT):0

@@ -18,6 +18,8 @@ StateMainMenu.prototype.Init = function(){
 	})
 	this.stage.addChild(bg)
 	this.stage.addChild(btnPlay)
+
+	Application.InitCloseButton(TextureManager.getTexture('Exit_btn'), 10, 10)
 }
 
 StateMainMenu.prototype.IsLoadDone = function()
