@@ -53,6 +53,14 @@ FireBaseMgr.prototype.initialize = function()
 				this.initializeStep++
 			})
 
+			if(window.appbridge){
+				this.currentUser.uid = window.appbridge.UserProfile.id
+				this.currentUser.display_name = window.appbridge.UserProfile.FullName
+			}
+			else{
+				this.currentUser.display_name = this.currentUser.uid
+			}
+
 			this.currentUserPref = this.database.ref('/users/' + this.currentUser.uid)
 			this.currentUserPref.once('value', (snapshot) => {
 				this.currentUserData = snapshot.val()

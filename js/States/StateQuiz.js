@@ -34,7 +34,7 @@ var StateQuiz = function(forceLevel = null)
             this.IsOnScreen = false
             Application.removeChild(this.stage)
             // check correct answer
-            if(this.currentQuiz.correct_answer == this.chosenAnswer)
+            if(this.currentQuiz.AnswerId == this.currentQuiz.Answers[this.chosenAnswer].QuizAnswerId)
             {
                 if(this.correctAction != null)
                     this.correctAction()
@@ -58,14 +58,14 @@ var StateQuiz = function(forceLevel = null)
 	this.stage.addChild(this.board)
 }
 
-StateQuiz.prototype.ResetQuiz = function()
+StateQuiz.prototype.ResetQuiz = function(curLevel)
 {
-    QuizManager.ResetQuiz()
+    QuizManager.ResetQuiz(curLevel)
 }
 
-StateQuiz.prototype.Show = function(correctAction = null, failAction = null, forceLevel = null)
+StateQuiz.prototype.Show = function(correctAction = null, failAction = null, curLevel = null)
 {
-    this.currentQuiz = QuizManager.GetRandomQuiz((forceLevel != null)?forceLevel:GameStates.GetLevel())
+    this.currentQuiz = QuizManager.GetRandomQuiz(curLevel)
     if(this.currentQuiz)
     {
         this.correctAction = correctAction
@@ -110,11 +110,11 @@ StateQuiz.prototype.ProcessQuiz = function()
         // init question
         if(this.question)
         {
-            this.question.text = this.currentQuiz.title
+            this.question.text = this.currentQuiz.Question
         }
         else
         {
-            this.question = new PIXI.Text(this.currentQuiz.title, questionStyle)
+            this.question = new PIXI.Text(this.currentQuiz.Question, questionStyle)
             this.question.position.set(0, Defines.QUIZ_OFFSET_Y)
             this.question.anchor.set(0.5, 0)
         }
@@ -127,13 +127,13 @@ StateQuiz.prototype.ProcessQuiz = function()
         var totalHeight = this.question.height + Defines.QUIZ_OFFSET_Y_SPACING
         this.answers = new PIXI.Container()
 
-        var length = this.currentQuiz.answers.length
+        var length = this.currentQuiz.Answers.length
         var x = 0
         var y = 0
         var offset = 0
         for(let i = 0; i < length; i++)
         {
-            var answer = new PIXI.Text(this.currentQuiz.answers[i], answerStyle)
+            var answer = new PIXI.Text(this.currentQuiz.Answers[i].Answer, answerStyle)
             y += offset + (answer.height <= 40? Defines.QUIZ_OFFSET_Y_SPACING/2 : 0)
             answer.position.set(x, y)
             answer.anchor.set(0, answer.height <= 40?0.5:0)

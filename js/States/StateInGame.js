@@ -154,7 +154,6 @@ StateInGame.prototype.Init = function()
 	{
 		quizPopup = new StateQuiz()
 	}
-	quizPopup.ResetQuiz()
 
 	if(completePopup == null)
 	{
@@ -169,10 +168,12 @@ StateInGame.prototype.Init = function()
 		if(this.isSpecialState)
 		{
 			this.ChangeLevel()
+			return
 		}
 		// Init old score
 		ScoreManager.currentScore = FireBaseManager.getRecord(this.isSpecialState?"DacBiet":this.currentLevelName)
 	}
+	quizPopup.ResetQuiz(this.currentLevelName)
 	this.InitCamera()
 
 	this.stage = new PIXI.Container()
@@ -278,9 +279,7 @@ StateInGame.prototype.FixedUpdate = function(dt)
 						}
 						FireBaseManager.CountQuiz(currentLevel)
 						StatesManager.ChangeState(GameStates.stateResult)
-					},
-						this.isSpecialState?this.currentLevelName:null
-					)
+					},this.currentLevelName)
 				}
 				else
 				{
@@ -302,7 +301,7 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			quizPopup.Show(()=>{
 				ItemsManager.SpawnScoreAt(this.player.position, 10)
 				HudManager.UpdateScore(ScoreManager.currentScore)
-			}, null, this.isSpecialState?this.currentLevelName:null)
+			}, null, this.currentLevelName)
 			return
 		}
 
