@@ -31,8 +31,6 @@ StateInformation.prototype.Init = function()
     }
     Application.addChild(this.stage)
     Application.Align(this.stage)
-
-    Application.InitCloseButton(TextureManager.getTexture('Exit_btn'), 10, 10)
 }
 
 StateInformation.prototype.IsLoadDone = function()

@@ -7,7 +7,7 @@ var StateResult = function()
 	this.myRank = -1
 	this.levelsName = {
 		"HoHap"		:"HÔ HẤP",
-		"SinhSan"	:"SINH SẢN",
+		"SinhSan"	:"SỨC KHỎE SINH SẢN",
 		"ThanKinh"	:"CHÓNG MẶT",
 		"RungToc"	:"RỤNG TÓC",
 		"DacBiet"	:"ĐẶC BIỆT",
@@ -167,7 +167,7 @@ StateResult.prototype.InitLeaderboard = function()
 	var y = 30
 	var users = null
 	try{
-		users = Object.keys(FireBaseManager.listUsers)
+		users = FireBaseManager.listUsers
 	}catch(e)
 	{
 		users = null
@@ -180,16 +180,16 @@ StateResult.prototype.InitLeaderboard = function()
 		this.myRank = this.FindMyRank(users) // find my rank after sort
 		for(let i = 0; i < length; i++)
 		{
-			var style = (users[i] != FireBaseManager.currentUser.uid)?normalStyle:myStyle
+			var style = (users[i].UserName != FireBaseManager.currentUserData.UserName)?normalStyle:myStyle
 			var stt = new PIXI.Text((i+1) + ".", style)
 			stt.position.set(stt_x, y)
 			stt.anchor.set(1, 0.5)
-			var strName = (users[i].length > 5)? users[i].substring(0, 5) + '.':users[i]
+			var strName = (users[i].UserName.length > 5)? users[i].UserName.substring(0, 5) + '.':users[i].UserName
 			var name = new PIXI.Text(strName + "", style)
 			name.position.set(name_x, y)
 			name.anchor.set(0, 0.5)
 
-			var score = new PIXI.Text(Utility.GetStringFromNumber(FireBaseManager.listUsers[users[i]].totalScore), style)
+			var score = new PIXI.Text(Utility.GetStringFromNumber(users[i].Total), style)
 			score.position.set(score_x, y)
 			score.anchor.set(0.5, 0.5)
 
@@ -207,7 +207,7 @@ StateResult.prototype.FindMyRank = function(users)
 	var length = users.length
 	for(let i = 0; i < length; ++i)
 	{
-		if(users[i] == FireBaseManager.currentUser.uid)
+		if(users[i].UserName == FireBaseManager.currentUserData.UserName)
 		{
 			return (i + 1)
 		}
@@ -239,20 +239,20 @@ var partition = function(arr, left, right)
 {
 	var i = left, j = right;
 	var tmp;
-	var pivot = FireBaseManager.listUsers[arr[Math.floor((left + right) / 2)]].totalScore// arr[(left + right) / 2];
+	var pivot = arr[Math.floor((left + right) / 2)].Total// arr[(left + right) / 2];
 
 	while (i <= j) {
 		var iScore, jScore
-		iScore = FireBaseManager.listUsers[arr[i]].totalScore
+		iScore = arr[i].Total
 		while (iScore > pivot)
 		{
 			i++;
-			iScore = FireBaseManager.listUsers[arr[i]].totalScore
+			iScore = arr[i].Total
 		}
-		jScore = FireBaseManager.listUsers[arr[j]].totalScore
+		jScore = arr[j].Total
 		while (jScore < pivot){
 			j--
-			jScore = FireBaseManager.listUsers[arr[j]].totalScore
+			jScore = arr[j].Total
 		}
 		if (i <= j) {
 		tmp = arr[i];

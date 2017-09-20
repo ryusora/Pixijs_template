@@ -5,16 +5,82 @@ function FireBaseMgr()
 	this.currentUser = null
 	this.quizList = null
 	this.initializeStep = 0
-	this.userPref = null
-	this.listUsers = null
+	this.usersPref = null
 	this.currentUserPref = null
-	this.currentUserData = null
 	this.cheatEnabled = false
+	this.currentUserData = {
+		"HoHap":{
+			"lockTime":null,
+			"quizCount":0,
+			"score":0,
+			"isCompleted":false
+		},
+		"SinhSan":{
+			"lockTime":null,
+			"quizCount":0,
+			"score":0,
+			"isCompleted":false
+		},
+		"TieuHoa":{
+			"lockTime":null,
+			"quizCount":0,
+			"score":0,
+			"isCompleted":false
+		},
+		"ThanKinh":{
+			"lockTime":null,
+			"quizCount":0,
+			"score":0,
+			"isCompleted":false
+		},
+		"RungToc":{
+			"lockTime":null,
+			"quizCount":0,
+			"score":0,
+			"isCompleted":false
+		},
+		"DauLung":{
+			"lockTime":null,
+			"quizCount":0,
+			"score":0,
+			"isCompleted":false
+		},
+		"DacBiet":{
+			"lockTime":null,
+			"quizCount":0,
+			"score":0,
+			"isCompleted":false
+		},
+		"FullName":"Default Account",
+		"UserName":"defaultAccount",
+		"totalScore":0
+	}
+	this.listUsers = null
+	this.BrandID_Dict = {
+		"HoHap"		:1,
+		"TieuHoa"	:2,
+		"SinhSan"	:3,
+		"DauLung"	:4,
+		"ThanKinh"	:5,
+		"RungToc"	:10,
+		"DacBiet"	:11
+	}
 }
 
-FireBaseMgr.prototype.IsInitialized = function()
+FireBaseMgr.prototype.UpdateListUser = function(users)
 {
-	return (this.initializeStep > 1)
+	if(users != null && user.length > 0)
+	{
+		this.listUsers = []
+		for(var i in users)
+		{
+			this.listUsers.push({
+				"Total":user[i].totalScore,
+				"FullName":user[i].FullName,
+				"UserName":user[i].UserName
+			})
+		}
+	}
 }
 
 FireBaseMgr.prototype.initialize = function()
@@ -27,50 +93,63 @@ FireBaseMgr.prototype.initialize = function()
 		projectId: "testabottapp",
 		storageBucket: "testabottapp.appspot.com",
 		messagingSenderId: "508686023016"
-		// catcheggs // remove bacause forget password
-		// apiKey: "AIzaSyCxByIYPGU6bmXnG_fVknGAx5ouqLzxb0Y",
-		// authDomain: "catcheggs-ba7c0.firebaseapp.com",
-		// databaseURL: "https://catcheggs-ba7c0.firebaseio.com",
-		// storageBucket: "catcheggs-ba7c0.appspot.com",
-		// messagingSenderId: "144968775208"
 	};
 
 	this.defaultApp = firebase.initializeApp(config)
 	this.database = firebase.database()
-	// sign-in anonymously
-	// firebase.auth().signInAnonymously().catch(function(error) {
-	// 	// Handle Errors here.
-	// 	console.log('login failed with reason ' + error.message)
-	// });
 	firebase.auth().onAuthStateChanged(user=>{
 		if(user)
 		{
 			this.currentUser = user
 			// get userPref
-			this.userPref = this.database.ref("users")
-			this.userPref.once("value", (snapshot) =>{
-				this.listUsers = snapshot.val()
-				this.initializeStep++
-			})
+			this.usersPref = this.database.ref("app_users")
+			
 
-			if(window.appbridge){
-				this.currentUser.uid = window.appbridge.UserProfile.id
-				this.currentUser.display_name = window.appbridge.UserProfile.FullName
+			if(window.appBridge){
+				console.log("Set up UserProfile")
+				console.log(window.appBridge.UserProfile)
+				this.currentUser.UserId = window.appBridge.UserProfile.id
+				this.currentUser.FullName = window.appBridge.UserProfile.FullName
+				this.currentUser.UserName = window.appBridge.UserProfile.UserName
+				this.currentUserData.FullName = window.appBridge.UserProfile.FullName
+				this.currentUserData.UserName = window.appBridge.UserProfile.UserName
+				window.appBridge.RequestTop10Ranking(response=>{
+					console.log("Get Top 10 onLine")
+					console.log(response.data)
+					this.listUsers = response.data
+					if(this.listUsers == null)
+					{
+						this.usersPref.once("value", (snapshot) =>{
+							console.log("Init list online : " + snapshot.val())
+							this.UpdateListUser(snapshot.val())
+						})
+					}
+				})
 			}
 			else{
-				this.currentUser.display_name = this.currentUser.uid
+				console.log("failed to get AppBridge")
+				this.currentUser.UserId = this.currentUser.uid
 			}
 
-			this.currentUserPref = this.database.ref('/users/' + this.currentUser.uid)
+			this.currentUserPref = this.database.ref('/app_users/' + (this.currentUser.UserId || this.currentUser.uid))
 			this.currentUserPref.once('value', (snapshot) => {
-				this.currentUserData = snapshot.val()
-				this.initializeStep++
+				var userData = snapshot.val()
+				var localUserData = JSON.parse(localStorage.getItem("UserData"))
+				localUserData = localUserData || this.currentUserData
+				if(userData != null && localUserData.totalScore < userData.totalScore)
+				{
+					this.currentUserData = userData
+					localStorage.setItem("UserData", JSON.stringify(this.currentUserData))
+				}
+				else
+				{
+					this.currentUser
+				}
 			})
 
 			// get QUIZs database
 			this.database.ref("quiz_new").once("value", (snapshot) =>{
 				this.quizList = snapshot.val()
-				this.initializeStep++
 			}, (reason)=>
 			{
 				// failed
@@ -79,7 +158,6 @@ FireBaseMgr.prototype.initialize = function()
 
 			this.database.ref("cheatEnabled").once("value", (snapshot) =>{
 				this.cheatEnabled = snapshot.val() || false
-				this.initializeStep++
 			}, (reason)=>
 			{
 				// failed
@@ -93,6 +171,33 @@ FireBaseMgr.prototype.initialize = function()
 			firebase.auth().signInAnonymously().catch(function(error) {
 				// Handle Errors here.
 				console.log('login failed with reason ' + error.message)
+				// offline
+				var userData = JSON.parse(localStorage.getItem("UserData"))
+				this.currentUserData = userData || this.currentUserData
+				console.log("UserData init offline")
+				console.log(this.currentUserData)
+				if(window.appBridge)
+				{
+					this.currentUser.UserId = window.appBridge.UserProfile.id
+					this.currentUser.FullName = this.currentUser.FullName
+					this.currentUser.UserName = this.currentUser.UserName
+					this.currentUserData.FullName = this.currentUser.FullName
+					this.currentUserData.UserName = this.currentUser.UserName
+					window.appBridge.RequestTop10Ranking(response=>{
+							console.log("Get Top 10 offline")
+							console.log(response.data)
+							this.listUsers = response.data
+							if(this.listUsers == null)
+							{
+								this.listUsers = []
+								this.listUsers.push({
+									"Total":this.currentUserData.totalScore,
+									"FullName":this.currentUser.FullName,
+									"UserName":this.currentUser.UserName
+								})
+							}
+					})
+				}
 			});
 		}
 	})
@@ -105,9 +210,7 @@ FireBaseMgr.prototype.isLogin = function()
 
 FireBaseMgr.prototype.CanEnterState = function(state)
 {
-	if(this.currentUserData != null 
-	&& this.currentUserData[state] != null
-	&& this.currentUserData[state].lockTime != null)
+	if(this.currentUserData[state].lockTime != null)
 	{
 		var currentDateTime = (new Date()).getTime()
 		var diffTime = currentDateTime - this.currentUserData[state].lockTime
@@ -125,12 +228,11 @@ FireBaseMgr.prototype.CanEnterState = function(state)
 
 FireBaseMgr.prototype.SetComplete = function(levelName)
 {
-	if(this.currentUserData != null
-	&& this.currentUserData[levelName] != null)
-	{
-		this.currentUserData[levelName].isCompleted = true
+	this.currentUserData[levelName].isCompleted = true
+	if(this.currentUserPref != null)
 		this.currentUserPref.set(this.currentUserData)
-	}
+	else
+		localStorage.setItem("UserData", JSON.stringify(this.currentUserData))
 }
 
 FireBaseMgr.prototype.IsLevelCompleted = function(levelName)
@@ -146,93 +248,69 @@ FireBaseMgr.prototype.IsLevelCompleted = function(levelName)
 
 FireBaseMgr.prototype.CountQuiz = function(state = null)
 {
-	if(state != null && this.currentUserData != null)
+	if(state != null)
 	{
-		if(this.currentUserData[state] != null)
+		this.currentUserData[state].quizCount++
+		
+		if(this.currentUserData[state].quizCount >= 1)
 		{
-			if(this.currentUserData[state].quizCount != null)
-			{
-				this.currentUserData[state].quizCount++
-				// if(this.currentUserData[state].quizCount >= 1)
-				// {
-				// 	this.currentUserData[state].lockTime = (new Date()).getTime()
-				// }
-			}
-			else
-			{
-				this.currentUserData[state].quizCount = 1
-			}
-			
-			// temporary move here
-			if(this.currentUserData[state].quizCount >= 1)
-			{
-				this.currentUserData[state].lockTime = (new Date()).getTime()
-			}
-			// temporary move here end
+			this.currentUserData[state].lockTime = (new Date()).getTime()
 		}
-		this.currentUserPref.set(this.currentUserData)
+		
+		if(this.currentUserPref != null)
+			this.currentUserPref.set(this.currentUserData)
+		else
+			localStorage.setItem("UserData", JSON.stringify(this.currentUserData))
 	}
-}
-
-FireBaseMgr.prototype.GetQuizCount = function()
-{
-	if(state != null && this.currentUserData != null)
-	{
-		if(this.currentUserData[state] != null)
-		{
-			return this.currentUserData[state].quizCount
-		}
-	}
-	return null
 }
 
 FireBaseMgr.prototype.SaveRecord = function(record, state)
 {
-	if(this.currentUser)
-	{
-		// update score
-		if(this.currentUserData == null
-		|| typeof(this.currentUserData.totalScore) == 'undefined' 
-		|| this.currentUserData.totalScore == null)
-			this.currentUserData = {totalScore:0}
-		if(this.currentUserData[state] == null
-		|| typeof(this.currentUserData[state]) == 'undefined')
-			this.currentUserData[state] = {score:0}
-		this.currentUserData.totalScore += (record - this.currentUserData[state].score)
-		this.currentUserData[state].score = record
+	// update score
+	this.currentUserData.totalScore += (record - this.currentUserData[state].score)
+	this.currentUserData[state].score = record
 
-		this.currentUserPref.set(this.currentUserData)
-		this.userPref.once("value", (snapshot) =>{
-			console.log("update list users : " + JSON.stringify(snapshot.val()) )
-			console.log(snapshot.val())
-			this.listUsers = snapshot.val()
-		})
-		if(this.listUsers != null)
-			this.listUsers[this.currentUser.uid] = {totalScore:this.currentUserData.totalScore}
+	if(window.appBridge){
+		window.appBridge.PostScoreTotal(this.currentUserData.totalScore)
+		window.appBridge.PostScoreInBrand(this.currentUserData[state].score, this.BrandID_Dict[state])
 	}
+	if(this.currentUserPref != null)
+		this.currentUserPref.set(this.currentUserData)
+	else
+		localStorage.setItem("UserData", JSON.stringify(this.currentUserData))
+	this.UpdateLeaderboardScore()
+}
+
+FireBaseMgr.prototype.UpdateLeaderboardScore = function()
+{
+	var isUserInList = false
+	for(var i in this.listUsers)
+	{
+		if(this.listUsers[i].UserName === this.currentUserData.UserName)
+		{
+			console.log("User in list")
+			this.listUsers[i].Total = this.currentUserData.totalScore
+			isUserInList = true
+			return
+		}
+	}
+	if(!isUserInList)
+		this.listUsers.push({
+			"Total":this.currentUserData.totalScore,
+			"FullName":this.currentUserData.FullName,
+			"UserName":this.currentUserData.UserName
+		})
+	console.log("User not in list")
 }
 
 FireBaseMgr.prototype.getRecord = function(state)
 {
-	if(this.currentUserData != null
-	&& this.currentUserData[state] != null
-	&& this.currentUserData[state].score != null
-	)
-	{
-		return this.currentUserData[state].score
-	}
-	return 0
+	return this.currentUserData[state].score
 }
 
 FireBaseMgr.prototype.getRecordTotal = function()
 {
-	if(this.currentUserData != null
-	&& this.currentUserData.totalScore != null
-	)
-	{
-		return this.currentUserData.totalScore
-	}
-	return 0
+	return this.currentUserData.totalScore
 }
 
 module.exports = new FireBaseMgr()

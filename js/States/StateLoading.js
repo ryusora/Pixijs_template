@@ -102,7 +102,6 @@ StateLoading.prototype.Destroy = function(){
 
 StateLoading.prototype.Update = function(dt)
 {
-	// if(this.isLoadingDone && FireBaseManager.isInitialized)
 	if(this.isLoadingDone)
 	{
 		// do something when textures are loaded

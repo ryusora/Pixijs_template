@@ -75,8 +75,6 @@ StateChooseCharacter.prototype.Init = function()
 	
 	Application.addChild(this.stage)
 	Application.Align(this.stage)
-
-	Application.InitCloseButton(TextureManager.getTexture('Exit_btn'), 10, 10)
 }
 
 StateChooseCharacter.prototype.InitCharacters = function()
@@ -143,16 +141,13 @@ StateChooseCharacter.prototype.InitButton = function()
 		StatesManager.ChangeState(GameStates.stateTutorial)
 	})
 
-	var btnSound = new PIXI.Sprite(TextureManager.getTexture('cc_sound_on_btn'))
-	btnSound.position.set(Defines.CL_BACK_BTN_OFFSET_X, Application.getScreenHeight() - Defines.PLAY_BTN_OFFSET_Y)
-	btnSound.anchor.set(0.5, 0.5)
-	btnSound.interactive = true
-	this.isSoundOn = true
-	btnSound.on('pointerdown', ((btnSound)=>{
-		//StatesManager.ChangeState(GameStates.stateChooseCharacter)
-		this.isSoundOn = !this.isSoundOn
-		btnSound.texture = TextureManager.getTexture(this.isSoundOn?'cc_sound_on_btn':'cc_sound_off_btn')
-	}).bind(this, btnSound))
+	var btnClose = new PIXI.Sprite(TextureManager.getTexture('Exit_btn'))
+	btnClose.position.set(Defines.CL_BACK_BTN_OFFSET_X, Application.getScreenHeight() - Defines.PLAY_BTN_OFFSET_Y)
+	btnClose.anchor.set(0.5, 0.5)
+	btnClose.interactive = true
+	btnClose.on('pointerdown', (()=>{
+		Application.Quit()
+	}))
 
 	var btnHint = new PIXI.Sprite(TextureManager.getTexture('cc_hint_btn'))
 	btnHint.position.set(Defines.CL_BACK_BTN_OFFSET_X, Application.getScreenHeight() - Defines.PLAY_BTN_OFFSET_Y)
@@ -163,7 +158,7 @@ StateChooseCharacter.prototype.InitButton = function()
 	})
 
 	this.stage.addChild(btnPlay)
-	this.stage.addChild(btnSound)
+	this.stage.addChild(btnClose)
 	this.stage.addChild(this.btnFemale)
 }
 

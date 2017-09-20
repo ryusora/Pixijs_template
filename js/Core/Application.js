@@ -15,6 +15,15 @@ var Application = function(){
 	this.scale = 1
 	this.scale_x = 1
 	this.closeBtn = null
+	this.isQuit = false
+}
+
+Application.prototype.Quit = function()
+{
+	if(!this.isQuit){
+		this.isQuit = true
+		window.history.back()
+	}
 }
 
 Application.prototype.InitCloseButton = function(texture, x, y)
@@ -25,7 +34,7 @@ Application.prototype.InitCloseButton = function(texture, x, y)
 	this.addChild(this.closeBtn)
 	this.closeBtn.interactive = true
 	this.closeBtn.on('pointerdown', ()=>{
-		window.history.back()
+		this.Quit()
 	})
 }
 
