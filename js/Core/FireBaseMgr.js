@@ -138,13 +138,18 @@ FireBaseMgr.prototype.initialize = function()
 				localUserData = localUserData || this.currentUserData
 				if(userData != null && localUserData.totalScore < userData.totalScore)
 				{
+					console.log("Init online user")
 					this.currentUserData = userData
 					localStorage.setItem("UserData", JSON.stringify(this.currentUserData))
 				}
 				else
 				{
-					this.currentUser
+					console.log("Init offline user")
+					this.currentUserData = localUserData
+					this.currentUserPref.set(this.currentUserData)
 				}
+				console.log("Current User")
+				console.log(this.currentUserData)
 			})
 
 			// get QUIZs database
@@ -276,8 +281,7 @@ FireBaseMgr.prototype.SaveRecord = function(record, state)
 	}
 	if(this.currentUserPref != null)
 		this.currentUserPref.set(this.currentUserData)
-	else
-		localStorage.setItem("UserData", JSON.stringify(this.currentUserData))
+	localStorage.setItem("UserData", JSON.stringify(this.currentUserData))
 	this.UpdateLeaderboardScore()
 }
 

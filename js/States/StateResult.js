@@ -78,7 +78,8 @@ StateResult.prototype.Init = function()
 			fontWeight: 'bold',
 			fill: ['#4a2268'], // red : #ee175a
 			wordWrap: true,
-			wordWrapWidth: 750
+			wordWrapWidth: 750,
+			align : 'center'
 		}))
 		
 		this.hanhTrinhTitle.anchor.set(0.5, 0.5)
