@@ -1,7 +1,7 @@
 const Item = require("./Item.js")
 const Effect = require("./Effect.js")
 
-const TYPE_ITEM_MAX		= 11
+const TYPE_ITEM_MAX		= 15
 const TYPE_ENEMY_MAX	= 8
 
 const ITEM_IDX 	= 0
