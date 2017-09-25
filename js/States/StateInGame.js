@@ -169,6 +169,7 @@ StateInGame.prototype.Init = function()
 		if(this.isSpecialState)
 		{
 			this.ChangeLevel()
+			return
 		}
 		// Init old score
 		ScoreManager.currentScore = FireBaseManager.getRecord(this.isSpecialState?"DacBiet":this.currentLevelName)

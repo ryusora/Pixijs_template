@@ -1,5 +1,5 @@
 const Quiz = require('./Quiz.js')
-const MAX_QUIZ_PER_LEVEL = 3
+const MAX_QUIZ_PER_LEVEL = 5
 var QuizManager = function()
 {
 	this.randomQuiz = []
