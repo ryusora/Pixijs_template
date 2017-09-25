@@ -53,11 +53,11 @@ StateLogo.prototype.Init = function(){
 
 		// menu info
 		'INFO_HoHap'				:'Assets/Menu/INFO_HoHap.jpg',
-		'INFO_ThanKinh'				:'Assets/Menu/INFO_ThanKinh.jpg',
+		'INFO_ThanKinh'				:'Assets/Menu/INFO_ThanKinh.png',
 		'INFO_DauLung'				:'Assets/Menu/INFO_DauLung.jpg',
 		'INFO_RungToc'				:'Assets/Menu/INFO_RungToc.jpg',
-		'INFO_SinhSan'				:'Assets/Menu/INFO_SinhSan.jpg',
-		'INFO_TieuHoa'				:'Assets/Menu/INFO_TieuHoa.jpg',
+		'INFO_SinhSan'				:'Assets/Menu/INFO_SinhSan.png',
+		'INFO_TieuHoa'				:'Assets/Menu/INFO_TieuHoa.png',
 		'Exit_btn'					:'Assets/Menu/exit-button-hi.png',
 
 		// menu result
