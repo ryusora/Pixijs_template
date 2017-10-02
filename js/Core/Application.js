@@ -46,7 +46,12 @@ Application.prototype.Shake = function()
 
 Application.prototype.initialize = function(gameLoop, width, height)
 {
-	this.instance = new PIXI.Application(width, height)
+	var options = {
+		width:width,
+		height:height,
+		forceCanvas:true
+	}
+	this.instance = new PIXI.Application(options)
 	document.body.appendChild(this.instance.view)
 	// this.UpdateScale(width, height)
 	this.Resize(width, height)
