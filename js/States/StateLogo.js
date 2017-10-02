@@ -58,7 +58,7 @@ StateLogo.prototype.Init = function(){
 		'INFO_RungToc'				:'Assets/Menu/INFO_RungToc.jpg',
 		'INFO_SinhSan'				:'Assets/Menu/INFO_SinhSan.png',
 		'INFO_TieuHoa'				:'Assets/Menu/INFO_TieuHoa.png',
-		'Exit_btn'					:'Assets/Menu/exit-button-hi.png',
+		'Exit_btn'					:'Assets/Menu/btn_close.PNG',
 
 		// menu result
 		'rs_bg'				:'Assets/Menu/Leaderboard/background.png',
