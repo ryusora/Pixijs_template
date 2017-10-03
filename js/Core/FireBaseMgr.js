@@ -55,7 +55,7 @@ function FireBaseMgr()
 		"UserName":"defaultAccount",
 		"totalScore":0
 	}
-	this.listUsers = null
+	this.listUsers = []
 	this.BrandID_Dict = {
 		"HoHap"		:1,
 		"TieuHoa"	:2,
@@ -65,11 +65,13 @@ function FireBaseMgr()
 		"RungToc"	:10,
 		"DacBiet"	:11
 	}
+
+	this.myRank = -1
 }
 
 FireBaseMgr.prototype.UpdateListUser = function(users)
 {
-	if(users != null && user.length > 0)
+	if(users != null && users.length > 0)
 	{
 		this.listUsers = []
 		for(var i in users)
@@ -103,7 +105,6 @@ FireBaseMgr.prototype.initialize = function()
 			this.currentUser = user
 			// get userPref
 			this.usersPref = this.database.ref("app_users")
-			
 
 			if(window.appBridge){
 				console.log("Set up UserProfile")
@@ -113,17 +114,15 @@ FireBaseMgr.prototype.initialize = function()
 				this.currentUser.UserName = window.appBridge.UserProfile.UserName
 				this.currentUserData.FullName = window.appBridge.UserProfile.FullName
 				this.currentUserData.UserName = window.appBridge.UserProfile.UserName
-				window.appBridge.RequestTop10Ranking(response=>{
+				window.appBridge.RequestTop10Ranking((data, myRank)=>{
 					console.log("Get Top 10 onLine")
-					console.log(response.data)
-					this.listUsers = response.data
-					if(this.listUsers == null)
-					{
-						this.usersPref.once("value", (snapshot) =>{
-							console.log("Init list online : " + snapshot.val())
-							this.UpdateListUser(snapshot.val())
-						})
-					}
+					console.log(data)
+					this.listUsers = data
+					this.myRank = myRank
+				}, (e)=>{
+					console.log("Get top 10 failed from appBridge")
+					console.log(e)
+					this.listUsers = []
 				})
 			}
 			else{
@@ -146,6 +145,8 @@ FireBaseMgr.prototype.initialize = function()
 				{
 					console.log("Init offline user")
 					this.currentUserData = localUserData
+					this.currentUserData.FullName = window.appBridge.UserProfile.FullName
+					this.currentUserData.UserName = window.appBridge.UserProfile.UserName
 					this.currentUserPref.set(this.currentUserData)
 				}
 				console.log("Current User")
@@ -188,19 +189,15 @@ FireBaseMgr.prototype.initialize = function()
 					this.currentUser.UserName = this.currentUser.UserName
 					this.currentUserData.FullName = this.currentUser.FullName
 					this.currentUserData.UserName = this.currentUser.UserName
-					window.appBridge.RequestTop10Ranking(response=>{
+					window.appBridge.RequestTop10Ranking((data, myRank)=>{
 							console.log("Get Top 10 offline")
-							console.log(response.data)
-							this.listUsers = response.data
-							if(this.listUsers == null)
-							{
-								this.listUsers = []
-								this.listUsers.push({
-									"Total":this.currentUserData.totalScore,
-									"FullName":this.currentUser.FullName,
-									"UserName":this.currentUser.UserName
-								})
-							}
+							console.log(data)
+							this.listUsers = data || []
+							this.myRank = myRank
+					},(e)=>{
+						console.log("Get top 10 failed from appBridge")
+						console.log(e)
+						this.listUsers = []
 					})
 				}
 			});
@@ -276,7 +273,7 @@ FireBaseMgr.prototype.SaveRecord = function(record, state)
 	this.currentUserData[state].score = record
 
 	if(window.appBridge){
-		window.appBridge.PostScoreTotal(this.currentUserData.totalScore)
+		// window.appBridge.PostScoreTotal(this.currentUserData.totalScore) // temporarily removed
 		window.appBridge.PostScoreInBrand(this.currentUserData[state].score, this.BrandID_Dict[state])
 	}
 	if(this.currentUserPref != null)

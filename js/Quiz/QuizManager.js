@@ -30,8 +30,8 @@ QuizManager.prototype.RequestQuizList = function(curLevel)
 {
 	if(window.appBridge){
 		this.isRequesting = true
-		window.appBridge.RequestQuizList(this.QuizID_Dict[curLevel], ((response)=>{
-			this.responseQuiz = response.data
+		window.appBridge.RequestQuizList(this.QuizID_Dict[curLevel], ((data)=>{
+			this.responseQuiz = data
 			this.isRequesting = false
 			console.log("Quiz Response")
 			console.log(this.responseQuiz)
