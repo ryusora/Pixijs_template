@@ -145,8 +145,11 @@ FireBaseMgr.prototype.initialize = function()
 				{
 					console.log("Init offline user")
 					this.currentUserData = localUserData
-					this.currentUserData.FullName = window.appBridge.UserProfile.FullName
-					this.currentUserData.UserName = window.appBridge.UserProfile.UserName
+					if(window.appBridge)
+					{
+						this.currentUserData.FullName = window.appBridge.UserProfile.FullName
+						this.currentUserData.UserName = window.appBridge.UserProfile.UserName
+					}
 					this.currentUserPref.set(this.currentUserData)
 				}
 				console.log("Current User")
