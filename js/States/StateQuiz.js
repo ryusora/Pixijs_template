@@ -34,7 +34,7 @@ var StateQuiz = function(forceLevel = null)
             this.IsOnScreen = false
             Application.removeChild(this.stage)
             // check correct answer
-            if(this.currentQuiz.AnswerId == this.currentQuiz.Answers[this.chosenAnswer].QuizAnswerId)
+            if(this.currentQuiz.AnswerId == this.currentQuiz.Answers[this.chosenAnswer].id)
             {
                 if(this.correctAction != null)
                     this.correctAction()
