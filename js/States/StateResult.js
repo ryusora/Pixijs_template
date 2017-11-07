@@ -79,7 +79,8 @@ StateResult.prototype.Init = function()
 			fill: ['#4a2268'], // red : #ee175a
 			wordWrap: true,
 			wordWrapWidth: 750,
-			align : 'center'
+			align : 'center',
+			lineHeight: 50
 		}))
 		
 		this.hanhTrinhTitle.anchor.set(0.5, 0.5)
@@ -155,7 +156,7 @@ StateResult.prototype.InitLeaderboard = function()
         fontSize: 28,
         fontStyle: 'normal',
         fontWeight: 'bold',
-        fill: ['#ffffff'],
+        fill: ['#71b6d3'],
         wordWrap: true,
         wordWrapWidth: 750
 	})
@@ -179,6 +180,7 @@ StateResult.prototype.InitLeaderboard = function()
 		var length = users.length>this.MAX_USERS?this.MAX_USERS:users.length
 		quickSort(users, 0, users.length - 1)
 		this.myRank = this.FindMyRank(users) // find my rank after sort
+		if(this.myRank > 10) this.myRank = FireBaseManager.myRank
 		for(let i = 0; i < length; i++)
 		{
 			var style = (users[i].UserName != FireBaseManager.currentUserData.UserName)?normalStyle:myStyle
