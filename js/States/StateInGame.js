@@ -91,6 +91,7 @@ var StateInGame = function()
 	this.currentLevelName = null
 
 	this.quizCount = 0
+	this.startScore = 0
 }
 
 StateInGame.prototype.ResetAll = function()
@@ -172,6 +173,7 @@ StateInGame.prototype.Init = function()
 		}
 		// Init old score
 		ScoreManager.currentScore = FireBaseManager.getRecord(this.isSpecialState?"DacBiet":this.currentLevelName)
+		this.startScore = ScoreManager.currentScore
 	}
 	quizPopup.ResetQuiz(this.currentLevelName)
 	this.InitCamera()
@@ -264,7 +266,6 @@ StateInGame.prototype.FixedUpdate = function(dt)
 			if(ScoreManager.life <= 0 && !this.invincible)
 			{ 
 				var currentLevel = this.isSpecialState?"DacBiet":this.currentLevelName
-				FireBaseManager.SaveRecord(ScoreManager.currentScore, currentLevel)
 				this.isGameOver = true
 				this.player.ResetAll()
 				// count quiz
@@ -279,6 +280,8 @@ StateInGame.prototype.FixedUpdate = function(dt)
 						}
 						FireBaseManager.CountQuiz(currentLevel)
 						StatesManager.ChangeState(GameStates.stateResult)
+						let score = ScoreManager.currentScore - this.startScore
+						FireBaseManager.SaveRecord(score, currentLevel)
 					},this.currentLevelName)
 				}
 				else
