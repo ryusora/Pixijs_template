@@ -188,7 +188,7 @@ StateInGame.prototype.Init = function()
 	GroundsManager.Initialize()
 	HudManager.Initialize()
 	HudManager.UpdateLife(ScoreManager.life)
-	HudManager.UpdateScore(ScoreManager.currentScore)
+	HudManager.UpdateScore(0)
 	// DecorationsManager.Initialize()
 
 	this.stage.addChild(GroundsManager.stage)
@@ -246,6 +246,8 @@ StateInGame.prototype.FixedUpdate = function(dt)
 		height:this.player.GetHeight(),
 		depth:Defines.PLAYER_BOX_DEPTH
 	})
+	
+	let score = ScoreManager.currentScore - this.startScore
 
 	if(collidedItem)
 	{
@@ -280,7 +282,6 @@ StateInGame.prototype.FixedUpdate = function(dt)
 						}
 						FireBaseManager.CountQuiz(currentLevel)
 						StatesManager.ChangeState(GameStates.stateResult)
-						let score = ScoreManager.currentScore - this.startScore
 						FireBaseManager.SaveRecord(score, currentLevel)
 					},this.currentLevelName)
 				}
@@ -303,7 +304,6 @@ StateInGame.prototype.FixedUpdate = function(dt)
 		{
 			quizPopup.Show(()=>{
 				ItemsManager.SpawnScoreAt(this.player.position, 10)
-				HudManager.UpdateScore(ScoreManager.currentScore)
 			}, null, this.currentLevelName)
 			return
 		}
@@ -313,7 +313,7 @@ StateInGame.prototype.FixedUpdate = function(dt)
 		// 	this.player.ActiveFrenzy()
 		// 	this.fadeEffect.alpha = 0.5
 		// }
-		HudManager.UpdateScore(ScoreManager.currentScore)
+		HudManager.UpdateScore(score)
 		HudManager.UpdateLife(ScoreManager.life)
 
 		if(!this.isSpecialState && !FireBaseManager.IsLevelCompleted(this.currentLevelName) && ScoreManager.currentScore >= this.ListUnlockScore[this.currentLevelName])
@@ -446,7 +446,7 @@ StateInGame.prototype.Update = function(dt)
 	if(this.invincibleTicker > 0)
 	{
 		this.invincibleTicker -= 1 * dt
-		if(this.invincibleTicker < 0)
+		if(this.invincibleTicker <= 0)
 		{
 			this.invincible = false
 			this.invincibleTicker = 0

@@ -125,12 +125,12 @@ StateResult.prototype.Init = function()
 	}
 	else
 	{
+		if(this.myRank == -1) this.myRank = FireBaseManager.myRank
 		this.score.text = Utility.GetStringFromNumber(ScoreManager.currentScore)
 		this.total_score.text = Utility.GetStringFromNumber(FireBaseManager.getRecordTotal())
 		this.hanhTrinhTitle.text = "HÀNH TRÌNH " + this.levelsName[GameStates.GetLevel()]
 		this.rank.text = Utility.GetStringFromNumber(this.myRank)
 	}
-
 
 	this.stage.addChild(this.leaderboardStage)
 
@@ -180,7 +180,7 @@ StateResult.prototype.InitLeaderboard = function()
 		var length = users.length>this.MAX_USERS?this.MAX_USERS:users.length
 		quickSort(users, 0, users.length - 1)
 		this.myRank = this.FindMyRank(users) // find my rank after sort
-		if(this.myRank > 10) this.myRank = FireBaseManager.myRank
+		if(this.myRank > 10 || this.myRank <= 0) this.myRank = FireBaseManager.myRank
 		for(let i = 0; i < length; i++)
 		{
 			var style = (users[i].UserName != FireBaseManager.currentUserData.UserName)?normalStyle:myStyle
@@ -233,7 +233,8 @@ StateResult.prototype.Update = function(dt)
 {
 	if(this.isLoadingDone)
 	{
-		
+		if(this.myRank > FireBaseManager.myRank)
+			--this.myRank
 	}
 }
 
