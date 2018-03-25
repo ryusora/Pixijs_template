@@ -1,4 +1,3 @@
-const GameStates = require('./GameStates.js')
 
 function StatesManager()
 {
