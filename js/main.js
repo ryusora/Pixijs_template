@@ -1,15 +1,15 @@
 String.prototype.startsWith||(String.prototype.startsWith=function(a,b){return this.substr(b||0,a.length)===a})
 
 window.Application 			= require('./Core/Application.js')
-const FIXED_TIME = 0.2;
+const FIXED_TIME = 0.016;
 
 function run(deltaTime){
 	deltaTime = deltaTime / (60 * Application.instance.ticker.speed);
-	let fixedDT = deltaTime;
-	while(fixedDT > FIXED_TIME) {
-		fixedDT -= FIXED_TIME;
-		FixedUpdate(FIXED_TIME);
-	}
+	// let fixedDT = deltaTime;
+	// while(fixedDT > FIXED_TIME) {
+	// 	fixedDT -= FIXED_TIME;
+	// 	FixedUpdate(FIXED_TIME);
+	// }
 	Update(deltaTime);
 }
 
@@ -37,7 +37,6 @@ var checkReady = function(){
 		window.Defines				= require('./Defines.js')
 		window.InputManager			= require('./Core/InputManager.js')
 		window.TextureManager 		= require('./Core/TextureManager.js')
-		window.Camera				= require('./Games/Camera.js')
 		window.StatesManager 		= require('./States/StatesManager.js')
 	}
 	else
