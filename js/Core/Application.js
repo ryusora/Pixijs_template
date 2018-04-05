@@ -14,7 +14,6 @@ var Application = function(){
 	this.screenOffset = {x:0, y:0}
 	this.scale = 1
 	this.scale_x = 1
-	this.closeBtn = null
 	this.isQuit = false
 }
 

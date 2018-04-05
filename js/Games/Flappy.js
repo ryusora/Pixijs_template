@@ -1,5 +1,7 @@
 require("pixi.js")
 
-var Flappy = function() {
-
+export class Flappy{
+    constructor(){
+        
+    }
 }

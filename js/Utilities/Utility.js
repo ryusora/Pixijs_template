@@ -1,6 +1,6 @@
-var Utility = function()
+export class Utility
 {
-    this.GetStringFromNumber = function(numbers)
+    static GetStringFromNumber(numbers)
     {
         var heSo = 10
         var result = ""
@@ -19,5 +19,3 @@ var Utility = function()
         return result
     }
 }
-
-module.exports = new Utility()

@@ -1,10 +1,11 @@
-const StateLoading = require('./StateLoading')
+import { StateLoading } from './StateLoading';
 
-function StatesManager() {
-	this.prevState = null;
-	this.currentState = null;
-
-	this.ChangeState = function (state) {
+export class StatesManager{
+	constructor(){
+		this.prevState = null
+		this.currentState = null
+	}
+	ChangeState(state) {
 		if (this.currentState != null) {
 			this.prevState = this.currentState;
 		}
@@ -15,20 +16,15 @@ function StatesManager() {
 			this.prevState.Destroy();
 		}
 	}
-
-	this.FixedUpdate = function (dt) {
+	FixedUpdate(dt) {
 		if (this.currentState != null && this.currentState.FixedUpdate) {
 			this.currentState.FixedUpdate(dt);
 		}
 	}
 
-	this.Update = function (dt) {
+	Update(dt) {
 		if (this.currentState != null) {
 			this.currentState.Update(dt);
 		}
 	}
 }
-
-
-
-module.exports = new StatesManager()
