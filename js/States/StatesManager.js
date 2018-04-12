@@ -1,17 +1,31 @@
 import { StateLoading } from './StateLoading';
 
+export class States {
+	static LOADING = 0
+	static MAIN_MENU = 1
+	static IN_GAME = 2
+	static END_SCREEN = 3
+	static REVIVE = 4
+}
+
 export class StatesManager{
 	constructor(){
-		this.prevState = null
-		this.currentState = null
+		this.stack = [];
+		this.SwitchState(States.LOADING);
 	}
-	ChangeState(state) {
-		if (this.currentState != null) {
-			this.prevState = this.currentState;
+	GetStateFromID(id){
+		switch(id){
+			case States.LOADING:
+				this.stateLoading = this.stateLoading || new StateLoading();
+				return this.stateLoading;
 		}
-		this.currentState = state;
-		this.currentState.Init();
-
+		throw "Cannot get state from id " + id;
+	}
+	SwitchState(stateID) {
+		let prevState = this.stack.pop();
+		let currentState = this.GetStateFromID(stateID);
+		currentState.Init();
+		this.stack.push(currentState);
 		if (this.prevState != null) {
 			this.prevState.Destroy();
 		}

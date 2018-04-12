@@ -1,9 +1,10 @@
-import {LoaderAsync} from '../Utilities/LoaderAsync'
+import {LoaderAsync} from '../Core/LoaderAsync'
 export class StateLoading {
     constructor(){
     }
     Init() {
         // add job for loading
+        console.log("Init State Loading");
     }
     Destroy() {
 

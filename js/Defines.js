@@ -1,5 +1,3 @@
-var Defines = function()
-{
+export class Defines{
+    static FPS = 60
 }
-
-module.exports = new Defines()

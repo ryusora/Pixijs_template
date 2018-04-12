@@ -1,5 +1,5 @@
 {
-  "name": "Pixijs_template",
+  "name": "FlappyBirds",
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-env": "^1.6.1",
     "pixi.js": "^4.3.4"
   },
   "devDependencies": {
@@ -21,14 +21,15 @@
     "babel-plugin-transform-class-properties": "^6.11.5",
     "babel-plugin-transform-flow-strip-types": "*",
     "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-env": "^1.6.1",
     "copy-webpack-plugin": "^4.0.1",
     "cross-env": "^3.1.4",
     "flow-bin": "*",
     "hash-webpack-plugin": "0.0.5",
-    "html-webpack-plugin": "^2.28.0",
+    "html-webpack-plugin": "^3.0.0",
     "typescript": "^2.0.3",
+    "tapable": "1.0.0-beta.5",
     "webpack": "*",
+    "webpack-cli": "^2.0.14",
     "webpack-dev-server": "*"
   }
 }
