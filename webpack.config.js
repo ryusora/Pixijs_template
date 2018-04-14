@@ -24,7 +24,7 @@ const m_export =
             exclude: /node_modules/,
             query:
             {
-            presets: [ 'es2015', 'stage-0' ],
+            presets: [ 'es2015' ],
             plugins:
             [
                 'babel-plugin-syntax-flow',
