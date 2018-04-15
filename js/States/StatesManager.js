@@ -24,11 +24,11 @@ export class StatesManager{
 	}
 	SwitchState(stateID) {
 		let prevState = this.stack.pop();
-		let currentState = this.GetStateFromID(stateID);
-		currentState.Init(this.appStage);
-		this.stack.push(currentState);
-		if (this.prevState != null) {
-			this.prevState.Destroy();
+		this.currentState = this.GetStateFromID(stateID);
+		this.currentState.Init(this.appStage);
+		this.stack.push(this.currentState);
+		if (prevState != null) {
+			prevState.Destroy();
 		}
 	}
 	FixedUpdate(dt) {

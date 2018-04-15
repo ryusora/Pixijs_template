@@ -61,21 +61,11 @@ export class StateLoading {
         }));
 
         loader.Excecute().then(val=>{
-            spritesMgr.Init(spritesInfos, atlasTexture);
-            let testSprite = spritesMgr.GetSprite("bird0_0");
-            this.stage.addChild(testSprite);
-            testSprite.position.set(0,0);
-            testSprite.pivot.set(0.5, 0.5);
-
-            testSprite = spritesMgr.GetSprite("bird0_1");
-            this.stage.addChild(testSprite);
-            testSprite.position.set(50,50);
-            testSprite.pivot.set(0.5, 0.5);
-            
-            testSprite = spritesMgr.GetSprite("bird0_2");
-            this.stage.addChild(testSprite);
-            testSprite.position.set(100,100);
-            testSprite.pivot.set(0.5, 0.5);
+            spritesMgr.Init(spritesInfos, atlasTexture, 2);
+            this.animSprite = spritesMgr.CreateAnimationSprite(["bird0_0", "bird0_1", "bird0_2"], 0.1);
+            this.stage.addChild(this.animSprite.GetSprite());
+            this.animSprite.SetPosition(this.parent.GetScreenWidth()>>1, this.parent.GetScreenHeight()>>1);
+            this.animSprite.SetPivot(0.5, 0.5);
         }).catch(error=>{
             console.error(error);
         });
@@ -84,7 +74,8 @@ export class StateLoading {
         this.parent.removeChild(this.stage);
     }
     Update(dt) {
-
+        if(this.animSprite)
+            this.animSprite.Update(dt)
     }
     FixUpdate(dt) {
 

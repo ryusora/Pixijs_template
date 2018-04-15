@@ -1,25 +1,41 @@
 require('pixi.js')
+import {SpriteAnimation} from './SpriteAnimation'
 export class SpritesManager{
     constructor(){
-        this.sprites = {};
+        this.atlasBaseTexture = null;
+        this.scaleFactor = 1;
+        this.spritesInfo = null;
     }
-    Init(infosList, atlas){
+    Init(infosList, atlas, scaleFactor = 1){
         // create list sprite base on info and texture
-        let infoLength = infosList.length;
-        try{
-            for(let i = 0; i < infoLength; ++i){
-                let info = infosList[i];
-                let texture = new PIXI.Texture(atlas.baseTexture);
-                this.sprites[info.name] = new PIXI.Sprite(texture);
-                texture.frame = new PIXI.Rectangle(info.x, info.y, info.width, info.height);
-            }
-        }catch(e){
-            throw e;
-        }
+        this.spritesInfo = infosList;
+        this.atlasBaseTexture = atlas.baseTexture;
+        this.scaleFactor = scaleFactor;
     }
-    GetSprite(name){
-        if(!this.sprites[name])
-            throw "Cannot get sprite : " + name;
-        return this.sprites[name];
+    GetInfo(name) {
+        let length = this.spritesInfo.length;
+        for(let i = 0; i < length; ++i) {
+            if(this.spritesInfo[i].name.includes(name))
+                return this.spritesInfo[i];
+        }
+        throw "Cannot get sprite Info : " + name;
+    }
+    CreateSprite(name){
+        let info = this.GetInfo(name);
+        let texture = new PIXI.Texture(this.atlasBaseTexture);
+        texture.frame = new PIXI.Rectangle(info.x, info.y, info.width, info.height);
+        let sprite = new PIXI.Sprite(texture);
+        sprite.scale.set(this.scaleFactor, this.scaleFactor);
+
+        return sprite;
+    }
+    CreateAnimationSprite(listName, baseTime) {
+        let animInfo = { baseTime: baseTime, frames:[]};
+        let frameCount = listName.length;
+        for(let i = 0; i < frameCount; ++i) {
+            animInfo.frames.push(this.GetInfo(listName[i]));
+        }
+
+        return new SpriteAnimation(animInfo, this.atlasBaseTexture, this.scaleFactor);
     }
 }

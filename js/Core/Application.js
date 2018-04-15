@@ -67,8 +67,7 @@ export class Application{
 	GetDeltaTime(){ return this.instance.ticker.deltaTime; }
 	SetBackGroundColor(color){ this.instance.renderer.backgroundColor = color; }
 	Align(stage){
-		stage.scale.x = this.scale
-		stage.scale.y = this.scale
+		stage.scale.set(this.scale, this.scale);
 		stage.position.set(this.GetScreenWidth() / 2, this.GetScreenHeight() / 2);
 		stage.pivot.set(this.GetScreenWidth() / 2, this.GetScreenHeight() / 2);
 	}
@@ -76,6 +75,6 @@ export class Application{
 	GetRatioHeight(){ return 667 + this.ratioOffset.y; }
 	GetScreenWidth(){ return this.instance.renderer.width; }
 	GetScreenHeight(){ return this.instance.renderer.height; }
-	addChild(child){ this.instance.stage.addChild(child);}
+	addChild(child){ this.instance.stage.addChild(child); this.Align(child); }
 	removeChild(child){ this.instance.stage.removeChild(child); }
 }
