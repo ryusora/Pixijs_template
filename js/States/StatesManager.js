@@ -9,7 +9,8 @@ export class States {
 }
 
 export class StatesManager{
-	constructor(){
+	constructor(appStage){
+		this.appStage = appStage;
 		this.stack = [];
 		this.SwitchState(States.LOADING);
 	}
@@ -24,7 +25,7 @@ export class StatesManager{
 	SwitchState(stateID) {
 		let prevState = this.stack.pop();
 		let currentState = this.GetStateFromID(stateID);
-		currentState.Init();
+		currentState.Init(this.appStage);
 		this.stack.push(currentState);
 		if (this.prevState != null) {
 			this.prevState.Destroy();

@@ -69,13 +69,13 @@ export class Application{
 	Align(stage){
 		stage.scale.x = this.scale
 		stage.scale.y = this.scale
-		stage.position.set(this.getScreenWidth() / 2, this.getScreenHeight() / 2);
-		stage.pivot.set(this.getScreenWidth() / 2, this.getScreenHeight() / 2);
+		stage.position.set(this.GetScreenWidth() / 2, this.GetScreenHeight() / 2);
+		stage.pivot.set(this.GetScreenWidth() / 2, this.GetScreenHeight() / 2);
 	}
 	GetRatioWidth(){ return 375 + this.ratioOffset.x; }
 	GetRatioHeight(){ return 667 + this.ratioOffset.y; }
 	GetScreenWidth(){ return this.instance.renderer.width; }
 	GetScreenHeight(){ return this.instance.renderer.height; }
-	AddChild(child){ this.instance.stage.addChild(child); }
-	RemoveChild(child){ this.instance.stage.removeChild(child); }
+	addChild(child){ this.instance.stage.addChild(child);}
+	removeChild(child){ this.instance.stage.removeChild(child); }
 }

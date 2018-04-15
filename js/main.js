@@ -39,7 +39,7 @@ var checkReady = function(){
 		application = new Application(new GameConfig());
 		application.Initialize(run, width, height, document.body);
 		inputMgr = new InputManager(application.instance.view);
-		statesMgr = new StatesManager();
+		statesMgr = new StatesManager(application);
 	}
 	else
 	{

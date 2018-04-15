@@ -1,24 +1,25 @@
 export class LoaderAsync{
     constructor(){
-        this.listPromise = [];
+        this.jobs = [];
         this.jobCount = 0;
     }
-    AddJob(promise) {
-        this.listPromise.push(promise);
+    AddJob(job) {
+        this.jobs.push(job);
         this.jobCount++;
+        return job;
     }
-    Notify(callback = null) {
+    Notify(callback) {
         this.jobCount--;
         if(callback) {
-            let max = this.listPromise.length;
+            let max = this.jobs.length;
             callback((max - this.jobCount) * 100/max);
         }
     }
     Excecute() {
-        return Promise.all(this.listPromise);
+        return Promise.all(this.jobs);
     }
     ClearJobs() {
-        this.listPromise = [];
+        this.jobs = [];
         this.jobCount = 0;
     }
 }
