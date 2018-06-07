@@ -1,0 +1,111 @@
+// Saved by AuroraGT v0.1.2.1
+////////////////////////////////////////////////////////////////////////////////
+
+"ingame_ui"
+{
+    FLAGS 0x00000000
+    ID 93
+    POS 0 0
+    MAX_ID 67
+    LAYER OBJECT_LAYER "bg-65"
+    {
+         FLAGS 0x00000000
+         ID 65
+         POS 375 -175
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 1="bg" 0="light" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "gradient-64"
+    {
+         FLAGS 0x00000000
+         ID 64
+         POS 375 0
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" 34="gradient" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "score-20"
+    {
+         FLAGS 0x00000000
+         ID 20
+         POS 335 65
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_TextItem"
+         SPILLOUT_CHECKER 1="SCORE" 1="SCORE"
+         PARAMS 1="SCORE" 50 140 60 0="Font 1" 255 255 255 2="Center" 0="FALSE" 0 0 0
+    }
+    LAYER OBJECT_LAYER "time-22"
+    {
+         FLAGS 0x00000000
+         ID 22
+         POS 513 65
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_TextItem"
+         SPILLOUT_CHECKER 1="SCORE" 1="SCORE"
+         PARAMS 1="SCORE" 50 140 60 0="Font 1" 255 255 255 2="Center" 0="FALSE" 0 0 0
+    }
+    LAYER OBJECT_LAYER "exit-54"
+    {
+         FLAGS 0x00000000
+         ID 54
+         POS 700 50
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" 2="exit" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "score_title-52"
+    {
+         FLAGS 0x00000000
+         ID 52
+         POS 405 47
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" 15="score" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "time_title-53"
+    {
+         FLAGS 0x00000000
+         ID 53
+         POS 582 47
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" 16="time" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "logo-55"
+    {
+         FLAGS 0x00000000
+         ID 55
+         POS 15 15
+         ANCHOR 1 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" 17="logo" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "animation-67"
+    {
+         FLAGS 0x00000000
+         ID 67
+         POS 304 330
+         ANCHOR 1 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" -1 7="razor_part1_foam" 1="TRUE"
+    }
+}

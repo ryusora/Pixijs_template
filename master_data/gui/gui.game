@@ -1,0 +1,36 @@
+// Saved by AuroraGT v0.1.2.1
+////////////////////////////////////////////////////////////////////////////////
+
+"gui.game"
+{
+    FLAGS 0x00000000
+
+    LOAD_TEMPLATES ".\gui.gts"
+    MAX_ID 107
+
+    CAMERA "Camera 1"
+    {
+        FLAGS 0x00000000
+        TYPE 0
+        POS 0 0
+        SIZE 750 1334
+        LIMIT_AREA 0 0 704 416
+        FILL_COLOR 0 128 128 128
+        HIDE_TOP 14
+        HIDE_BOTTOM 14
+    }
+
+    LOAD_LEVEL ".\levels\preload_landscape.level"
+
+    LOAD_LEVEL ".\levels\preload_portrait.level"
+
+    LOAD_LEVEL ".\levels\loading.level"
+
+    LOAD_LEVEL ".\levels\objects.level"
+
+    LOAD_LEVEL ".\levels\exitpopup.level"
+
+    LOAD_LEVEL ".\levels\ingame_ui.level"
+
+    LOAD_LEVEL ".\levels\gameover.level"
+}

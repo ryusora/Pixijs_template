@@ -10,25 +10,16 @@ let statesMgr;
 let inputMgr;
 const FIXED_TIME = 1/60;
 let fixedDT = 0;
-function run(deltaTime){
+function gameLoop(deltaTime){
 	deltaTime = deltaTime / (Defines.FPS * application.instance.ticker.speed);
-	fixedDT += deltaTime;
-	do {
-		fixedDT -= FIXED_TIME;
-		FixedUpdate(FIXED_TIME);
-	} while(fixedDT >= FIXED_TIME);
 	Update(deltaTime);
 }
-
-function FixedUpdate(deltaTime){
-}
-
 function Update(deltaTime){
 	statesMgr.Update(deltaTime);
 	inputMgr.Update(deltaTime);
 }
 var readyChecker = null;
-var checkReady = function(){
+var checkReady = function() {
 	if(readyChecker) {
 		clearTimeout(readyChecker)
 		readyChecker = null
@@ -37,7 +28,7 @@ var checkReady = function(){
 	var height = Math.max(window.innerHeight, document.documentElement.clientHeight)
 	if(width != 0 && height != 0){
 		application = new Application(new GameConfig());
-		application.Initialize(run, width, height, document.body);
+		application.Initialize(gameLoop, width, height, document.body);
 		inputMgr = new InputManager(application.instance.view);
 		statesMgr = new StatesManager(application);
 	}

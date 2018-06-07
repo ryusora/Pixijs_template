@@ -1,0 +1,111 @@
+// Saved by AuroraGT v0.1.2.1
+////////////////////////////////////////////////////////////////////////////////
+
+"loading"
+{
+    FLAGS 0x00000000
+    ID 106
+    POS 0 0
+    MAX_ID 16
+    LAYER OBJECT_LAYER "exit-16"
+    {
+         FLAGS 0x00000000
+         ID 16
+         POS 700 50
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 0="exit" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "title-12"
+    {
+         FLAGS 0x00000000
+         ID 12
+         POS 75 1171
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_TextItem"
+         SPILLOUT_CHECKER 12="LOADING" 12="LOADING"
+         PARAMS 12="LOADING" 40 600 50 0="Font 1" 0 0 0 2="Center" 0="FALSE" 0 0 0
+    }
+    LAYER OBJECT_LAYER "icon-11"
+    {
+         FLAGS 0x00000000
+         ID 11
+         POS 375 1080
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 22="loading_icon" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "lost_connection-13"
+    {
+         FLAGS 0x00000000
+         ID 13
+         POS 75 1017
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_TextItem"
+         SPILLOUT_CHECKER 16="LOST_CONNECT" 16="LOST_CONNECT"
+         PARAMS 16="LOST_CONNECT" 40 600 100 0="Font 1" 0 0 0 2="Center" 0="FALSE" 0 0 0
+    }
+    LAYER OBJECT_LAYER "retry-15"
+    {
+         FLAGS 0x00000000
+         ID 15
+         POS 386 1195
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 1="retry" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "penguin-1"
+    {
+         FLAGS 0x00000000
+         ID 1
+         POS 376 860
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" -1 1="penguin_walk" 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "left-6"
+    {
+         FLAGS 0x00000000
+         ID 6
+         POS 0 1333
+         ANCHOR 1 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 24="bar_1334" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "right-7"
+    {
+         FLAGS 0x00000000
+         ID 7
+         POS 730 1333
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 24="bar_1334" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "bottom-5"
+    {
+         FLAGS 0x00000000
+         ID 5
+         POS -255 1335
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 17="bar_down_loading" -1 1="TRUE"
+    }
+}

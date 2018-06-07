@@ -7,7 +7,7 @@ import {SpritesManager} from '../Core/SpritesManager';
 window.spritesMgr||(window.spritesMgr = new SpritesManager());
 
 export class StateLoading {
-    constructor(){
+    constructor() {
         this.parent = null;
         this.stage = new PIXI.Container();
     }

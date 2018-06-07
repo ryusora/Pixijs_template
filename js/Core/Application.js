@@ -1,54 +1,51 @@
 require('pixi.js')
 
 export class GameConfig {
-	constructor(){
-		this.isWebviewPortrait = true;
-		this.width 	= 750;
-		this.height = 1334;
-		this.originalWidth = 0;
-		this.originalHeight = 0;
-	}
+	
+	static isWebviewPortrait 	= true;
+	static width 				= 750;
+	static height 				= 1334;
+	static originalWidth 		= 0;
+	static originalHeight 		= 0;
 }
 
-export class Application{
+export class Application {
 	constructor(gameConfig){
 		this.screenOffset = {x:0, y:0};
 		this.scale = 1;
 		this.isQuit = false;
-		this.gameConfig = gameConfig;
+		this.ticker = PIXI.ticker.shared;
+		this.renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight);
+
+		this.Resize();
+		document.body.appendChild(this.renderer.view);
 	}
-	Initialize(gameLoop, width, height, parent){
-		this.instance = new PIXI.Application({
-			width:width, 
-			height:height,
-			forceCanvas:false
-		})
-		parent.appendChild(this.instance.view)
-		
-		this.Resize(width, height)
-		this.instance.ticker.add(gameLoop)
-		this.SetBackGroundColor(0xffffff);
+	Initialize(gameLoop){
+		this.ticker.add(gameLoop);
 	}
 	Resize(width, height) {
-		this.gameConfig.isWebviewPortrait = (width < height)
-		this.gameConfig.originalWidth = width
-		this.gameConfig.originalHeight = height
-		if(this.gameConfig.isWebviewPortrait)
+		let width = window.innerWidth;
+		let height = window.innerHeight;
+		
+		GameConfig.isWebviewPortrait = (width < height)
+		GameConfig.originalWidth = width
+		GameConfig.originalHeight = height
+		if(GameConfig.isWebviewPortrait)
 		{
 			this.ratio = width / height
-			this.instance.renderer.resize(this.gameConfig.height * this.ratio, this.gameConfig.height)
-			this.screenOffset.x = (this.instance.renderer.width - this.gameConfig.width) / 2
+			this.instance.renderer.resize(GameConfig.height * this.ratio, GameConfig.height)
+			this.screenOffset.x = (this.instance.renderer.width - GameConfig.width) / 2
 			this.screenOffset.y = 0
 		}
 		else
 		{
 			this.ratio = height / width
-			this.instance.renderer.resize(this.gameConfig.height, this.gameConfig.height * this.ratio)
-			this.screenOffset.x = (this.instance.renderer.height - this.gameConfig.width) / 2
+			this.instance.renderer.resize(GameConfig.width, GameConfig.width * this.ratio)
+			this.screenOffset.x = (this.instance.renderer.height - GameConfig.width) / 2
 			this.screenOffset.y = 0
 		}
 	
-		this.Rotate(!this.gameConfig.isWebviewPortrait)
+		this.Rotate(!GameConfig.isWebviewPortrait)
 	}
 	Rotate(isRotate){
 		if (isRotate)
@@ -71,8 +68,8 @@ export class Application{
 		stage.position.set(this.GetScreenWidth() / 2, this.GetScreenHeight() / 2);
 		stage.pivot.set(this.GetScreenWidth() / 2, this.GetScreenHeight() / 2);
 	}
-	GetRatioWidth(){ return 375 + this.ratioOffset.x; }
-	GetRatioHeight(){ return 667 + this.ratioOffset.y; }
+	GetRatioWidth(){ return 375 + this.screenOffset.x; }
+	GetRatioHeight(){ return 667 + this.screenOffset.y; }
 	GetScreenWidth(){ return this.instance.renderer.width; }
 	GetScreenHeight(){ return this.instance.renderer.height; }
 	addChild(child){ this.instance.stage.addChild(child); this.Align(child); }

@@ -1,0 +1,84 @@
+FILE_FORMAT_TEMPLATE "GuiFFT"
+{
+	CHUNKS
+	{
+		game.for_each_level
+			level.open_cinematics_file
+				level.number_of_cinematics : INT8
+				level.for_each_cinematic
+					cinematic.id : INT16
+					cinematic.number_of_tracks : INT8
+					cinematic.for_each_track
+						track.type : INT8
+						track.switch_by_type
+						{
+							case CTRACK_BASIC:
+								track.flags	: INT8
+							case CTRACK_CAMERA:
+								track.flags : INT8
+							case CTRACK_OBJ_LAYER:
+								track.flags	: INT8
+								track.object_layer_id :	INT16
+							case CTRACK_SI:
+								track.flags	: INT8
+								track.sprite_id	: INT16
+						}
+						track.number_of_key_frames	: INT16
+						track.for_each_key_frame
+							key_frame.time : INT16
+							key_frame.number_of_commands : INT8
+							key_frame.for_each_command
+								key_frame_cmd.type : INT8
+								key_frame_cmd.switch_by_type_ex
+								{
+									//////////////////////////////////////////////////
+									// Standard commands...
+
+									case "Camera.SetPos.PosX"			: INT16
+									case "Camera.SetPos.PosY"			: INT16
+									case "Camera.CenterTo.PosX"			: INT16
+									case "Camera.CenterTo.PosY"			: INT16
+									case "Camera.FocusOn.Thread"		: INT8
+									case "Camera.FocusOn.OffsetX"		: INT16
+									case "Camera.FocusOn.OffsetY"		: INT16
+						
+									case "Basic.SetPos.PosX"			: INT16
+									case "Basic.SetPos.PosX"			: INT16
+									case "Basic.SetAction.Action"		: INT16
+									case "Basic.SendObjEvent.ObjectID"	: INT16
+									case "Basic.SendObjEvent.Param"		: INT16
+									case "Basic.SendObjEvent2.ObjectID"	: INT16
+									case "Basic.SendObjEvent2.Param1"	: INT16
+									case "Basic.SendObjEvent2.Param2"	: INT16
+									case "Basic.SendObjEvent3.ObjectID"	: INT16
+									case "Basic.SendObjEvent3.Param1"	: INT16
+									case "Basic.SendObjEvent3.Param2"	: INT16
+									case "Basic.SendObjEvent3.Param3"	: INT16
+									case "Basic.SendEvent.Param"		: INT16
+									case "Basic.SendEvent2.Param1"		: INT16
+									case "Basic.SendEvent2.Param2"		: INT16
+									case "Basic.SendEvent3.Param1"		: INT16
+									case "Basic.SendEvent3.Param2"		: INT16
+									case "Basic.SendEvent3.Param3"		: INT16
+
+									case "ObjThread.SetPos.PosX"		: INT16
+									case "ObjThread.SetPos.PosY"		: INT16
+									case "ObjThread.SetFrame.Frame"		: INT8
+									case "ObjThread.SetAnim.Animation"	: INT8
+									case "ObjThread.SetAnim.Loop"		: INT8
+									case "ObjThread.AddFlags.Flags"		: INT32
+									case "ObjThread.RemoveFlags.Flags"	: INT32
+									case "ObjThread.SetAlpha.Alpha"		: INT8
+									case "ObjThread.SetScale.ScaleX"	: INT16
+									case "ObjThread.SetScale.ScaleY"	: INT16
+									case "ObjThread.SetRotation.Angle"	: INT16
+									case "ObjThread.Repeat.Key_Start"	: INT16
+									case "ObjThread.Repeat.Num_Repeat"	: INT16
+									
+									case "SIThread.SetPos.PosX"			: INT16
+									case "SIThread.SetPos.PosY"			: INT16
+									case "SIThread.SetAnim.Animation"	: INT8
+									case "SIThread.AddFlags.Flags"		: INT32
+									case "SIThread.RemoveFlags.Flags"	: INT32																		
+						}
+	}

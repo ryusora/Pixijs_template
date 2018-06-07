@@ -1,0 +1,32 @@
+// Saved by AuroraGT v0.1.2.1
+////////////////////////////////////////////////////////////////////////////////
+
+"object"
+{
+    FLAGS 0x00000000
+    ID 92
+    POS 0 0
+    MAX_ID 31
+    LAYER OBJECT_LAYER "frame-29"
+    {
+         FLAGS 0x00000000
+         ID 29
+         POS 181 140
+         ANCHOR 0 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" 0="close" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "anim-30"
+    {
+         FLAGS 0x00000000
+         ID 30
+         POS 197 156
+         ANCHOR 0 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" -1 0="beard 1" 1="TRUE"
+    }
+}

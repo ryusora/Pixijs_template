@@ -1,0 +1,55 @@
+// Saved by AuroraGT v0.1.2.1
+////////////////////////////////////////////////////////////////////////////////
+
+"exitpopup"
+{
+    FLAGS 0x00000000
+    ID 98
+    POS 0 0
+    MAX_ID 4
+    LAYER OBJECT_LAYER "bg-1"
+    {
+         FLAGS 0x00000000
+         ID 1
+         POS 375 688
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" 3="exitpopup_bg" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "description-4"
+    {
+         FLAGS 0x00000000
+         ID 4
+         POS 100 560
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_TextItem"
+         SPILLOUT_CHECKER 17="EXIT_POPUP" 17="EXIT_POPUP"
+         PARAMS 17="EXIT_POPUP" 50 550 150 0="Font 1" 0 0 0 2="Center" 0="FALSE" 0 0 0
+    }
+    LAYER OBJECT_LAYER "ok-2"
+    {
+         FLAGS 0x00000000
+         ID 2
+         POS 225 812
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" 4="exitpopup_ok" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "cancel-3"
+    {
+         FLAGS 0x00000000
+         ID 3
+         POS 525 812
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 2="game" 5="exitpopup_cancel" -1 1="TRUE"
+    }
+}

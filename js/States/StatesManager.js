@@ -1,11 +1,11 @@
 import { StateLoading } from './StateLoading';
 
 export class States {
-	static LOADING = 0
-	static MAIN_MENU = 1
-	static IN_GAME = 2
-	static END_SCREEN = 3
-	static REVIVE = 4
+	static LOADING = 0;
+	static MAIN_MENU = 1;
+	static IN_GAME = 2;
+	static END_SCREEN = 3;
+	static REVIVE = 4;
 }
 
 export class StatesManager{
@@ -29,11 +29,6 @@ export class StatesManager{
 		this.stack.push(this.currentState);
 		if (prevState != null) {
 			prevState.Destroy();
-		}
-	}
-	FixedUpdate(dt) {
-		if (this.currentState != null && this.currentState.FixedUpdate) {
-			this.currentState.FixedUpdate(dt);
 		}
 	}
 

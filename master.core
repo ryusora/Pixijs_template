@@ -1,0 +1,164 @@
+<Manager version="1.0.1">
+  <Resources>
+    <Type uid="818E97E6" id="Sprites" index="3">
+      <Comment uid="53A9AFFD" id="comment" csControl="Label" csLabel="Here you can manage the sprites that will be used in the game." />
+      <Comment uid="5D4E472C" id="comment1" csControl="Label" csLabel="You have to set the path to AuroraGT, otherwise the sprites will not build." />
+      <Comment uid="4E667E5F" id="comment2" csControl="Label" csLabel="You have to specify for each sprite the export format: GǣFlagsGǥ, GǣDataFormatGǥ, GǣPixelFormatGǥ," />
+      <Comment uid="4081968E" id="comment3" csControl="Label" csLabel="otherwise that sprite will not be exported." />
+      <Comment uid="68360CB9" id="comment4" csControl="Label" csLabel="Commands are optional. The default exporter just exports a bsprite using the export flags." />
+      <Preview uid="7B1E35CA" id="preview" csControl="GroupBox" csAnchor="TLR">
+        <path uid="66D1E468" id="path" csLabel="AuroraGT" csControl="TextBox" csStyle="ra" csWidth="60%" csAnchor="TLR" onEdit="browseOne;AuroraGT Executable(AuroraGT*.exe)|AuroraGT*.exe" valueType="pathE" value="..\..\auroragt\auroragt.exe" />
+        <param uid="75F9DD1B" id="param" csLabel="Parameters" csControl="TextBox" csWidth="*" csAnchor="TR" csStyle="r" value="&quot;{%3}&quot;" />
+      </Preview>
+      <Build uid="BBA4EE9F" id="build" csControl="GroupBox" csAnchor="TLR">
+        <path uid="2496E975" id="path" csLabel="AuroraGT" csControl="TextBox" csStyle="ra" csWidth="60%" csAnchor="TLR" onEdit="browseOne;AuroraGT Executable(AuroraGT*.exe)|AuroraGT*.exe" valueType="pathE" value="..\..\auroragt\auroragt.exe" />
+        <param uid="2A7101A4" id="param" csLabel="Parameters" csControl="TextBox" csWidth="*" csAnchor="TR" csStyle="r" value="doAction(makesprcmd;{..\BS_GLOBAL};{%3};{%4};{%5};{%6};{%7})" />
+      </Build>
+      <BS_GLOBAL uid="A88CD7EC" id="bs_global" csLabel="Global flags" csControl="TextBox" csAnchor="TLR" csStyle="r" value="BS_MODULES|BS_MODULES_WH_SHORT|BS_MODULES_XY_SHORT|BS_FRAMES|BS_FM_OFF_SHORT|BS_FRAME_RECTS|BS_ANIMS|BS_AF_OFF_SHORT|BS_FM_INDEX_SHORT|BS_AF_INDEX_SHORT|BS_IMAGE_SIZE_INT" onEdit="pickflags;${Aurora.SpriteFlags}" />
+      <List uid="92A6AE95" id="list" csControl="RichListView" csHeight="260" csAnchor="TBLR" csStyle="bip" onAdd="Sprite files (*.sprite)|*.sprite" output="*.bsprite|*.mmp" log="*.log">
+        <columns uid="B4F6DC73">
+          <column uid="A66B3F3D" id="define" csLabel="Define" csWidth="5" csStyle="" onAdd="" />
+          <column uid="8EDCA50A" id="id" csLabel="Id" csWidth="15" csStyle="sb+" onAdd="{n}[_$]" />
+          <column uid="803B4DDB" id="path" csLabel="Path" csWidth="30" csStyle="-" onAdd="{fp}" />
+          <column uid="931374A8" id="flags" csLabel="Flags" csWidth="30" csStyle="" onAdd="GLOBAL" onEdit="pickflags;GLOBAL|${Aurora.SpriteFlags}" />
+          <column uid="A273AA57" id="dataformat" csLabel="DataFormat" csWidth="8" csStyle="" onAdd="I256" csRestriction="Auto;I2;I4;I16;I256;I64RLE;I127RLE;I256RLE;A256I64RLE;A256I127RLE;A256I256RLE;A256I256RLE;A256I256;RAW;GIF;PVRT" />
+          <column uid="AC944286" id="pixelformat" csLabel="PixelFormat" csWidth="7" csStyle="" onAdd="_8888" csRestriction="_8888;_0888;_4444;_1555;_0565;_0332;_2BPP;_4BPP;_ETC" />
+          <column uid="BFBC7BF5" id="commands" csLabel="Commands" csWidth="5" csStyle="" onAdd="" onEdit="editSprcmd;${Aurora.SpriteCommands}" />
+        </columns>
+        <items uid="9C414644">
+          <item uid="5C4AFD28" id="BG" define="" path="master_data\sprite\bg.sprite" flags="GLOBAL" dataformat="I256" pixelformat="_8888" commands="">
+            <binary uid="7A8B754A" id="out.bsprite" package="F07F66DF" index="1" />
+          </item>
+          <item uid="4AFF52BF" id="GAME" define="" path="master_data\sprite\game.sprite" flags="GLOBAL" dataformat="I256" pixelformat="_8888" commands="">
+            <binary uid="8B2778B9" id="out.bsprite" package="F07F66DF" index="2" />
+          </item>
+          <item uid="CC949583" id="GAMEOVER" define="" path="master_data\sprite\gameover.sprite" flags="GLOBAL" dataformat="I256" pixelformat="_8888" commands="">
+            <binary uid="6B476F5C" id="out.bsprite" package="F07F66DF" index="4" />
+          </item>
+          <item uid="CAE07744" id="PRELOAD" define="" path="master_data\sprite\preload.sprite" flags="GLOBAL" dataformat="I256" pixelformat="_8888" commands="">
+            <binary uid="ADE48D25" id="out.bsprite" package="639A23B8" index="0" />
+          </item>
+        </items>
+      </List>
+    </Type>
+    <Type uid="19FEAB37" id="Games" index="0">
+      <Comment uid="8F697F37" id="comment" csControl="Label" csLabel="Here you can manage the game file(s) that will be used in the application." />
+      <Comment uid="D0E1A388" id="comment1" csControl="Label" csLabel="You have to set the path to AuroraGT, otherwise the game file(s) will not build." />
+      <Comment uid="DE064B59" id="comment2" csControl="Label" csLabel="The Commands field is NOT optional." />
+      <Comment uid="4FD3A462" id="comment3" csControl="Label" csLabel="You have to specify the commands, otherwise the game file(s) will not build." />
+      <Preview uid="7AABEFF7" id="preview" csControl="GroupBox" csAnchor="TLR">
+        <path uid="5CFB9D11" id="path" csLabel="AuroraGT" csControl="TextBox" csStyle="ra" csWidth="60%" csAnchor="TLR" onEdit="browseOne;AuroraGT Executable(AuroraGT*.exe)|AuroraGT*.exe" valueType="pathE" value="..\..\auroragt\auroragt.exe" />
+        <param uid="521C75C0" id="param" csLabel="Parameters" csControl="TextBox" csWidth="*" csAnchor="TR" csStyle="r" value="&quot;{%3}&quot;" />
+      </Preview>
+      <Build uid="6EC1EDBF" id="build" csControl="GroupBox" csAnchor="TLR">
+        <path uid="744C0726" id="path" csLabel="AuroraGT" csControl="TextBox" csStyle="ra" csWidth="60%" csAnchor="TLR" onEdit="browseOne;AuroraGT Executable(AuroraGT*.exe)|AuroraGT*.exe" valueType="pathE" value="..\..\auroragt\auroragt.exe" />
+        <param uid="67643E55" id="param" csLabel="Parameters" csControl="TextBox" csWidth="*" csAnchor="TR" csStyle="r" value="doAction(makegamecmd;{%4})" />
+      </Build>
+      <List uid="46767788" id="list" csControl="RichListView" csHeight="270" csAnchor="TBLR" csStyle="bip" onAdd="Game files (*.game)|*.game" output="*.bin|*.layers|*.cinematics" log="*.log">
+        <columns uid="5BB9A62A">
+          <column uid="6026056E" id="define" csLabel="Define" csWidth="5" csStyle="" onAdd="" />
+          <column uid="730E3C1D" id="id" csLabel="Id" csWidth="25" csStyle="sb+" onAdd="{n}[_$]" />
+          <column uid="7DE9D4CC" id="path" csLabel="Path" csWidth="40" csStyle="-" onAdd="{fp}" />
+          <column uid="555E4EFB" id="commands" csLabel="Commands" csWidth="30" onAdd="" onEdit="editGamecmd;${Aurora.GameCommands}" />
+        </columns>
+        <items uid="48919F59">
+          <item uid="ACBE594C" id="GUI" define="" path="master_data\gui\gui.game" commands="Load(&quot;gui.game&quot;)&#xA;EXPORTGAME&#xA;{&#xA;    DESC        &quot;$id&quot;&#xA;    PATH        &quot;.&quot;&#xA;    LOG_FILE    &quot;$id.log&quot;&#xA;&#xA;    OBJ_LAYERS&#xA;    {&#xA;        //OPTIONS EXPORT_OBJ_ID&#xA;        OPTIONS USE_TEMPLATE_EXPORT_FORMAT&#xA;    }&#xA;&#xA;    TASKS&#xA;    {&#xA;        OPTIONS    FINAL_OFFSET&#xA;    }   &#xA;   &#xA;    CINEMATICS       &#xA;    {           &#xA;        OPTIONS EXPORT_OBJ_ID       &#xA;    }   &#xA;   &#xA;    GTS_SRC_FILE &quot;gui&quot;&#xA;    CINEMATICS_GTS_SRC_FILE &quot;gui_cinematic&quot;&#xA;&#xA;&#xA;}&#xA;&#xA;InitGameFFT(&quot;export.fft&quot;)&#xA;ExportGameFFT(WRITE_LOG)">
+            <binary uid="2B2A7986" id="level1.layers" package="639A23B8" index="1" label="LEVEL1" />
+            <binary uid="396557A5" id="level2.layers" label="LEVEL2" package="639A23B8" index="2" />
+            <binary uid="BD61CF34" id="level3.layers" label="LEVEL3" package="639A23B8" index="3" />
+            <binary uid="68313842" id="level1.cinematics" label="LEVEL1" package="" index="4" />
+            <binary uid="66D6D093" id="level2.cinematics" label="LEVEL2" package="" index="4" />
+            <binary uid="75FEE9E0" id="level3.cinematics" label="LEVEL3" package="" index="4" />
+            <binary uid="BB06ACD1" id="level4.layers" label="LEVEL4" package="31B8FDCA" index="0" />
+            <binary uid="B7301173" id="level4.cinematics" label="LEVEL4" package="" index="4" />
+            <binary uid="8069FAFF" id="level5.layers" label="LEVEL5" package="31B8FDCA" index="1" />
+            <binary uid="75A74EFA" id="level6.layers" label="LEVEL6" package="31B8FDCA" index="2" />
+            <binary uid="668F7789" id="level7.layers" label="LEVEL7" package="31B8FDCA" index="3" />
+            <binary uid="D8C9CB88" id="level5.cinematics" label="LEVEL5" />
+            <binary uid="F07E51BF" id="level6.cinematics" label="LEVEL6" />
+            <binary uid="FE99B96E" id="level7.cinematics" label="LEVEL7" />
+          </item>
+        </items>
+      </List>
+    </Type>
+    <Type uid="318E015A" id="Texts">
+      <Preview uid="FFD332DE" id="preview" csControl="GroupBox" csAnchor="TLR">
+        <path uid="A686423B" id="path" csLabel="Tool" csControl="TextBox" csStyle="ra" csWidth="60%" csAnchor="TLR" onEdit="browseOne;Executable Files(*.exe;*.bat)|*.exe;*.bat" valueType="pathE" value="..\..\monolith\bin\monolith.exe" />
+        <param uid="ECFB0BAD" id="param" csLabel="Parameters" csControl="TextBox" csStyle="" csWidth="*" csAnchor="TR" value="&quot;{%3}&quot;" />
+      </Preview>
+      <Build uid="D764A8E9" id="build" csControl="GroupBox" csAnchor="TLR">
+        <path uid="F134DA0F" id="path" csLabel="Tool" csControl="TextBox" csStyle="ra" csWidth="60%" csAnchor="TLR" onEdit="browseOne;Executable Files(*.exe;*.bat)|*.exe;*.bat" valueType="pathE" value="stringxml.exe" />
+        <param uid="D9834038" id="param" csLabel="Parameters" csControl="TextBox" csStyle="" csWidth="*" csAnchor="TR" value="-e &quot;{%3}&quot; {..\Languages}" />
+      </Build>
+      <Encoding uid="C44C919A" id="encoding" csLabel="Encoding" csControl="DropDown" value="UTF-8" csAnchor="TLR" items="UTF-8|UTF-16|UTF-32" />
+      <Languages uid="CAAB794B" id="languages" csLabel="Languages" csControl="TextBox" csAnchor="TLR" csStyle="r" value="EN|FR|DE|IT|ES|BR|RU|PL|TR|TH|VI|JP|KR|AR" onEdit="pickflags;EN|FR|DE|IT|ES|BR|RU|PL|TR|TH|VI|JP|KR|AR" />
+      <List uid="3F69E98B" id="list" csControl="RichListView" csHeight="270" csAnchor="TBLR" csStyle="bip" onAdd="Text files (*.mnt)|*.mnt" output="*.str" log="*.log">
+        <columns uid="19399B6D">
+          <column uid="9523A5F4" id="define" csLabel="Define" csWidth="5" csStyle="" onAdd="" />
+          <column uid="9BC44D25" id="id" csLabel="Id" csWidth="35" csStyle="sb+" onAdd="{n}[_$]" />
+          <column uid="0A11A21E" id="path" csLabel="Path" csWidth="60" csStyle="-" onAdd="{fp}" />
+        </columns>
+        <items uid="17DE73BC">
+          <item uid="94100236" id="TEXT" define="" path="master_data\text\text.mnt">
+            <binary uid="B2FCF16F" id="contents_br.str" label="CONTENTS_BR" package="A4F307C9" index="0" />
+            <binary uid="636FA2F4" id="contents_de.str" label="CONTENTS_DE" package="B49224B7" index="0" />
+            <binary uid="A294152E" id="contents_en.str" label="CONTENTS_EN" package="8D81B28C" index="0" />
+            <binary uid="8A238F19" id="contents_es.str" label="CONTENTS_ES" package="1ADE4B3F" index="0" />
+            <binary uid="84C467C8" id="contents_fr.str" label="CONTENTS_FR" package="615E0831" index="0" />
+            <binary uid="97EC5EBB" id="contents_it.str" label="CONTENTS_IT" package="ED297547" index="0" />
+            <binary uid="990BB66A" id="contents_jp.str" label="CONTENTS_JP" package="312CBED5" index="0" />
+            <binary uid="C6836AD5" id="contents_kr.str" label="CONTENTS_KR" package="4072E91A" index="0" />
+            <binary uid="C8648204" id="contents_pl.str" label="CONTENTS_PL" package="27CAB91A" index="0" />
+            <binary uid="59B16D3F" id="contents_pt.str" label="CONTENTS_AR" package="" index="1" />
+            <binary uid="D4BBD40A" id="contents_ru.str" label="CONTENTS_RU" package="FC326089" index="0" />
+            <binary uid="DA5C3CDB" id="contents_tr.str" label="CONTENTS_TR" package="22B9B06A" index="0" />
+            <binary uid="2EB573FC" id="contents_vi.str" label="CONTENTS_VI" package="61492451" index="0" />
+            <binary uid="B7C953F0" id="contents_th.str" label="CONTENTS_TH" package="EF1AFA3F" index="0" />
+            <binary uid="C77AA005" id="contents_ar.str" label="CONTENTS_AR" package="6FFCEE22" index="0" />
+          </item>
+        </items>
+      </List>
+    </Type>
+    <Type uid="5101C5B2" id="ODS2MNT" index="1">
+      <Preview uid="7E13307C" id="preview" csControl="GroupBox" csAnchor="TLR">
+        <path uid="70F4D8AD" id="path" csLabel="Tool" csControl="TextBox" csStyle="ra" csWidth="60%" csAnchor="TLR" onEdit="browseOne;Executable Files(*.exe;*.bat)|*.exe;*.bat" valueType="pathE" />
+        <param uid="63DCE1DE" id="param" csLabel="Parameters" csControl="TextBox" csWidth="*" csAnchor="TR" value="" />
+      </Preview>
+      <Build uid="6D3B090F" id="build" csControl="GroupBox" csAnchor="TLR">
+        <path uid="458C9338" id="path" csLabel="Tool" csControl="TextBox" csStyle="ra" csWidth="60%" csAnchor="TLR" onEdit="browseOne;Executable Files(*.exe;*.bat)|*.exe;*.bat" valueType="pathE" value="..\..\monolith\make.bat" />
+        <param uid="4B6B7BE9" id="param" csLabel="Parameters" csControl="TextBox" csWidth="*" csAnchor="TR" value="&quot;{%3}&quot; &gt; make.log 2&gt;&amp;1" />
+      </Build>
+      <List uid="C4B6FFFD" id="list" csControl="RichListView" csHeight="295" csAnchor="TBLR" csStyle="bitp" onAdd="*.*|*.*">
+        <columns uid="CA51172C">
+          <column uid="B11BC089" id="define" csLabel="Define" csWidth="5" csStyle="" onAdd="" />
+          <column uid="855C38F7" id="id" csLabel="Id" csWidth="15" csStyle="sb+" onAdd="{n}" />
+          <column uid="96740184" id="path" csLabel="Path" csWidth="25" csStyle="-" onAdd="{p}" />
+        </columns>
+        <items uid="95D9CB93">
+          <item uid="F0BD5846" id="TEXT" define="" path="master_data\text\text.ods">
+            <binary uid="C0121ABE" id="" />
+          </item>
+        </items>
+      </List>
+    </Type>
+  </Resources>
+  <Packages uid="FE988E0E">
+    <package uid="639A23B8" id="Preload" />
+    <package uid="F07F66DF" id="Sprites" />
+    <package uid="31B8FDCA" id="Games" />
+    <package uid="8D81B28C" id="TEXT_EN" />
+    <package uid="615E0831" id="TEXT_FR" />
+    <package uid="B49224B7" id="TEXT_DE" />
+    <package uid="ED297547" id="TEXT_IT" />
+    <package uid="1ADE4B3F" id="TEXT_ES" />
+    <package uid="A4F307C9" id="TEXT_BR" />
+    <package uid="FC326089" id="TEXT_RU" />
+    <package uid="27CAB91A" id="TEXT_PL" />
+    <package uid="22B9B06A" id="TEXT_TR" />
+    <package uid="EF1AFA3F" id="TEXT_TH" />
+    <package uid="61492451" id="TEXT_VI" />
+    <package uid="312CBED5" id="TEXT_JP" />
+    <package uid="4072E91A" id="TEXT_KR" />
+    <package uid="6FFCEE22" id="TEXT_AR" />
+  </Packages>
+</Manager>

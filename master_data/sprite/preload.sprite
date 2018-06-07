@@ -1,0 +1,360 @@
+// saved by AuroraGT v0.1.2.1 (SpriteEditor v0.1.1.1)
+////////////////////////////////////////////////////////////////////////////////
+/*SPRITE*/ {
+
+    VERSION 0001
+
+    // Images:  1
+    // Modules: 30
+    // Frames:  26
+    // Anims:   3
+
+////////////////////////////////////////////////////////////////////////////////
+// Images...
+// <Image> := IMAGE [id] "file" [ALPHA "alpha_file"] [TRANSP transp_color]
+
+    IMAGE 0x0000 "..\image\preload.png" TRANSP 0x00FF00FF // 0  size: 2048 x 947  palettes: 1
+
+////////////////////////////////////////////////////////////////////////////////
+// Modules...
+// <Modules> := MODULES { <MD1> <MD2> ... }
+// <MDi>     := MD id Type [params] ["desc"]
+// Type      := MD_IMAGE | MD_RECT | ...
+// [params]  := if (Type == MD_IMAGE)     -> image x y width height
+//              if (Type == MD_RECT)      -> color width height
+//              if (Type == MD_FILL_RECT) -> color width height
+//              if (Type == MD_ARC)       -> color width height startAngle arcAngle
+//              if (Type == MD_FILL_ARC)  -> color width height startAngle arcAngle
+//              if (Type == MD_MARKER)    -> color width height
+//              if (Type == MD_TRIANGLE)  -> color p2X p2Y p3X p3Y
+//              if (Type == MD_FILL_TRIANGLE)  -> color p2X p2Y p3X p3Y
+//              if (Type == MD_LINE)	   -> color width height
+//              if (Type == MD_FILL_RECT_GRAD) -> color01 color02 direction width height
+//              if (Type == MD_GRADIENT_TRIANGLE) -> x0 y0 color0 x1 y1 color1 x2 y2 color2
+//              if (Type == MD_GRADIENT_RECT) -> x0 y0 color0 x1 y1 color1 x2 y2 color2 x3 y3 color3
+//              if (Type == MD_MESH)    -> image numOfCorner p0x p0y p1x p1y p2x p2y ... 
+
+    MODULES
+    {
+        MD	0x102C	MD_IMAGE	0	1	1	1	1	"empty"
+        MD	0x101C	MD_IMAGE	0	845	458	38	37	"exit"
+        MD	0x1012	MD_IMAGE	0	191	65	437	376	"penguin"
+        MD	0x1000	MD_IMAGE	0	31	863	145	61	"fire1"
+        MD	0x1002	MD_IMAGE	0	215	864	90	61	"fire2"
+        MD	0x1003	MD_IMAGE	0	348	863	193	61	"fire3"
+        MD	0x1004	MD_IMAGE	0	570	867	145	61	"fire4"
+        MD	0x1005	MD_IMAGE	0	761	867	187	61	"fire5"
+        MD	0x1001	MD_IMAGE	0	40	68	105	4	"wind"
+        MD	0x1009	MD_IMAGE	0	489	465	118	176	"hot_air_balloon"
+        MD	0x100A	MD_IMAGE	0	31	656	186	55	"cloud"
+        MD	0x1006	MD_IMAGE	0	48	467	74	142
+        MD	0x1007	MD_IMAGE	0	145	469	245	142
+        MD	0x1008	MD_IMAGE	0	419	470	53	88
+        MD	0x1014	MD_IMAGE	0	671	232	367	127
+        MD	0x100B	MD_IMAGE	0	298	670	99	158
+        MD	0x100C	MD_IMAGE	0	421	676	99	155
+        MD	0x100D	MD_IMAGE	0	543	676	99	158
+        MD	0x100E	MD_IMAGE	0	659	676	99	160
+        MD	0x100F	MD_IMAGE	0	781	678	99	158
+        MD	0x1010	MD_IMAGE	0	911	678	99	155
+        MD	0x1011	MD_IMAGE	0	1029	673	99	158
+        MD	0x1013	MD_IMAGE	0	1156	677	99	160
+        MD	0x1015	MD_IMAGE	0	671	24	543	162
+        MD	0x1016	MD_IMAGE	0	15	733	218	42
+        MD	0x1017	MD_IMAGE	0	659	389	137	155	"loading_icon"
+        MD	0x1018	MD_IMAGE	0	48	534	74	74
+        MD	0x101A	MD_IMAGE	0	419	537	53	21
+        MD	0x1019	MD_IMAGE	0	145	536	245	75
+        MD	0x101B	MD_IMAGE	0	48	91	20	362
+    }
+
+////////////////////////////////////////////////////////////////////////////////
+// Frames...
+// <Frame> := FRAME ["desc"] { id <RC1> [<RC2> ...] <FM1> [<FM2> ...] }
+// <RCi>   := RC x1 y1 x2 y2
+// <POi>   := PO numOfCorner x1 y1 x2 y2...
+// <FMi>   := FM module_or_frame_id ox oy [FLAGS hex_flags] [+Flags]
+// Flags   := HYPER_FM | FLIP_X | FLIP_Y | ROT_90 | FREE_ROT
+
+    FRAME "exit" // Index = 0, FModules = 1
+    {
+        0x2014
+        RC	-50	-50	50	50
+        FM	0x101C	-19	-18	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "retry" // Index = 1, FModules = 1
+    {
+        0x2018
+        FM	0x1015	-215	-56	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -206.0 -55.0
+    }
+
+    FRAME "penguin01" // Index = 2, FModules = 5
+    {
+        0x2000
+        FM	0x1012	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        FM	0x1000	-37	237	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -35.0 237.0
+        FM	0x1001	-149	263	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -31.0 31.0
+        FM	0x1001	-103	290	FREE_ROTATE 0	FREE_SCALE_XY 100 100 15.0 58.0
+        FM	0x1001	-97	238	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -97.0 238.0
+    }
+
+    FRAME "penguin02" // Index = 3, FModules = 4
+    {
+        0x2001
+        FM	0x1012	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        FM	0x1002	18	238	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -101.0 -73.0
+        FM	0x1001	-67	241	FREE_ROTATE 0	FREE_SCALE_XY 100 100 30.0 3.0
+        FM	0x1001	-105	287	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -8.0 49.0
+    }
+
+    FRAME "penguin03" // Index = 4, FModules = 5
+    {
+        0x2002
+        FM	0x1012	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        FM	0x1001	-40	306	FREE_ROTATE 0	FREE_SCALE_XY 100 100 78.0 74.0
+        FM	0x1001	-135	275	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -30.0 -12.0
+        FM	0x1001	-81	226	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -81.0 226.0
+        FM	0x1003	-85	238	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -200.0 -17.0
+    }
+
+    FRAME "penguin04" // Index = 5, FModules = 4
+    {
+        0x2003
+        FM	0x1012	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        FM	0x1001	-69	232	FREE_ROTATE 0	FREE_SCALE_XY 100 100 49.0 0.0
+        FM	0x1001	-25	292	FREE_ROTATE 0	FREE_SCALE_XY 100 100 93.0 60.0
+        FM	0x1004	-37	238	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -147.0 -24.0
+    }
+
+    FRAME "penguin05" // Index = 6, FModules = 4
+    {
+        0x2004
+        FM	0x1012	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        FM	0x1001	-93	258	FREE_ROTATE 0	FREE_SCALE_XY 100 100 25.0 26.0
+        FM	0x1001	-20	222	FREE_ROTATE 0	FREE_SCALE_XY 100 100 98.0 -10.0
+        FM	0x1005	-79	237	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -189.0 -24.0
+    }
+
+    FRAME "" // Index = 7, FModules = 1
+    {
+        0x2006
+        FM	0x100B	-50	-79	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "" // Index = 8, FModules = 1
+    {
+        0x2007
+        FM	0x100C	-50	-76	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "" // Index = 9, FModules = 1
+    {
+        0x2008
+        FM	0x100D	-50	-79	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "" // Index = 10, FModules = 1
+    {
+        0x2009
+        FM	0x100E	-50	-81	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "" // Index = 11, FModules = 1
+    {
+        0x200A
+        FM	0x100F	-50	-79	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "" // Index = 12, FModules = 1
+    {
+        0x200B
+        FM	0x1010	-50	-76	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "" // Index = 13, FModules = 1
+    {
+        0x200C
+        FM	0x1011	-50	-79	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "" // Index = 14, FModules = 1
+    {
+        0x200D
+        FM	0x1013	-50	-81	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "bar_up" // Index = 15, FModules = 24
+    {
+        0x2005
+        FM	0x1007	179	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 82.0 0.0
+        FM	0x1006	106	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 47.0 -32.0
+        FM	0x1006	33	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 47.0 -32.0
+        FM	0x1006	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 47.0 -32.0
+        FM	0x1014	5	4	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -155.0 -66.0
+        FM	0x1008	1283	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 260.0 9.0
+        FM	0x1008	1232	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 209.0 9.0
+        FM	0x1008	1181	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 158.0 9.0
+        FM	0x1008	1130	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 107.0 9.0
+        FM	0x1008	1079	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 56.0 9.0
+        FM	0x1008	1028	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 5.0 9.0
+        FM	0x1008	977	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -46.0 9.0
+        FM	0x1008	926	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -97.0 9.0
+        FM	0x1008	875	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -148.0 9.0
+        FM	0x1008	824	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -199.0 9.0
+        FM	0x1008	774	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -249.0 5.0
+        FM	0x1008	723	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -300.0 5.0
+        FM	0x1008	672	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -351.0 5.0
+        FM	0x1008	621	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -402.0 5.0
+        FM	0x1008	570	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -453.0 5.0
+        FM	0x1008	519	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -504.0 5.0
+        FM	0x1008	468	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -555.0 5.0
+        FM	0x1008	417	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -606.0 5.0
+        FM	0x1008	366	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -657.0 5.0
+    }
+
+    FRAME "bar_down" // Index = 16, FModules = 23
+    {
+        0x2010
+        FM	0x1018	1336	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x1018	1273	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x1018	1217	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x1019	1158	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x101A	915	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x101A	865	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x101A	814	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x101A	764	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x101A	712	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1180.0 -3.0
+        FM	0x101A	661	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1180.0 -3.0
+        FM	0x101A	611	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1180.0 -3.0
+        FM	0x101A	561	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1033.0 -4.0
+        FM	0x101A	510	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1033.0 -4.0
+        FM	0x101A	460	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1033.0 -4.0
+        FM	0x101A	408	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 877.0 -7.0
+        FM	0x101A	357	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 877.0 -7.0
+        FM	0x101A	307	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 877.0 -7.0
+        FM	0x101A	258	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 729.0 1.0
+        FM	0x101A	207	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 729.0 1.0
+        FM	0x101A	157	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 729.0 1.0
+        FM	0x101A	105	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 573.0 -2.0
+        FM	0x101A	53	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 573.0 -2.0
+        FM	0x1016	1103	-59	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -59.0 41.0
+    }
+
+    FRAME "bar_down_loading" // Index = 17, FModules = 17
+    {
+        0x2017
+        FM	0x1018	1005	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x1018	942	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x1018	886	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x1019	827	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x101A	584	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x101A	534	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x101A	483	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x101A	433	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1336.0 0.0
+        FM	0x101A	381	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1180.0 -3.0
+        FM	0x101A	330	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1180.0 -3.0
+        FM	0x101A	280	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1180.0 -3.0
+        FM	0x101A	230	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1033.0 -4.0
+        FM	0x101A	179	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1033.0 -4.0
+        FM	0x101A	129	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 1033.0 -4.0
+        FM	0x101A	77	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 877.0 -7.0
+        FM	0x101A	53	0	FREE_ROTATE 0	FREE_SCALE_XY -100 -100 877.0 -7.0
+        FM	0x1016	772	-59	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -59.0 41.0
+    }
+
+    FRAME "hot_air_balloon" // Index = 18, FModules = 1
+    {
+        0x2011
+        FM	0x1009	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "cloud" // Index = 19, FModules = 1
+    {
+        0x2012
+        FM	0x100A	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "cloud_small" // Index = 20, FModules = 1
+    {
+        0x2013
+        FM	0x100A	0	0	FREE_ROTATE 0	FREE_SCALE_XY 50 50 0.0 0.0
+    }
+
+    FRAME "playbutton" // Index = 21, FModules = 1
+    {
+        0x200E
+        FM	0x1015	-207	-59	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -420.0 7.0
+    }
+
+    FRAME "loading_icon" // Index = 22, FModules = 1
+    {
+        0x200F
+        FM	0x1017	-68	-77	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    FRAME "bar_1004" // Index = 23, FModules = 3
+    {
+        0x2015
+        FM	0x101B	0	-361	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -16.0 -309.0
+        FM	0x101B	0	-720	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -2.0 -681.0
+        FM	0x101B	0	-1004	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -2.0 -965.0
+    }
+
+    FRAME "bar_1334" // Index = 24, FModules = 4
+    {
+        0x2016
+        FM	0x101B	0	-361	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -16.0 -309.0
+        FM	0x101B	0	-720	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -2.0 -681.0
+        FM	0x101B	0	-1004	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -2.0 -965.0
+        FM	0x101B	0	-1333	FREE_ROTATE 0	FREE_SCALE_XY 100 100 -2.0 -1322.0
+    }
+
+    FRAME "empty" // Index = 25, FModules = 1
+    {
+        0x2034
+        FM	0x102C	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+////////////////////////////////////////////////////////////////////////////////
+// Animations...
+// <Anim> := ANIM ["desc"] { id [<AF1> <AF2> ...] }
+// <AFi>  := AF frame_id time ox oy [FLAGS hex_flags] [+Flags]
+// Flags  := FLIP_X | FLIP_Y | ROT_90
+
+    ANIM "penguin_fly" // Index = 0, AFrames = 8
+    {
+        0x3001
+        AF	0x2000	5	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x2001	5	0	1	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x2002	5	0	2	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x2003	5	0	3	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x2004	5	0	4	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x2003	5	0	3	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x2002	5	0	2	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x2001	5	0	1	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    ANIM "penguin_walk" // Index = 1, AFrames = 8
+    {
+        0x3000
+        AF	0x2006	4	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x2007	4	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x2008	4	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x2009	4	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x200A	4	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x200B	4	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x200C	4	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+        AF	0x200D	4	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    ANIM "empty" // Index = 2, AFrames = 1
+    {
+        0x3011
+        AF	0x2034	1	0	0	FREE_ROTATE 0	FREE_SCALE_XY 100 100 0.0 0.0
+    }
+
+    SPRITE_END
+
+} // SPRITE
+////////////////////////////////////////////////////////////////////////////////

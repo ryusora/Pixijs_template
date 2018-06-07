@@ -1,13 +1,13 @@
 import {SpriteAnimation} from '../Core/SpriteAnimation';
 import {SpritesManager} from '../Core/SpritesManager';
 import {Flappy} from './Flappy'
-window.spritesMgr||(window.spritesMgr = new SpritesManager())
+window.spritesMgr = window.spritesMgr || new SpritesManager();
 
-export class GamePlay{
-    constructor(application){
+export class GamePlay extends PIXI.Container {
+    constructor(application) {
+        super();
         this.application = application;
-        this.stage = new PIXI.Container();
-        this.application.addChild(this.stage);
+        this.application.addChild(this);
         this.ResetGame();
         // init birds pool
         let birdsCollection = [
@@ -27,5 +27,8 @@ export class GamePlay{
     }
     ResetGame(){
 
+    }
+    Destroy(){
+        this.application.removeChild(this);
     }
 }

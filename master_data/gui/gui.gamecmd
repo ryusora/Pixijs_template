@@ -1,0 +1,19 @@
+Load("gui.game")
+
+EXPORTGAME
+{
+	DESC		"GUI_Export"
+	PATH		"."
+	LOG_FILE	"GUI_Export.log"
+
+	OBJ_LAYERS
+	{
+		//OPTIONS EXPORT_OBJ_ID
+		OPTIONS USE_TEMPLATE_EXPORT_FORMAT
+	}
+
+	TASKS
+	{
+		OPTIONS	FINAL_OFFSET
+	}
+}

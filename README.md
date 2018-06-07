@@ -1,4 +1,4 @@
-# Pixi Js Template for Game
+# Pixi Js Template for Instant Game
 
 
 ## Development

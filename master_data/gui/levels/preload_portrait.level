@@ -1,0 +1,164 @@
+// Saved by AuroraGT v0.1.2.1
+////////////////////////////////////////////////////////////////////////////////
+
+"preload_portrait"
+{
+    FLAGS 0x00000000
+    ID 107
+    POS 0 0
+    MAX_ID 14
+    LAYER OBJECT_LAYER "cloud01-14"
+    {
+         FLAGS 0x00000000
+         ID 14
+         POS 112 215
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 19="cloud" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "cloud02-13"
+    {
+         FLAGS 0x00000000
+         ID 13
+         POS 447 117
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 19="cloud" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "cloud03-12"
+    {
+         FLAGS 0x00000000
+         ID 12
+         POS 362 479
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 19="cloud" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "cloud04-11"
+    {
+         FLAGS 0x00000000
+         ID 11
+         POS 663 710
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 19="cloud" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "cloud05-10"
+    {
+         FLAGS 0x00000000
+         ID 10
+         POS 87 897
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 19="cloud" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "cloud06-9"
+    {
+         FLAGS 0x00000000
+         ID 9
+         POS 370 1149
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 19="cloud" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "balloon01-8"
+    {
+         FLAGS 0x00000000
+         ID 8
+         POS 540 299
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 18="hot_air_balloon" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "balloon02-7"
+    {
+         FLAGS 0x00000000
+         ID 7
+         POS 446 774
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 18="hot_air_balloon" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "barleft-6"
+    {
+         FLAGS 0x00000000
+         ID 6
+         POS 0 1331
+         ANCHOR 1 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 24="bar_1334" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "barright-5"
+    {
+         FLAGS 0x00000000
+         ID 5
+         POS 730 1331
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 24="bar_1334" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "barup-4"
+    {
+         FLAGS 0x00000000
+         ID 4
+         POS 0 0
+         ANCHOR 1 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 15="bar_up" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "bardown-3"
+    {
+         FLAGS 0x00000000
+         ID 3
+         POS -255 1334
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 17="bar_down_loading" -1 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "penguin-2"
+    {
+         FLAGS 0x00000000
+         ID 2
+         POS 100 379
+         ANCHOR 13 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" -1 0="penguin_fly" 1="TRUE"
+    }
+    LAYER OBJECT_LAYER "exit-1"
+    {
+         FLAGS 0x00000000
+         ID 1
+         POS 700 50
+         ANCHOR 5 0
+         ANCHOR_2 0 0
+         DISABLE_OBJECT 0
+         TEMPLATE "GUI_GfxItem"
+         PARAMS 0="preload" 0="exit" -1 1="TRUE"
+    }
+}
